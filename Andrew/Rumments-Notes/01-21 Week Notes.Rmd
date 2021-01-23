@@ -1,0 +1,52 @@
+---
+title: "01 - Notes - 21 Jan 2021"
+author: "Andrew Rumments"
+date: "1/23/2021"
+output: html_document
+---
+
+# Assignment for this week
++ [ ] Reading
+  + [X] 5.1
+  + [X] 5.2
+  + [ ] 5.3.1
+  + [ ] 5.3.2
+  + [ ] 5.5
+  + [ ] 5.6
+  + [ ] 9.1
+  + [ ] 9.2
+  + [ ] 9.3
++ [ ] Publish questions on all chapters for this week
++ [ ] Investigate Bookdown
++ [ ] Investigate Shiny
++ [ ] Investigate Learnr
++ [ ] Try to Shiny/Learnr my questions
+
+
+
+# Reading
+## Chapter 5 Generalized Linear Models: Structure
++ 5.1 Introduction and Overview
+  + nstr
++ 5.2 The Two Components of Generalized Linear Models
+  + Two compponents - A random component and a systematic component.
+  + Form depends on answers to two questions
+    + What probability is appropriate?
+    + How are the explanatory variables related to the mean of the response $\mu$?
++ 5.3 The Random Component: Exponential Dispersion Models
+  + 5.3.1 Examples of EDMs
+    + GLM assumes the responses come from a distribution that belongs to the exponential dispersion model family.
+    + *continuous* EDMs include the normal and gamma distributions.
+    + *discrete* EDMs include the Poisson, binomial, and negative binomial distributions.
+    
+  + 5.3.2. Definition of EDMs
+    + Distributions in the EDM family have a probability function^[(probabilty *density* function if continuous, probability *mass* function if not).] of the form:
+      + Formula (5.1):$$ \mathcal{P}(y; \theta, \phi) = a(y, \phi)\mathrm{exp}{\frac{y\theta-\kappa(\theta)}{\phi}}  $$ 
+      + $\theta$ is the *canonical parameter*
+      + $\kappa(\theta)$ is a known function called the *cumulant function*
+      + $\phi > 0$ is the *dispersion parameter*
+      + $a(y,\phi)$ is a normalizing function ensuring that (5.1) is a probability function.
+    
+    
+
+
