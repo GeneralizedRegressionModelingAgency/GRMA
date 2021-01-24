@@ -382,23 +382,23 @@ summary {
 <div id="assignment-for-this-week" class="section level1">
 <h1>Assignment for this week</h1>
 <ul>
-<li>[ ] Reading
+<li>[_] Reading
 <ul>
-<li>[ ] 5.1</li>
-<li>[ ] 5.2</li>
-<li>[ ] 5.3.1</li>
-<li>[ ] 5.3.2</li>
-<li>[ ] 5.5</li>
-<li>[ ] 5.6</li>
-<li>[ ] 9.1</li>
-<li>[ ] 9.2</li>
-<li>[ ] 9.3</li>
+<li>[X] 5.1</li>
+<li>[X] 5.2</li>
+<li>[X] 5.3.1</li>
+<li>[X] 5.3.2</li>
+<li>[X] 5.5</li>
+<li>[X] 5.6</li>
+<li>[_] 9.1</li>
+<li>[_] 9.2</li>
+<li>[_] 9.3</li>
 </ul></li>
-<li>[ ] Publish questions on all chapters for this week</li>
-<li>[ ] Investigate Bookdown</li>
-<li>[ ] Investigate Shiny</li>
-<li>[ ] Investigate Learnr</li>
-<li>[ ] Try to Shiny/Learnr my questions</li>
+<li>[_] Publish questions on all chapters for this week</li>
+<li>[_] Investigate Bookdown</li>
+<li>[_] Investigate Shiny</li>
+<li>[_] Investigate Learnr</li>
+<li>[_] Try to Shiny/Learnr my questions</li>
 </ul>
 </div>
 <div id="reading" class="section level1">
@@ -431,13 +431,174 @@ summary {
 <ul>
 <li>Distributions in the EDM family have a probability function<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> of the form:
 <ul>
-<li>Formula (5.1):<span class="math display">\[ \mathcal{P}(y; \theta, \phi) = a(y, \phi)\mathrm{exp}{\frac{y\theta-\kappa(\theta)}{\phi}}  \]</span></li>
+<li>Formula (5.1):<span class="math display">\[ \mathcal{P}(y; \theta, \phi) = a(y, \phi)\mathrm{exp}
+\left\{
+{\frac{y\theta-\kappa(\theta)}{\phi}} 
+\right\}
+\]</span></li>
 <li><span class="math inline">\(\theta\)</span> is the <em>canonical parameter</em></li>
 <li><span class="math inline">\(\kappa(\theta)\)</span> is a known function called the <em>cumulant function</em></li>
 <li><span class="math inline">\(\phi &gt; 0\)</span> is the <em>dispersion parameter</em></li>
-<li><span class="math inline">\(a(y,\phi)\)</span> is a normalizing function ensuring that (5.1) is a probability function.</li>
+<li><span class="math inline">\(a(y,\phi)\)</span> is a normalizing function ensuring that (5.1) is a probability function.
+<ul>
+<li>That <span class="math inline">\(\int\mathcal{P}(y; \theta, \phi)=1\)</span> over the range if continuous or that <span class="math inline">\(\sum\mathcal{P}(y; \theta, \phi)=1\)</span> if distcrete.</li>
+<li>It cannot always be written in closed form.</li>
 </ul></li>
 </ul></li>
+<li><em>Example 5.1</em> gives the pdf for a normal distribution as an example
+<ul>
+<li><span class="math display">\[\mathcal{P}(y; \theta, \phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\mathrm{exp}
+\left\{
+-\frac{(y-\mu)^2}{2\sigma^2}
+\right\}\]</span></li>
+<li><span class="math inline">\(\theta=\mu\)</span> is the <em>canonical parameter</em></li>
+<li><span class="math inline">\(\kappa(\theta)=\mu^2/2=\theta^2/2\)</span> is the <em>cumulant function</em></li>
+<li><span class="math inline">\(\phi=\sigma^2\)</span> is the <em>dispersion parameter</em></li>
+<li><span class="math inline">\(a(y,\phi)=(2\pi\sigma^2)^{1/2}exp\{-y^2/(2\sigma^2)\}\)</span> is the <em>normalizing function</em></li>
+<li>It meets these conditions, so it’s an EDM.</li>
+</ul></li>
+<li><em>Example 5.2</em> does the same, but for a poisson.
+<ul>
+<li>meets the conditions, so it’s an EDM.</li>
+</ul></li>
+<li><em>Example 5.3</em> for a binomial probability function.
+<ul>
+<li>meets the conditions, when <span class="math inline">\(m\)</span> is known and so is an EDM when <span class="math inline">\(m\)</span> is known.</li>
+</ul></li>
+<li><em>Example 5.4</em> gives the Weibull distribution. It’s shown that, even when rewriten, that a certain term cannot be extracted except for in the condition that <span class="math inline">\(a=1\)</span>, and so the Weibull distribution is <strong>not</strong> an EDM in general, but can be in <em>certain conditions</em>.</li>
+</ul></li>
+</ul></li>
+<li>5.5 The Systematic Component
+<ul>
+<li>5.5.1 Link Function
+<ul>
+<li>GLMs assume a component where the <em>linear predictor</em> is linked to the mean <span class="math inline">\(\mu\)</span> through a <em>link function</em> <span class="math inline">\(g()\)</span> so that <span class="math inline">\(g(\mu)=\eta\)</span>.</li>
+<li><span class="math display">\[\eta=\beta_0+\sum^p_{j=1}\beta_j x_j\]</span></li>
+<li>This component shows that GLMs are regression models <em>linear in the parameters</em>
+<ul>
+<li><strong><em>What does this mean?</em></strong></li>
+<li>The link function <span class="math inline">\(g(\bullet)\)</span> is
+<ul>
+<li>monotonic - ensures any value if <span class="math inline">\(\eta\)</span> is mapped to only one possible value of <span class="math inline">\(\mu\)</span></li>
+<li>differentiable - required for estimation</li>
+</ul></li>
+<li>The <em>canonical link function</em> is a special link function such that <span class="math inline">\(\eta=\theta=g(\mu)\)</span>
+<ul>
+<li><em>Example 5.16</em> shows that for the normal distribution, the canonincal link function is the <em>identity</em> link function, implying <span class="math inline">\(\eta=\theta=g(\mu)=\mu\)</span></li>
+<li><em>Example 5.17</em> describes the canonical link function for the Poisson distribution, it’s qualities, and why it’s a sensible link function to use.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>5.5.2 Offsets
+<ul>
+<li>Sometimes the linear predictor contains a term w/ no estimation required called <em>an offset</em>.
+<ul>
+<li>Can be viewed as a term <span class="math inline">\(\beta_j x_{ji}\)</span> in the linear predictor for which <span class="math inline">\(\beta_j\)</span> is known <em>a priori</em>.</li>
+<li>Example: when estimating the number of births in a town, a contribution to that is the number of people living in that town. This doesn’t need to be estimated, and can exist in the model as an <em>offset</em>.</li>
+<li><em>Example 5.18</em> examines the cherry tree data from <em>Example 3.14, p. 125</em> which includes an offset based on girth and height of a tree which has no terms in it requiring estimation.</li>
+<li>In short, <em>offset</em> is the part of the systematic omponent not requiring estimation - <em>conclusion mine</em></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>5.6 Generalized Linear Models Defined
+<ul>
+<li>A GLM consists of two components
+<ul>
+<li><em>Random</em> and <em>Systematic</em></li>
+<li>Random: Observations <span class="math inline">\(y_i\)</span> come independently from a specified EDM such taht <span class="math inline">\(y_i \sim \mathrm{EDM}(\mu_i, \phi/w_i)\)</span>. for <span class="math inline">\(i=1,2,...,n\)</span>.
+<ul>
+<li><span class="math inline">\(w_i\)</span> are known as non-negative <em>prior weights</em> which potentially weigh each observation <span class="math inline">\(i\)</span> differently and all eqal one.</li>
+</ul></li>
+<li>Systematic: A linear predictor <span class="math inline">\(\eta=o_i+\beta_0+\sum^p_{j=1}\beta_jx_{ji}\)</span>, where
+<ul>
+<li><span class="math inline">\(o_i\)</span> are offsets that are often equal to zero, and</li>
+<li><span class="math inline">\(g(u)=\eta\)</span> is a <strong>known, monotonic, differentiable</strong> link function.</li>
+</ul></li>
+<li>The GLM then is:
+<ul>
+<li><span class="math display">\[\begin{cases}
+y_i \sim \mathrm{EDM}(\mu_i,\phi/w_i)\\
+g(\mu_i)=o_i+\beta_0+\sum^p_{j=1}\beta_jx_{ji}.\\
+\end{cases}
+\]</span></li>
+</ul></li>
+<li>The notation <span class="math inline">\(\mathrm{GLM}(\mathrm{EDM}; \mathrm{Link\hspace{0.1cm}function})\)</span></li>
+<li><em>Example 5.19</em> gives a random and systematic component in the above format for the Quilpie rainfall data (<em>Ex 4.6, p 174</em>).
+<ul>
+<li><span class="math inline">\(\mathrm{GLM}(\mathrm{binomial}; \mathrm{logit}) \Rightarrow \texttt{family(&quot;binomial&quot;, link=&quot;logit&quot;)}\)</span> in R.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="chapter-9-models-for-proportions-binomial-glms" class="section level2">
+<h2>Chapter 9 Models for Proportions: Binomial GLMs</h2>
+<ul>
+<li>9.1 Introduction and Overview
+<ul>
+<li>nstr</li>
+</ul></li>
+<li>9.2 Modelling Proportions
+<ul>
+<li>Proportion <span class="math inline">\(y\)</span> of a toatl number <span class="math inline">\(m\)</span>.</li>
+<li>Examples good for <em>binomial</em> response distribution:
+<ul>
+<li>proportion of individuals having a disease</li>
+<li>proportion of voters who vote for a particular election candidate</li>
+<li>proportion of insects that die after being exposed to different doses of a poison.</li>
+</ul></li>
+<li>PMF
+<ul>
+<li><span class="math display">\[\mathcal{P}(y;\mu,m)=
+\left(\begin{matrix}
+m\\
+my\\
+\end{matrix}\right)
+\mu^{my}(1-\mu)^{m(1-y)}
+\]</span>
+<ul>
+<li>where <span class="math inline">\(m\)</span> is known</li>
+<li><span class="math inline">\(\phi=1\)</span></li>
+<li><span class="math inline">\(y=0, 1/m, 2/m, ..., 1\)</span></li>
+<li>expected proportion is <span class="math inline">\(0 &lt; \mu &lt; 1\)</span></li>
+</ul></li>
+</ul></li>
+<li>To use, the prior weights <span class="math inline">\(w\)</span> are set to the group totals <span class="math inline">\(m\)</span>.</li>
+<li>The unit deviance for the binomial distribution is:
+<ul>
+<li><span class="math display">\[d(y,\mu)=2
+\left\{
+ylog\frac{y}{\mu}+
+(1-y)log\frac{1-y}{1-\mu}
+\right\}.\]</span></li>
+</ul></li>
+<li>When <span class="math inline">\(y=0\)</span> or <span class="math inline">\(y=1\)</span>, the limit form of the unit deviance is used. See <em>5.14</em>
+<ul>
+<li><strong><em>Look up limit form</em></strong></li>
+<li><strong><em>Discuses using a saddlepoint approximation chi-sq for a model with <span class="math inline">\(p'\)</span>, but it’s lost me.</em></strong></li>
+<li>Discusses when saddlepoint approxiumation is appropriate.</li>
+</ul></li>
+</ul></li>
+<li>Denoted in R using <span class="math inline">\(\texttt{family=binomial()}\)</span> in the <span class="math inline">\(\texttt{glm()}\)</span> call.
+<ul>
+<li>Binomial responses may be specified in <span class="math inline">\(\texttt{glm()}\)</span> formula in one of three ways.
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>The response can be supplied as observed proprtions <span class="math inline">\(y_i\)</span> with sample sizes <span class="math inline">\(m_i\)</span> supplied as <span class="math inline">\(\texttt{weights}\)</span> in the call to <span class="math inline">\(\texttt{glm()}\)</span>.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Response can be given as a two-column array, giving the number of successes and failures respectively in each group of size <span class="math inline">\(m_i\)</span>. +The prior <span class="math inline">\(\texttt{weights}\)</span> do not need to be supplied.</li>
+</ol></li>
+<li>The response can be given as a factor or as logicals (<span class="math inline">\(\texttt{TRUE}\)</span> for success).
+<ul>
+<li>No prior <span class="math inline">\(\texttt{wieghts}\)</span> need to be supplied then.</li>
+<li>Useful if the data have one row for each observation.</li>
+<li>In this form, responses are binary and the model is Bernoulli GLM.</li>
+<li>While many model statistics are the same, there are some limits with using this form.</li>
+</ul></li>
+</ul></li>
+<li>For binomial GLMs, the use of quantile residuals is strongly recommended for diagnostic analysis. *(Section 8.3.4.2)</li>
+<li><em>Ex 9.1</em> gives an experiment running turbines for various lengths of time recording the proportion of turbine wheels <span class="math inline">\(y\)</span> out of total <span class="math inline">\(m_i\)</span> turbines developing fissures.</li>
 </ul></li>
 </ul>
 </div>
