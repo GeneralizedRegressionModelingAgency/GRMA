@@ -1,6 +1,8 @@
 # LearnR test
 
-We describe our methods in this chapter.
+Here is an embedded learnR tutorial from a published shiny app. 
+
+
 
 ```{r}
 knitr::include_url("https://emilypalmer.shinyapps.io/GRM_LearnR/", 

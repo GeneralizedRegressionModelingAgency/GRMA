@@ -14,6 +14,8 @@ description: "This is a draft of the book that we will write for non-Statisticia
 
 You should probably know some math stuff? 
 
+We used this book [@dunn2018generalized]
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
