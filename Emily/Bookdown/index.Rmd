@@ -1,0 +1,22 @@
+--- 
+title: "TBD GRM Book"
+author: "Emily Palmer et.al."
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a draft of the book that we will write for non-Statisticians to understand GRMS"
+---
+
+# Prerequisites
+
+You should probably know some math stuff? 
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

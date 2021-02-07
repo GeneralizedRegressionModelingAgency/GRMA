@@ -1,0 +1,9 @@
+# LearnR test
+
+We describe our methods in this chapter.
+
+```{r}
+knitr::include_url("https://emilypalmer.shinyapps.io/GRM_LearnR/", 
+  height = "600px")
+```
+
