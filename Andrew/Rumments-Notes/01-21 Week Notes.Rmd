@@ -13,7 +13,7 @@ output: html_document
   + [X] 5.3.2
   + [X] 5.5
   + [X] 5.6
-  + [_] 9.1
+  + [X] 9.1
   + [_] 9.2
   + [_] 9.3
 + [_] Publish questions on all chapters for this week
@@ -69,6 +69,22 @@ output: html_document
       + meets the conditions, when $m$ is known and so is an EDM when $m$ is known.
     + *Example 5.4* gives the Weibull distribution. It's shown that, even when rewriten, that a certain term cannot be extracted except for in the condition that $a=1$, and so the Weibull distribution is **not** an EDM in general, but can be in *certain conditions*.
     
+  + 5.3.3. Generating Functions
+    + EDMs always have MGFs, even if the probability function cannot be wrten in closed form.
+    + The *moment generating function*, denoted $M(t)$, for some variable $y$ with probability function $\mathcal{P}(y)$ is
+      + $$M(t)=\textrm{E}[e^{ty}]=
+      \begin{cases}
+      \int_S\mathcal{P}(y)e^{ty}dy&&\textrm{for }y\textrm{ continuous}\\
+      \sum_{y \in S}^{S}\mathcal{P}(y)e^{ty}&&\textrm{for }y\textrm{ discrete}\\
+      \end{cases}
+      $$
+      for all values of $t$ for which the expectation exists.
+    + The *cumulant generating function* (or CGF) is then defined as
+      + $$K(t)=\textrm{log}M(t)=\textrm{log}\textrm{E}[e^{ty}]$$
+        + true for all values of t for which the expectation exists.
+        + The CGF is used to derive the *cumulants* of a distribution, such as the mean (first cumulant, $\kappa_1$) and the variance (second cumulant $\kappa_2$).
+      + The $r$th cumulant, $\kappa_r$, is
+        + $$\kappa_r=\frac{\textrm{d}^rK(t)}{\textrm{d}t^r}|_{t=0}$$  
   
     
 + 5.5 The Systematic Component
