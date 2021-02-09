@@ -1,0 +1,20 @@
+---
+title: "Ch-5 Problems"
+author: "Andrew Rumments"
+date: "1/26/2021"
+output: html_document
+---
+
+### Problem 5.8.
+
++ **1** Show that the gamma distribution is an EDM by identifying $\theta$, $\kappa(\theta)$, and $\phi$.
+
+  + $$\theta = -1/\mu$$
+  + $$\kappa(\theta) = -log(-\theta)$$
+  + $$\phi = \phi$$
+  
+  $$\frac{y\theta - \kappa(\theta)}{\phi} = \frac{-y}{\beta}$$
+  
+  $$a(y;\theta, \phi)=\frac{1}{\Gamma(\alpha)\beta^\alpha}$$
+  
++ **2** Show that the saddlepoint approximation for Gaussi
