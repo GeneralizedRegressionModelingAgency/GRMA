@@ -113,7 +113,7 @@
 
 \title{TBD GRM Book}
 \author{Emily Palmer et.al.}
-\date{2021-02-07}
+\date{2021-02-25}
 
 \begin{document}
 \maketitle
@@ -122,88 +122,67 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\hypertarget{prerequisites}{%
-\chapter{Prerequisites}\label{prerequisites}}
-
-You should probably know some math stuff?
-
-We used this book \citep{dunn2018generalized}
-
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-You can label chapter and section titles using \texttt{\{\#label\}} after them, e.g., we can reference Chapter \ref{intro}. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter
-
-Figures and tables with captions will be placed in \texttt{figure} and \texttt{table} environments, respectively.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{))}
-\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\hypertarget{linear-models}{%
+\section{Linear models}\label{linear-models}}
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{Bookdown_files/figure-latex/nice-fig-1} 
-
-}
-
-\caption{Here is a nice figure!}\label{fig:nice-fig}
+\centering
+\includegraphics{put_a_bird.png}
+\caption{put a bird on it}
 \end{figure}
 
-Reference a figure by its code chunk label with the \texttt{fig:} prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can reference tables generated from \texttt{knitr::kable()}, e.g., see Table \ref{tab:nice-tab}.
+\hypertarget{some-definitions}{%
+\section{Some definitions}\label{some-definitions}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
-  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{\textquotesingle{}Here is a nice table!\textquotesingle{}}\NormalTok{,}
-  \DataTypeTok{booktabs =} \OtherTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Predictor -
+Explanatory variable
 
-\begin{table}
+Something that is an estimated quantity will have a hat over it.
+For example, we might assume that there is some `true' relationship
 
-\caption{\label{tab:nice-tab}Here is a nice table!}
-\centering
-\begin{tabular}[t]{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.1 & 3.5 & 1.4 & 0.2 & setosa\\
-4.9 & 3.0 & 1.4 & 0.2 & setosa\\
-4.7 & 3.2 & 1.3 & 0.2 & setosa\\
-4.6 & 3.1 & 1.5 & 0.2 & setosa\\
-5.0 & 3.6 & 1.4 & 0.2 & setosa\\
-\addlinespace
-5.4 & 3.9 & 1.7 & 0.4 & setosa\\
-4.6 & 3.4 & 1.4 & 0.3 & setosa\\
-5.0 & 3.4 & 1.5 & 0.2 & setosa\\
-4.4 & 2.9 & 1.4 & 0.2 & setosa\\
-4.9 & 3.1 & 1.5 & 0.1 & setosa\\
-\addlinespace
-5.4 & 3.7 & 1.5 & 0.2 & setosa\\
-4.8 & 3.4 & 1.6 & 0.2 & setosa\\
-4.8 & 3.0 & 1.4 & 0.1 & setosa\\
-4.3 & 3.0 & 1.1 & 0.1 & setosa\\
-5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-\addlinespace
-5.7 & 4.4 & 1.5 & 0.4 & setosa\\
-5.4 & 3.9 & 1.3 & 0.4 & setosa\\
-5.1 & 3.5 & 1.4 & 0.3 & setosa\\
-5.7 & 3.8 & 1.7 & 0.3 & setosa\\
-5.1 & 3.8 & 1.5 & 0.3 & setosa\\
-\bottomrule
-\end{tabular}
-\end{table}
+\[ y = \beta_0 + \beta_1 x\]
 
-You can write citations, too. For example, we are using the \textbf{bookdown} package \citep{R-bookdown} in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+From our sample data, we use a linear model to make an estimate of \(\beta_0\) and \(\beta_1\),
 
-\hypertarget{literature}{%
-\chapter{Literature}\label{literature}}
+so our estimate/best guess of this true model relationship is
 
-Here is a review of existing methods.
+\[ \hat y = \hat\beta_0 + \hat\beta_1 x\]
+We of course want our \(\hat\beta_0\) and \(\hat\beta_1\) to be a `good' and `close' estimate of the unknown quantities \(\beta_0\) and \(\beta_1\).
+
+\hypertarget{assumptions-of-linear-mordels}{%
+\section{Assumptions of linear mordels}\label{assumptions-of-linear-mordels}}
+
+Linear models assume
+
+How can we tell when these assumptions are violated?
+
+\begin{itemize}
+\tightlist
+\item
+  Knowledge of the data.
+\item
+\end{itemize}
+
+\hypertarget{what-happens-when-we-break-the-assumptions-of-linear-models}{%
+\section{What happens when we break the assumptions of linear models}\label{what-happens-when-we-break-the-assumptions-of-linear-models}}
+
+\hypertarget{examples}{%
+\section{Examples}\label{examples}}
+
+\hypertarget{glms---kat}{%
+\chapter{GLMs - Kat}\label{glms---kat}}
+
+\hypertarget{linear-models---emma}{%
+\chapter{Linear Models - Emma}\label{linear-models---emma}}
+
+\hypertarget{logistic-regression---andrew}{%
+\chapter{Logistic Regression - Andrew}\label{logistic-regression---andrew}}
+
+\hypertarget{poisson-glms---leah}{%
+\chapter{Poisson GLMs - Leah}\label{poisson-glms---leah}}
 
 \hypertarget{learnr-test}{%
 \chapter{LearnR test}\label{learnr-test}}
@@ -217,21 +196,6 @@ Here is an embedded learnR tutorial from a published shiny app.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
-
-Some \emph{significant} applications are demonstrated in this chapter.
-
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
-
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
-
-\hypertarget{final-words}{%
-\chapter{Final Words}\label{final-words}}
-
-We have finished a nice book.
 
   \bibliography{book.bib,packages.bib}
 
