@@ -1,0 +1,92 @@
+---
+title: "GRM Week 3 Work"
+author: "Kate Pulham"
+date: "1/18/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+# Problem 4.8 
+
+Using the density $\mathcal{P}(y;\mu)=\frac{e^{-\mu}\mu^{y}}{y!}$ we find that the likelihood function is given by 
+\[
+L(\mu;\textbf{y})= e^{-n\mu}\mu^{\sum_{i=1}^ny_i}\prod_{i=1}^n\frac{1}{y_i!}
+\]
+Which gives us a log likelihood of 
+\[
+\ell (\mu;\textbf{y}) = -n\mu + n\bar{y}log(\mu) - \sum_{i=1}^n log(y_i!)
+\]
+using this we find the score function to be
+\[
+U(\mu;\textbf{y}) = \frac{\partial}{\partial\mu}\ell(\mu;\textbf{y})=-n + \frac{n\bar{y}}{\mu}
+\]
+setting this equal to zero we find that 
+\[
+\hat{\mu}=\bar{y}
+\]
+Using the score function we can find the information:
+\[
+\mathcal{J}(\mu;\textbf{y})
+=-\frac{\partial^2}{\partial\mu^2}\ell (\mu;y) 
+=\frac{n\bar{y}}{\mu^2}
+\]
+Taking the expectation of this gives us the expected information 
+\[
+\mathcal{I}(\mu;\textbf{y})=\frac{n}{\mu}
+\]
+By the asymptotic normality of the MLE, we find that the $\hat\mu$ follows a $\mathcal{N}\left(\mu,(\mathcal{I}(\mu;\textbf{y}))^{-1}\right)$, which makes the standard error $SE(\hat\mu)=\frac{1}{\sqrt{n}}$. 
+
+# Simulation
+
+Let's simulate a data set from a poisson data generating process. 
+
+```{r}
+#define parameter values
+n <- 20 
+lambda <- 4
+
+#simulate data, calculate MLE
+dat <- rpois(n,lambda)
+MLE <- mean(dat)
+
+
+#define log-likelihood, score, and information functions
+loglike <- function(mu){
+  -n*mu + n*MLE*log(mu) - sum(log(factorial(dat)))
+}
+score <- function(mu){
+  n*MLE/mu -n
+}
+info <- function(mu){
+  -n*MLE/(mu^2)
+}
+
+#create dataframe for plotting
+x <- seq (1,15,length.out=1000)
+df <- data.frame(mu = x,
+                 logLike = loglike(x),
+                 score = score(x),
+                 info = info(x)
+                 )%>%
+  pivot_longer(2:4,names_to="Function")
+
+#plot
+ggplot(data=df,mapping=aes(x=mu))+
+  geom_line(aes(y=value,color=Function))+
+  geom_hline(yintercept=0)+
+  geom_point(data=data.frame(dat), mapping=aes(x=dat,y=0),position="jitter")+
+  geom_vline(xintercept=MLE,linetype="dashed",color="purple")
+```
+
+# Fisher Scoring iteration
+
+\[
+\hat\zeta^{(r+1)} = 
+\hat\zeta^{(r)} + \mathcal{I}(\hat\zeta^{(r)})^{-1}U(\hat\zeta^{(r)})
+\]
