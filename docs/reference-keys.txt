@@ -1,0 +1,11 @@
+intro
+linear-models
+some-definitions
+assumptions-of-linear-mordels
+what-happens-when-we-break-the-assumptions-of-linear-models
+examples
+glms---kat
+linear-models---emma
+logistic-regression---andrew
+poisson-glms---leah
+learnr-test

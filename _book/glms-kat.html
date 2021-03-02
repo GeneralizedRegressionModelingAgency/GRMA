@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>TBD GRM Book</title>
+  <title>Chapter 2 GLMs - Kat | TBD GRM Book</title>
   <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="TBD GRM Book" />
+  <meta property="og:title" content="Chapter 2 GLMs - Kat | TBD GRM Book" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="TBD GRM Book" />
+  <meta name="twitter:title" content="Chapter 2 GLMs - Kat | TBD GRM Book" />
   
   <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="glms-kat.html"/>
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="linear-models-emma.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,68 +168,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">TBD GRM Book</h1>
-<p class="author"><em>Emily Palmer et.al.</em></p>
-<p class="date"><em>2021-02-25</em></p>
-</div>
-<div id="intro" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<div id="linear-models" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Linear models</h2>
-<div class="figure">
-<img src="put_a_bird.png" alt="" />
-<p class="caption">put a bird on it</p>
-</div>
-</div>
-<div id="some-definitions" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Some definitions</h2>
-<p>Predictor - the thing on the y-axis
-Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won’t plot it then), and then this becomes multivariate regression.</p>
-<p>Something that is an estimated quantity will have a hat over it.
-For example, we might assume that there is some ‘true’ (but unknown) linear relationship between our explanatory variables and our predictor.</p>
-<p><span class="math display">\[ y = \beta_0 + \beta_1 x\]</span></p>
-<p>From our sample data, we use a linear model to make an estimate of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>,</p>
-<p>so our estimate/best guess of this true model relationship is</p>
-<p><span class="math display">\[ \hat y = \hat\beta_0 + \hat\beta_1 x\]</span>
-We of course want our <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> to be a ‘good’ and ‘close’ estimate of the unknown quantities <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Ideas of what ‘good’ and ‘close’ mean will be covered in the next section.</p>
-</div>
-<div id="assumptions-of-linear-mordels" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Assumptions of linear mordels</h2>
-<p>Linear models assume:</p>
-<ul>
-<li>The relationship between the explanatory variables and the</li>
-<li>The samples are independent.</li>
-<li>The variance is constant</li>
-<li>The errors are normally distributed with mean 0.</li>
-</ul>
-<p>We can write these assumptions down in notation as such.</p>
-<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
-where
-<span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span>
-In words, this means that each
-this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span> (notice how there is no subscript <span class="math inline">\(i\)</span> for the variance)</p>
-<p>How can we tell when these assumptions are violated?</p>
-<ul>
-<li>Knowledge of the data.</li>
-<li></li>
-</ul>
-</div>
-<div id="what-happens-when-we-break-the-assumptions-of-linear-models" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> What happens when we break the assumptions of linear models</h2>
-</div>
-<div id="examples" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Examples</h2>
+<div id="glms---kat" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> GLMs - Kat</h1>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="glms-kat.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-models-emma.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
