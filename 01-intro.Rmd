@@ -1,0 +1,55 @@
+# Introduction {#intro}
+
+
+## Linear models 
+
+![put a bird on it](put_a_bird.png)
+
+
+## Some definitions
+
+Predictor - the thing on the y-axis
+Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won't plot it then), and then this becomes multivariate regression. 
+
+Something that is an estimated quantity will have a hat over it. 
+For example, we might assume that there is some 'true' (but unknown) linear relationship between our explanatory variables and our predictor. 
+
+$$ y = \beta_0 + \beta_1 x$$
+
+From our sample data, we use a linear model to make an estimate of $\beta_0$ and $\beta_1$, 
+
+so our estimate/best guess of this true model relationship is 
+
+$$ \hat y = \hat\beta_0 + \hat\beta_1 x$$
+We of course want our $\hat\beta_0$ and $\hat\beta_1$ to be a 'good' and 'close' estimate of the unknown quantities $\beta_0$ and $\beta_1$. Ideas of what 'good' and 'close' mean will be covered in the next section. 
+
+## Assumptions of linear mordels 
+
+Linear models assume:
+
+ - The relationship between the explanatory variables and the 
+ - The samples are independent. 
+ - The variance is constant 
+ - The errors are normally distributed with mean 0. 
+
+
+We can write these assumptions down in notation as such. 
+
+$$y_i  = \beta_0 + \beta_1 x + \epsilon_i $$
+where 
+$$ \epsilon_i \sim \text{iid } N(0,\sigma^2)$$
+In words, this means that each 
+this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance $\sigma^2$ (notice how there is no subscript $i$ for the variance)
+
+
+
+How can we tell when these assumptions are violated? 
+
+ - Knowledge of the data. 
+ - 
+
+## What happens when we break the assumptions of linear models 
+
+
+
+## Examples 
