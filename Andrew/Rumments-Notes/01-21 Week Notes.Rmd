@@ -1,0 +1,178 @@
+---
+title: "01 - Notes - 21 Jan 2021"
+author: "Andrew Rumments"
+date: "1/23/2021"
+output: html_document
+---
+
+# Assignment for this week
++ [_] Reading
+  + [X] 5.1
+  + [X] 5.2
+  + [X] 5.3.1
+  + [X] 5.3.2
+  + [X] 5.5
+  + [X] 5.6
+  + [X] 9.1
+  + [_] 9.2
+  + [_] 9.3
++ [_] Publish questions on all chapters for this week
++ [_] Investigate Bookdown
++ [_] Investigate Shiny
++ [_] Investigate Learnr
++ [_] Try to Shiny/Learnr my questions
+
+
+
+# Reading
+## Chapter 5 Generalized Linear Models: Structure
++ 5.1 Introduction and Overview
+  + nstr
++ 5.2 The Two Components of Generalized Linear Models
+  + Two compponents - A random component and a systematic component.
+  + Form depends on answers to two questions
+    + What probability is appropriate?
+    + How are the explanatory variables related to the mean of the response $\mu$?
++ 5.3 The Random Component: Exponential Dispersion Models
+  + 5.3.1 Examples of EDMs
+    + GLM assumes the responses come from a distribution that belongs to the exponential dispersion model family.
+    + *continuous* EDMs include the normal and gamma distributions.
+    + *discrete* EDMs include the Poisson, binomial, and negative binomial distributions.
+    
+  + 5.3.2. Definition of EDMs
+    + Distributions in the EDM family have a probability function^[(probabilty *density* function if continuous, probability *mass* function if not).] of the form:
+      + Formula (5.1):$$ \mathcal{P}(y; \theta, \phi) = a(y, \phi)\mathrm{exp}
+      \left\{
+      {\frac{y\theta-\kappa(\theta)}{\phi}} 
+      \right\}
+      $$ 
+      + $\theta$ is the *canonical parameter*
+      + $\kappa(\theta)$ is a known function called the *cumulant function*
+      + $\phi > 0$ is the *dispersion parameter*
+      + $a(y,\phi)$ is a normalizing function ensuring that (5.1) is a probability function.
+        + That $\int\mathcal{P}(y; \theta, \phi)=1$ over the range if continuous or that $\sum\mathcal{P}(y; \theta, \phi)=1$ if distcrete.
+        + It cannot always be written in closed form.
+        
+    + *Example 5.1* gives the pdf for a normal distribution as an example
+      + $$\mathcal{P}(y; \theta, \phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\mathrm{exp}
+      \left\{
+      -\frac{(y-\mu)^2}{2\sigma^2}
+      \right\}$$
+      + $\theta=\mu$ is the *canonical parameter*
+      + $\kappa(\theta)=\mu^2/2=\theta^2/2$ is the *cumulant function*
+      + $\phi=\sigma^2$ is the *dispersion parameter*
+      + $a(y,\phi)=(2\pi\sigma^2)^{1/2}exp\{-y^2/(2\sigma^2)\}$ is the *normalizing function*
+      + It meets these conditions, so it's an EDM.
+    + *Example 5.2* does the same, but for a poisson.
+      + meets the conditions, so it's an EDM.
+    + *Example 5.3* for a binomial probability function.
+      + meets the conditions, when $m$ is known and so is an EDM when $m$ is known.
+    + *Example 5.4* gives the Weibull distribution. It's shown that, even when rewriten, that a certain term cannot be extracted except for in the condition that $a=1$, and so the Weibull distribution is **not** an EDM in general, but can be in *certain conditions*.
+    
+  + 5.3.3. Generating Functions
+    + EDMs always have MGFs, even if the probability function cannot be wrten in closed form.
+    + The *moment generating function*, denoted $M(t)$, for some variable $y$ with probability function $\mathcal{P}(y)$ is
+      + $$M(t)=\textrm{E}[e^{ty}]=
+      \begin{cases}
+      \int_S\mathcal{P}(y)e^{ty}dy&&\textrm{for }y\textrm{ continuous}\\
+      \sum_{y \in S}^{S}\mathcal{P}(y)e^{ty}&&\textrm{for }y\textrm{ discrete}\\
+      \end{cases}
+      $$
+      for all values of $t$ for which the expectation exists.
+    + The *cumulant generating function* (or CGF) is then defined as
+      + $$K(t)=\textrm{log}M(t)=\textrm{log}\textrm{E}[e^{ty}]$$
+        + true for all values of t for which the expectation exists.
+        + The CGF is used to derive the *cumulants* of a distribution, such as the mean (first cumulant, $\kappa_1$) and the variance (second cumulant $\kappa_2$).
+      + The $r$th cumulant, $\kappa_r$, is
+        + $$\kappa_r=\frac{\textrm{d}^rK(t)}{\textrm{d}t^r}|_{t=0}$$  
+  
+    
++ 5.5 The Systematic Component
+  + 5.5.1 Link Function
+    +  GLMs assume a component where the *linear predictor* is linked to the mean $\mu$ through a *link function* $g()$ so that $g(\mu)=\eta$.
+      + $$\eta=\beta_0+\sum^p_{j=1}\beta_j x_j$$
+      + This component shows that GLMs are regression models *linear in the parameters*
+        + ***What does this mean?***
+        + The link function $g(\bullet)$ is
+          + monotonic - ensures any value if $\eta$ is mapped to only one possible value of $\mu$
+          + differentiable - required for estimation
+        + The *canonical link function* is a special link function such that $\eta=\theta=g(\mu)$
+          + *Example 5.16* shows that for the normal distribution, the canonincal link function is the *identity* link function, implying $\eta=\theta=g(\mu)=\mu$
+          + *Example 5.17* describes the canonical link function for the Poisson distribution, it's qualities, and why it's a sensible link function to use.
+  + 5.5.2 Offsets
+    + Sometimes the linear predictor contains a term w/ no estimation required called *an offset*.
+      + Can be viewed as a term $\beta_j x_{ji}$ in the linear predictor for which $\beta_j$ is known *a priori*.
+      + Example: when estimating the number of births in a town, a contribution to that is the number of people living in that town. This doesn't need to be estimated,  and can exist in the model as an *offset*.
+      + *Example 5.18* examines the cherry tree data from *Example 3.14, p. 125* which includes an offset based on girth and height of a tree which has no terms in it requiring estimation.
+      + In short, *offset* is the part of the systematic omponent not requiring estimation - *conclusion mine*
+      
++ 5.6 Generalized Linear Models Defined
+  + A GLM consists of two components
+    + *Random* and *Systematic*
+    + Random: Observations $y_i$ come independently from a specified EDM such taht $y_i \sim \mathrm{EDM}(\mu_i, \phi/w_i)$. for $i=1,2,...,n$.
+      + $w_i$ are known as non-negative *prior weights* which potentially weigh each observation $i$ differently and all eqal one.
+    + Systematic: A linear predictor $\eta=o_i+\beta_0+\sum^p_{j=1}\beta_jx_{ji}$, where
+      + $o_i$ are offsets that are often equal to zero, and
+      + $g(u)=\eta$ is a **known, monotonic, differentiable** link function.
+    + The GLM then is:
+      + $$\begin{cases}
+      y_i \sim \mathrm{EDM}(\mu_i,\phi/w_i)\\
+      g(\mu_i)=o_i+\beta_0+\sum^p_{j=1}\beta_jx_{ji}.\\
+      \end{cases}
+      $$
+    + The notation $\mathrm{GLM}(\mathrm{EDM}; \mathrm{Link\hspace{0.1cm}function})$
+    + *Example 5.19* gives a random and systematic component in the above format for the Quilpie rainfall data (*Ex 4.6, p 174*).
+      + $\mathrm{GLM}(\mathrm{binomial}; \mathrm{logit}) \Rightarrow \texttt{family("binomial", link="logit")}$  in R.
+    
+      
+    
+## Chapter 9 Models for Proportions: Binomial GLMs
+
++ 9.1 Introduction and Overview
+  + nstr
++ 9.2 Modelling Proportions
+  + Proportion $y$ of a toatl number $m$.
+  + Examples good for *binomial* response distribution:
+    + proportion of individuals having a disease
+    + proportion of voters who vote for a particular election candidate
+    + proportion of insects that die after being exposed to different doses of a poison.
+  + PMF
+    + $$\mathcal{P}(y;\mu,m)=
+    \left(\begin{matrix}
+    m\\
+    my\\
+    \end{matrix}\right)
+    \mu^{my}(1-\mu)^{m(1-y)}
+    $$
+      + where $m$ is known
+      + $\phi=1$
+      + $y=0, 1/m, 2/m, ..., 1$
+      + expected proportion is $0 < \mu < 1$
+  + To use, the prior weights $w$ are set to the group totals $m$.
+  + The unit deviance for the binomial distribution is:
+    + $$d(y,\mu)=2
+    \left\{
+    ylog\frac{y}{\mu}+
+    (1-y)log\frac{1-y}{1-\mu}
+    \right\}.$$
+  + When $y=0$ or $y=1$, the limit form of the unit deviance is used. See *5.14*
+    + ***Look up limit form***
+    + ***Discuses using a saddlepoint approximation chi-sq for a model with $p'$, but it's lost me.***
+    + Discusses when saddlepoint approxiumation is appropriate.
++ Denoted in R using $\texttt{family=binomial()}$ in the $\texttt{glm()}$ call.
+  + Binomial responses may be specified in $\texttt{glm()}$ formula in one of three ways.
+    + 1. The response can be supplied as observed proprtions $y_i$ with sample sizes $m_i$ supplied as $\texttt{weights}$ in the call to $\texttt{glm()}$.
+    + 2. Response can be given as a two-column array, giving the number of successes and failures respectively in each group of size $m_i$.
+      +The prior $\texttt{weights}$ do not need to be supplied.
+    + The response can be given as a factor or as logicals ($\texttt{TRUE}$ for success).
+      + No prior $\texttt{weights}$ need to be supplied then.
+      + Useful if the data have one row for each observation.
+      + In this form, responses are binary and the model is Bernoulli GLM.
+      + While many model statistics are the same, there are some limits with using this form.
+  + For binomial GLMs, the use of quantile residuals is strongly recommended for diagnostic analysis. *(Section 8.3.4.2)
+  + *Ex 9.1* gives an experiment running turbines for various lengths of time recording the proportion of turbine wheels $y$ out of total $m_i$ turbines developing fissures.
+  
+      
+    
+
+

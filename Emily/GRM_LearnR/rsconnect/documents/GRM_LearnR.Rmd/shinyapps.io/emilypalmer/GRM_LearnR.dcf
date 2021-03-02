@@ -1,0 +1,12 @@
+name: GRM_LearnR
+title: GRM_LearnR
+username:
+account: emilypalmer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3597361
+bundleId: 4193278
+url: https://emilypalmer.shinyapps.io/GRM_LearnR/
+when: 1612734791.14863
+asMultiple: FALSE
+asStatic: FALSE

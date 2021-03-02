@@ -1,0 +1,82 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Example case where Linear models fail 
+
+```{r, echo = F}
+xs <- rnorm(30)
+z <- 3*xs
+p <-  1/(1+exp(-z)) 
+ys = rbinom(30,1,p )
+
+data <- data.frame(x = xs, y = ys)
+
+ggplot(data)+ 
+  geom_point(aes(x,y))
+```
+
+
+```{r quiz}
+quiz(
+  question("Why is a linear model not appropriate here?",
+    answer("Non-normal errors", correct = TRUE),
+    answer("Line should be constratined between 0 and 1", correct = TRUE)
+  )
+)
+```
+
+
+
+
+### Code:
+
+Which family should we specify in `glm()`
+
+```{r quiz2}
+quiz(
+  question("Which family should we specify in glm()",
+    answer("binomial", correct = TRUE),
+    answer("gaussian"),
+    answer("poisson")
+  )
+)
+```
+
+
+Write the R code required to run a generalized linear model using the given `data` data frame. 
+
+```{r glm_call, exercise=TRUE, exercise.eval = TRUE}
+data
+```
+
+```{r glm_call-hint}
+glm(formula, family = , data)
+```
+
+
+### Inference 
+
+What is our estimate for $\hat\beta_1$?
+
+```{r infer}
+quiz(
+  question("What is our estimate for beta1?",
+    answer("-0.01862"),
+    answer("3.42975 " , correct = TRUE),
+    answer("22.96")
+  )
+)
+```
+
+
+
