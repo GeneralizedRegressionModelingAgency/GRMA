@@ -3,7 +3,7 @@
 
 ## Linear models 
 
-![put a bird on it](put_a_bird.png)
+![put a bird on it](images/put_a_bird.png)
 
 
 ## Some definitions
