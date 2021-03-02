@@ -1,6 +1,6 @@
 --- 
-title: "TBD GRM Book"
-author: "Emily Palmer et.al."
+title: "An Introduction to Generalized Linear Models"
+author: "Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -10,5 +10,10 @@ link-citations: yes
 description: "This is a draft of the book that we will write for non-Statisticians to understand GRMS"
 ---
 
+# Description of our book 
 
+Someone please update this. 
 
+We used [@dunn2018generalized]
+
+(also cite data we use...)
