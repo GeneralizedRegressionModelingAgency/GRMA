@@ -1,0 +1,29 @@
+---
+title: "learnr test"
+author: "Andrew Rumments"
+date: "2/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(learnr)
+```
+
+# Chapter 9: Models for Proportions: Binomial GLMs
+
+## Recall
+* GLM - Generalized Linear Model
+  * As a regression model, consists of two components: a random component and a systematic components.
+  * Assume the response comes from a distribution that belongs to a family of distributions called the *exponential disperson model* family.
+ + Distributions in the EDM family have a probability function^[(probabilty *density* function if continuous, probability *mass* function if not).] of the form:
+      + Formula (5.1):$$ \mathcal{P}(y; \theta, \phi) = a(y, \phi)\mathrm{exp}
+      \left\{
+      {\frac{y\theta-\kappa(\theta)}{\phi}} 
+      \right\}
+      $$ 
+## The Binomial Distribution
+```{r}
+
+
+```
