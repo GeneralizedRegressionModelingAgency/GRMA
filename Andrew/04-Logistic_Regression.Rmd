@@ -1,0 +1,29 @@
+# Logistic Regression - Andrew
+
+
+---
+title: "Chapter 4: Logistic Regression"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+# Logistic Regression - Andrew
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+We've asked you thus far to take our word regarding Generalized Linear Models (GLMs). In this chapter, we're going to take a look at a certain type of data that we know violates our assumptions.
+
+
+## What is Binomial Data?
+
+
+
+## Why doesn't OLS work for Binomial Data?
+
+
+## Link functions we can use
+
+
+## ED50
