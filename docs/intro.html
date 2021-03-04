@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-02" />
+<meta name="date" content="2021-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,14 +137,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Description of our book</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models"><i class="fa fa-check"></i><b>2.1</b> Linear models</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#what-came-before---linear-models"><i class="fa fa-check"></i><b>2.1</b> What came before - Linear models</a></li>
 <li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>2.2</b> Some definitions</a></li>
 <li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-mordels"><i class="fa fa-check"></i><b>2.3</b> Assumptions of linear mordels</a></li>
 <li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
-<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.5</b> Examples</a></li>
+<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#random-and-systematic-component"><i class="fa fa-check"></i><b>2.5</b> Random and Systematic Component</a></li>
+<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#random-and-systematic-components-for-binary-and-count-data"><i class="fa fa-check"></i><b>2.6</b> Random and Systematic components for Binary and Count data</a></li>
+<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.7</b> Parameter estimation</a></li>
+<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
+<li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="glms-kat.html"><a href="glms-kat.html"><i class="fa fa-check"></i><b>3</b> GLMs - Kat</a></li>
-<li class="chapter" data-level="4" data-path="linear-models-emma.html"><a href="linear-models-emma.html"><i class="fa fa-check"></i><b>4</b> Linear Models - Emma</a></li>
+<li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models - Emma</a></li>
 <li class="chapter" data-level="5" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression - Andrew</a></li>
 <li class="chapter" data-level="6" data-path="poisson-glms-leah.html"><a href="poisson-glms-leah.html"><i class="fa fa-check"></i><b>6</b> Poisson GLMs - Leah</a></li>
 <li class="chapter" data-level="7" data-path="learnr-test.html"><a href="learnr-test.html"><i class="fa fa-check"></i><b>7</b> LearnR test</a></li>
@@ -171,12 +175,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="intro" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="linear-models" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Linear models</h2>
-<div class="figure">
-<img src="images/put_a_bird.png" alt="" />
-<p class="caption">put a bird on it</p>
-</div>
+<div id="what-came-before---linear-models" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> What came before - Linear models</h2>
+<p>If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (which we will explain later), we can perform either inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables)</p>
+<p>The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.6     ✓ dplyr   1.0.4
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">100</span>,.<span class="dv">5</span>),<span class="dv">50</span>)</span>
+<span id="cb5-2"><a href="intro.html#cb5-2"></a>y &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">30</span>)</span>
+<span id="cb5-3"><a href="intro.html#cb5-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x,y), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb5-4"><a href="intro.html#cb5-4"></a><span class="st">        </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x,y), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb6-2"><a href="intro.html#cb6-2"></a><span class="st">        </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb6-3"><a href="intro.html#cb6-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">formula=</span> y<span class="op">~</span>x, <span class="dt">se =</span> F)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 @ref{linear}.</p>
+<p><img src="images/put_a_bird.png" style="width:50.0%" /></p>
 </div>
 <div id="some-definitions" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Some definitions</h2>
@@ -192,12 +215,12 @@ We of course want our <span class="math inline">\(\hat\beta_0\)</span> and <span
 </div>
 <div id="assumptions-of-linear-mordels" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Assumptions of linear mordels</h2>
+<p>A linear model might very well be a good model if our data look like (ref plot). However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.</p>
 <p>Linear models assume:</p>
 <ul>
-<li>The relationship between the explanatory variables and the</li>
+<li>The relationship between the explanatory variables and the response is linear</li>
 <li>The samples are independent.</li>
-<li>The variance is constant</li>
-<li>The errors are normally distributed with mean 0.</li>
+<li>The errors are normally distributed with mean 0 and constant variance</li>
 </ul>
 <p>We can write these assumptions down in notation as such.</p>
 <p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
@@ -205,17 +228,50 @@ where
 <span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span>
 In words, this means that each
 this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span> (notice how there is no subscript <span class="math inline">\(i\)</span> for the variance)</p>
+<p>If these assumptions hold, we then write our model as
+<span class="math display">\[ \hat y_i = \hat\beta_0 + \hat\beta_1 x_i\]</span></p>
 <p>How can we tell when these assumptions are violated?</p>
 <ul>
 <li>Knowledge of the data.</li>
-<li></li>
+<li>Plots</li>
 </ul>
 </div>
 <div id="what-happens-when-we-break-the-assumptions-of-linear-models" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> What happens when we break the assumptions of linear models</h2>
+<p>Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.</p>
 </div>
-<div id="examples" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Examples</h2>
+<div id="random-and-systematic-component" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Random and Systematic Component</h2>
+<p>We will now analyze the assumptions for linear models and explore how we can generalize them. (and create generalized linear models!)</p>
+<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
+<span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span></p>
+<p>We refer to the first equation as the Systematic Component, and the second equation as the Random Component.</p>
+<p>A Generalized Regression Model has a systematic component:</p>
+<p><span class="math display">\[ g(y_i) = \beta_0 + \beta_1 x + \epsilon_i\]</span>
+To generalized the systematic component, we use a link function <span class="math inline">\(g(y)\)</span>, so we now require some function of the response to be linearly related to our explanatory variables.</p>
+<p>and a random component:</p>
+<p><span class="math display">\[ \epsilon_i \sim \text{ iid } EDM(\phi) \]</span>
+In words, the errors are independently distributed according to some probability distribution in the Exponential Dispersion Family, which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all fall into this family.</p>
+<p>We note that normal linear models fall exactly into this framework, where <span class="math inline">\(g(y_i) = y_i\)</span> the identity function, and use the Normal distribution as our random component.</p>
+<p>Deciding on what Random and Systematic component to use requires u</p>
+</div>
+<div id="random-and-systematic-components-for-binary-and-count-data" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Random and Systematic components for Binary and Count data</h2>
+<p>The two most common cases of GRMs are those for Binary and Count data</p>
+<p>For Binary data, the systemtatic component is, and the random component is: We call these types of GRMS logistic regression or …</p>
+<p>For Count data, the systematic component is, and the random component is. We call these types of GRMS</p>
+</div>
+<div id="parameter-estimation" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Parameter estimation</h2>
+<p>The last difference between linear models and generalized linear models is the way we estimate the parameters <span class="math inline">\(\beta\)</span>.</p>
+</div>
+<div id="conclusion" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Conclusion</h2>
+<p>Linear models are not always the best tool for describing relationship in data. Luckily we can generalize the ideas and framework developed in linear models to hold for more general cases to create GLMs. Using a more general framework and more general assumptions allows us to build tools that will hold for all GRMs. The most notable of these that we will further explore are GRMs for binary data (ch4) and count data (ch5)</p>
+</div>
+<div id="examples" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> Examples</h2>
+<p>Perhaps some examples of data and students can tell what type of data it should be modeled by?</p>
 
 </div>
 </div>
