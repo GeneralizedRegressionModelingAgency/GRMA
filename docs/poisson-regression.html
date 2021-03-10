@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 LearnR test | An Introduction to Generalized Linear Models</title>
+  <title>Chapter 6 Poisson Regression | An Introduction to Generalized Linear Models</title>
   <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 LearnR test | An Introduction to Generalized Linear Models" />
+  <meta property="og:title" content="Chapter 6 Poisson Regression | An Introduction to Generalized Linear Models" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 LearnR test | An Introduction to Generalized Linear Models" />
+  <meta name="twitter:title" content="Chapter 6 Poisson Regression | An Introduction to Generalized Linear Models" />
   
   <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="poisson-regression.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="logistic-regression-andrew.html"/>
+<link rel="next" href="learnr-test.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -205,22 +205,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learnr-test" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> LearnR test</h1>
-<p>Here is an embedded learnR tutorial from a published shiny app.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="learnr-test.html#cb9-1"></a>knitr<span class="op">::</span><span class="kw">include_url</span>(<span class="st">&quot;https://emilypalmer.shinyapps.io/GRM_LearnR/&quot;</span>, </span>
-<span id="cb9-2"><a href="learnr-test.html#cb9-2"></a>  <span class="dt">height =</span> <span class="st">&quot;600px&quot;</span>)</span></code></pre></div>
-<iframe src="https://emilypalmer.shinyapps.io/GRM_LearnR/" width="672" height="600px">
-</iframe>
+<div id="poisson-regression" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Poisson Regression</h1>
+<div id="what-is-poisson-data" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> What is Poisson data?</h2>
+<p>Poisson data occurs when there is a need to model counts. The counts of events being modeled should be independent and the upper limit of the counts is much greater than the majority of the counts or even may not exist. Possion GLMs can also be used to model rates, used to compare counts across the unit of populations, when a Binomial GLM would not be appropriate. This occurs when populations are large and the rate of occurance is very small, usually less than 1%. The Poisson distribution has probability function P(y|<span class="math inline">\(\mu\)</span>) = <span class="math inline">\(e^{-\mu}\mu^y/y!\)</span> for y = 0, 1, 2,… and <span class="math inline">\(\mu\)</span> &gt; 0.</p>
+</div>
+<div id="why-ordinary-least-squares-does-not-work-for-poisson-data" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Why ordinary least squares does not work for Poisson data</h2>
+<p>Ordinary least squares (OLS) regression cannot be used for Poisson data. Count data violates the constant variance assumption of OLS because as the counts are smaller and approach 0, the variance of the response must decrease, and as the counts grow larger, the variance of the response will tend to increase. The normal distribution is also not adequate for modeling the random component of count data because counts are both non-negative and discrete. The Poisson distribution is a more suitable option to model count data.</p>
+</div>
+<div id="link-functions-for-poisson-glms" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Link functions for Poisson GLM’s</h2>
+<p>The most common link function used for Poisson regression is the logrithmic link function because it guarentees that <span class="math inline">\(\mu\)</span> will be greater than 0 and makes interpretation of the regression parameters more straightforward, since they are interpreted as having multiplicative effects. The systematic component of a Poisson GLM is <span class="math inline">\(\mu = e^{\beta_0 + \beta_1x_1 + ... + \beta_px_p}\)</span> and increasing <span class="math inline">\(x_j\)</span> by one will increase <span class="math inline">\(\mu\)</span> by a factor of <span class="math inline">\(\beta_j\)</span>. Other link functions, while less commmon, can be used for a Poisson GLM. The identity link function, where <span class="math inline">\(\eta = \mu\)</span>, or the sqrt link function, where <span class="math inline">\(\eta = \sqrt{\mu}\)</span>, are two options. When all of the explanatory variables are quantitative, the data are modeled by a Poisson regression model. Additionally, quantile residuals should be used to asses the model fit since the data are discrete. Count data can also be represented in contingency tables so that observations can be cross-classified in their relevant categories. These data are modeled using a log-linear model, where all of the explanatory variables are qualitative.</p>
+</div>
+<div id="problems-of-overdispersion-and-solutions" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Problems of overdispersion and solutions</h2>
+<p>A characteristic of the Poisson distribution is that the mean <span class="math inline">\(\mu\)</span> equals the variance. However, when modeling real data, this assumption can be a bit <span class="math inline">\({fishy}\)</span>, since the variance is usually greater than <span class="math inline">\(\mu\)</span>, which is overdispersion. Overdispersion occurs because the events being counted have a positive correlation and so are not independent. Overdispersion is an issue in Poisson GLM’s because the standard errors of the estimated <span class="math inline">\(\beta_j\)</span> will be underestimated, making the model’s explanatory variables appear more significant than they actually are. Models fit using the Poisson family can be checked for overdispersion by comparing the residual deviance compared to the residual degrees of freedom. If the residual deviance is greater than the degrees of freedom, the model is overdispersed, and if the residual deviance is much less than the degrees of freedom, the model is underdispersed, a less frequent occurence. A large residual deviance compared to the residual degrees of freedom could also indicate a lack of fit, but this can be checked by eliminating outliers and fits the a model with the most explanatory variables possible. The residual deviance will still be large if overdispersion is the issue. Similarly, the Pearson goodness-of-fit statistic can be compared to the residual degrees of freedom to check for overdispersion. This method should be used when the counts are small, so asymptotic approximations would not be appropriate. Here, large goodness-of-fit statistics indicate a poor fit. If there is overdispersion after fitting a Poisson GLM, the model can be fit using other related families. By modeling the data using a hierarchical model to add more variability, <span class="math inline">\(\mu\)</span> can be treated as a random variable, resulting in the response variable of interest following a negative binomial distribution. The expectation of <span class="math inline">\(y_i\)</span> is <span class="math inline">\(\mu_i\)</span> and the variance of <span class="math inline">\(y_i\)</span> is now <span class="math inline">\(\mu_i + \psi\mu_i^2\)</span>, where <span class="math inline">\(\psi\mu_i^2\)</span> is the added overdispersion term and <span class="math inline">\(\psi\)</span> is larger when overdispersion is greater. The MASS package contains the function glm.nb() to model negative binomial GLMs. The standard link function is the log-link function so that <span class="math inline">\(\mu\)</span> &gt; 0, and similar to the Poisson GLM, quantile residuals should be used. Quasi-Poisson models are another alternative to Poisson GLMs when there is overdispersion. The variance of <span class="math inline">\(y_i\)</span> is now <span class="math inline">\(\phi\mu_i\)</span>, where <span class="math inline">\(\phi\)</span> &gt; 1 represents overdispersion and raises standard errors to a factor of <span class="math inline">\(\sqrt{\phi}\)</span>. Quasi-Poisson models can be fit in R by family = quasipoisson(). Quantile residuals cannot be found because the quasi-Poisson model is not a probability model but standardized deviance residuals can be examoned.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="poisson-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="logistic-regression-andrew.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="learnr-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
