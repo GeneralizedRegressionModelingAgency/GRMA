@@ -1,5 +1,12 @@
 # Introduction {#intro}
 
+## Description of our book 
+
+Someone please update this. 
+
+We used [@dunn2018generalized]
+
+(also cite data we use...)
 
 ## What came before - Linear models 
 

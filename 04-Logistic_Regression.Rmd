@@ -1,4 +1,4 @@
-# Logistic Regression - Andrew
+# Logistic Regression 
 
 
 We've asked you thus far to take our word regarding Generalized Linear Models (GLMs). In this chapter, we're going to take a look at a certain type of data that we know violates our assumptions: binomial data. Here we'll examine binomial data, see why ordinary least sqares falls apart, and consider some alternative methods (spoiler: it's going to be one of our generalized linear models). 

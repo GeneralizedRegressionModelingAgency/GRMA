@@ -123,17 +123,17 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
 \hypertarget{description-of-our-book}{%
-\chapter{Description of our book}\label{description-of-our-book}}
+\section{Description of our book}\label{description-of-our-book}}
 
 Someone please update this.
 
 We used \citep{dunn2018generalized}
 
 (also cite data we use\ldots)
-
-\hypertarget{intro}{%
-\chapter{Introduction}\label{intro}}
 
 \hypertarget{what-came-before---linear-models}{%
 \section{What came before - Linear models}\label{what-came-before---linear-models}}
@@ -411,7 +411,7 @@ The consequences of these differences will not be discussed here, this example e
 Formally, a Generalized Linear Model is made of two components: the \emph{probability family} and the \emph{link function}. Given a set of data with response variable \(Y\) and explanatory variables \(X_1, ... X_k\), we wish to build a Generalized Linear Model. We assume that each \(Y_i\) follows a probability distribution from a given EDM family of distribution with mean \(\mu_i\) and dispersion parameter \(\phi\): \(\mu_i\) \(Y_i \sim EDM(\mu_i,\phi)\), where \(\mu_i\) is such that \(g(\mu_i) = \beta_0 + \beta_1X_{i,1} + ... \beta_kX_{i,k}\) for the link function \(g(\mu_i)\) and some vector of parameters \((\beta_0...\beta_k)\). We assume all of this is true, and then estimate the parameters \((\beta_0...\beta_k)\) using the data and maximum likelihood estimation algorithms. In this book, we will leave these estimation algorithms ``under the hood'' for brevity's sake, and focus on some common applications of these GLMs. Generally, to fit one of these models in R, you will need to know the family and the link function, as defined above.
 
 \hypertarget{linear}{%
-\chapter{Linear Models - Emma}\label{linear}}
+\chapter{Linear Models}\label{linear}}
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -452,8 +452,8 @@ As mentioned before, the assumptions belonging to linear regression are:
   Each datam is \textbf{independent} of all other data points.
 \end{enumerate}
 
-\hypertarget{logistic-regression---andrew}{%
-\chapter{Logistic Regression - Andrew}\label{logistic-regression---andrew}}
+\hypertarget{logistic-regression}{%
+\chapter{Logistic Regression}\label{logistic-regression}}
 
 We've asked you thus far to take our word regarding Generalized Linear Models (GLMs). In this chapter, we're going to take a look at a certain type of data that we know violates our assumptions: binomial data. Here we'll examine binomial data, see why ordinary least sqares falls apart, and consider some alternative methods (spoiler: it's going to be one of our generalized linear models).
 
@@ -596,7 +596,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 0 1 1 0 1 0 0 0
+##  [1] 1 1 0 1 1 1 1 1 1 1
 \end{verbatim}
 
 \begin{Shaded}

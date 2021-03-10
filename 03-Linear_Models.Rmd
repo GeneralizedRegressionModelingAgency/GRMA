@@ -1,4 +1,4 @@
-# Linear Models - Emma {#linear}
+# Linear Models {#linear}
 
 ## Introduction
 

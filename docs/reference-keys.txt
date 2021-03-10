@@ -1,5 +1,5 @@
-description-of-our-book
 intro
+description-of-our-book
 what-came-before---linear-models
 some-definitions
 assumptions-of-linear-models
@@ -19,7 +19,7 @@ linking-the-edm-to-the-explanatory-data
 formal-definition-of-a-glm
 linear
 introduction
-logistic-regression---andrew
+logistic-regression
 what-is-binomial-data
 refresher-bernoulli-and-binomial
 representing-the-bernoulli-distribution
