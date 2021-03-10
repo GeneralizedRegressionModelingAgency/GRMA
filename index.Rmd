@@ -10,6 +10,7 @@ link-citations: yes
 description: "This is a draft of the book that we will write for non-Statisticians to understand GRMS"
 ---
 
+# About this book
 Include description of this project and intended audience 
 
 We used [@dunn2018generalized]

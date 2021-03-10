@@ -33,3 +33,4 @@ why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
 problems-of-overdispersion-and-solutions
 learnr-test
+about-this-book
