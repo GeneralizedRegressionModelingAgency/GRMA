@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-09" />
+<meta name="date" content="2021-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,10 +188,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 3</span> How are GLMs “different”?</h1>
 <div id="introdution" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Introdution</h2>
-<p>So we’ve talked about the issues that linear models can run into. the question now is how do we deal with these issues? What we’re going to need to do is expand the type of model we’re trying to fit. In linear regression we assumed two things: that the response variable <span class="math inline">\(Y_i\)</span> is distributed normally, with constant variance <span class="math inline">\(\sigma^2\)</span>, and that the mean of the response variable is a linear combination of the explanatory variables. These two assumptions can be stated as</p>
+<p>So, we’ve talked about the issues that linear models can run into. The question now is how do we deal with these issues? What we’re going to need to do is expand the type of model we’re trying to fit. In linear regression we assumed two things: that the response variable <span class="math inline">\(Y_i\)</span> is distributed normally, with constant variance <span class="math inline">\(\sigma^2\)</span>, and that the mean of the response variable is a linear combination of the explanatory variables. These two assumptions can be stated as</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(Y_i \sim \mathcal{N}(\mu_i,\sigma^2)\)</span></li>
-<li><span class="math inline">\(\mu_i = \beta_0 + \beta_{1}X_{i,1},...+\beta_{k}X_{i,k}\)</span></li>
+<li><span class="math inline">\(\mu_i = \beta_0 + \beta_{1}X_{i,1}+...+\beta_{k}X_{i,k}\)</span></li>
 </ol>
 <p>In this chapter we’re going to make our model more general by expanding these two assumptions. The first assumption, which we will call the random component, is going to change from <span class="math inline">\(Y\)</span> being distributed normally to <span class="math inline">\(Y\)</span> being distributed according to <em>some probability family</em>. The second assumption is going to change from <span class="math inline">\(\mu_i\)</span> directly equaling the linear predictor to <em>some function</em> of <span class="math inline">\(\mu_i\)</span> being equal to this linear predictor.</p>
 </div>
