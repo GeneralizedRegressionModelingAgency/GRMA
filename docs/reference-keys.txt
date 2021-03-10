@@ -14,3 +14,12 @@ linear
 logistic-regression---andrew
 poisson-glms---leah
 learnr-test
+how-are-glms-different
+introdution
+assumptions
+framework
+exponential-dispersion-models
+properties-of-edms
+linking-the-edm-to-the-explanatory-data
+formal-definition-of-a-glm
+assumptions-of-a-glm
