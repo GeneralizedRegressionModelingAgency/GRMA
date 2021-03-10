@@ -252,8 +252,8 @@ where <span class="math inline">\(y\in\{0, 1\}, 0\leq\mu\leq1\)</span>.</p>
 <span class="math display">\[
 \mathcal{P}(y;\mu)=
 \begin{cases}
-\mu&amp;&amp;\textrm{if }y=1\\
-1-\mu&amp;&amp;\textrm{if }y=0\\
+\mu&amp;\textrm{if }y=1\\
+1-\mu&amp;\textrm{if }y=0\\
 \end{cases}, 0\leq\mu\leq1
 \]</span></li>
 </ul>
@@ -265,7 +265,7 @@ where <span class="math inline">\(y\in\{0, 1\}, 0\leq\mu\leq1\)</span>.</p>
 where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a positive integer, and }0&lt;\mu&lt;1.\)</span></p>
 <p>Like before, this format might be a bit different than what you may have seen elsewhere, so let’s break it down.</p>
 <ul>
-<li>A reminder, <span class="math inline">\(\binom{n}{k}\)</span>, (written <span class="math inline">\(\texttt{\binom{n}{k}}\)</span> in TeX) is a combination <span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>. More detail <a href="https://en.wikipedia.org/wiki/Combination">here.</a></li>
+<li>A reminder, <span class="math inline">\(\binom{n}{k}\)</span>, (written <code>\texttt{\binom{n}{k}}</code> in TeX) is a combination <span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>. More detail <a href="https://en.wikipedia.org/wiki/Combination">here.</a></li>
 <li><span class="math inline">\(\mathcal{P}\)</span> (<span class="math inline">\(\texttt{\\mathcal\{P\}}\)</span> in TeX) is the probability mass function (PMF) aka probability function. <span class="math inline">\(\mathcal{P}(y;\mu,m)\)</span> then is the probability function of a binomial distribution for event <span class="math inline">\(y\)</span> in the case of <span class="math inline">\(m\)</span> Bernoulli trials with each trial having a probability of <span class="math inline">\(\mu\)</span>.</li>
 <li><span class="math inline">\(m\)</span> here is simply the number of trials easy.</li>
 <li><span class="math inline">\(y\)</span> here measures the <em>proportion</em> of successes (and actually it really is above as well–I’ll get to that in a moment).
@@ -287,7 +287,7 @@ where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a posit
 <span id="cb4-3"><a href="logistic-regression-andrew.html#cb4-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
 <span id="cb4-4"><a href="logistic-regression-andrew.html#cb4-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
 <span id="cb4-5"><a href="logistic-regression-andrew.html#cb4-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
-<pre><code>##  [1] 0 0 0 1 1 1 1 1 0 0</code></pre>
+<pre><code>##  [1] 0 1 0 1 0 0 0 1 0 1</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="logistic-regression-andrew.html#cb6-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
 <span id="cb6-2"><a href="logistic-regression-andrew.html#cb6-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
 <span id="cb6-3"><a href="logistic-regression-andrew.html#cb6-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>

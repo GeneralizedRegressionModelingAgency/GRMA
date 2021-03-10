@@ -48,8 +48,8 @@ This might be a bit different than what you've seen before, so lets talk about e
   $$
   \mathcal{P}(y;\mu)=
   \begin{cases}
-  \mu&&\textrm{if }y=1\\
-  1-\mu&&\textrm{if }y=0\\
+  \mu&\textrm{if }y=1\\
+  1-\mu&\textrm{if }y=0\\
   \end{cases}, 0\leq\mu\leq1
   $$
 
@@ -62,7 +62,7 @@ where $y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a positive integer, and }0<\mu<1.$
 
 Like before, this format might be a bit different than what you may have seen elsewhere, so let's break it down.
 
-* A reminder, $\binom{n}{k}$, (written $\texttt{\binom{n}{k}}$ in TeX) is a combination $n$ choose $k$. More detail [here.](https://en.wikipedia.org/wiki/Combination)
+* A reminder, $\binom{n}{k}$, (written `\texttt{\binom{n}{k}}` in TeX) is a combination $n$ choose $k$. More detail [here.](https://en.wikipedia.org/wiki/Combination)
 * $\mathcal{P}$ ($\texttt{\\mathcal\{P\}}$ in TeX) is the probability mass function (PMF) aka probability function. $\mathcal{P}(y;\mu,m)$ then is the probability function of a binomial distribution for event $y$ in the case of $m$ Bernoulli trials with each trial having a probability of $\mu$.
 * $m$ here is simply the number of trials easy.
 * $y$ here measures the *proportion* of successes (and actually it really is above as well--I'll get to that in a moment).
