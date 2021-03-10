@@ -52,7 +52,7 @@ We of course want our $\hat\beta_0$ and $\hat\beta_1$ to be a 'good' and 'close'
 
 ## Assumptions of linear models 
 
-A linear model might very well be a good model if our data look like \@ref(fig:lineplot). However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+A linear model might very well be a good model if our data look like. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
 
 
 Linear models assume:
