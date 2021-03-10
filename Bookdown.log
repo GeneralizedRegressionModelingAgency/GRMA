@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  10 MAR 2021 11:39
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  10 MAR 2021 12:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -897,8 +897,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip59
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count290
-)
-No file Bookdown.aux.
+) (./Bookdown.aux)
 \openout1 = `Bookdown.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 119.
@@ -1200,9 +1199,6 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 119.
 LaTeX Info: Redefining \pageref on input line 119.
 LaTeX Info: Redefining \nameref on input line 119.
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
 (Font)              scaled to size 12.0pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
@@ -1247,7 +1243,24 @@ Overfull \hbox (115.44005pt too wide) in paragraph at lines 121--121
 
 ] [2
 
-]
+] (./Bookdown.toc
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.01236pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 4.98074pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.00015pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.01247pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 4.9808pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 9.99985pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.01224pt on input line 3.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.98067pt on input line 3.
+)
 \tf@toc=\write4
 \openout4 = `Bookdown.toc'.
 
@@ -1255,17 +1268,10 @@ Overfull \hbox (115.44005pt too wide) in paragraph at lines 121--121
 
 ]
 Chapter 1.
-
-Package natbib Warning: Citation `dunn2018generalized' on page 5 undefined on i
-nput line 131.
-
 [5] [6
 
 ]
 Chapter 2.
-
-LaTeX Warning: Reference `linear' on page 7 undefined on input line 141.
-
 
 Overfull \hbox (90.75pt too wide) in paragraph at lines 147--147
 []\TU/lmtt/m/n/10 ## -- Attaching packages ------------------------------------
@@ -1290,22 +1296,6 @@ File: Bookdown_files/figure-latex/lineplot-1.pdf Graphic file (type pdf)
 [8]
 File: images/put_a_bird.png Graphic file (type bmp)
 <images/put_a_bird.png>
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.01236pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 4.98074pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00015pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.01247pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 4.9808pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99985pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.01224pt on input line 181.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.98067pt on input line 181.
 
 LaTeX Warning: Reference `fig:lineplot' on page 9 undefined on input line 193.
 
@@ -1336,19 +1326,52 @@ LaTeX Warning: Float too large for page by 36.50941pt on input line 423.
 
 ]
 Chapter 5.
-[23] [24]
-! Extra alignment tab has been changed to \cr.
-<template> $\hfil $$\endtemplate 
-                                 
-l.539   \mu&&
-             \textrm{if }y=1\\ 
-Here is how much of TeX's memory you used:
- 26228 strings out of 492970
- 476966 string characters out of 6133938
- 698566 words of memory out of 5000000
- 29975 multiletter control sequences out of 15000+600000
- 536633 words of font info for 78 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 58i,9n,117p,10403b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
+[23] [24] [25]
+Overfull \hbox (32.9342pt too wide) detected at line 579
+[][][][] [][] [][] [] [][][][][] [] [][][] [] [][][][][] [] [][][] [] [] [] [] 
+[] [][] [] [][][]
+ []
 
-Output written on Bookdown.pdf (24 pages).
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 590.
+File: Bookdown_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+
+<use Bookdown_files/figure-latex/unnamed-chunk-4-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[26] [27] [28
+
+]
+Chapter 6.
+
+Underfull \vbox (badness 5862) has occurred while \output is active []
+
+[29] [30] [31] [32
+
+]
+Chapter 7.
+(./Bookdown.bbl [33] [34
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 679.
+[35]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 679.
+(./Bookdown.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 679.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 679.
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 679.
+ ) 
+Here is how much of TeX's memory you used:
+ 26298 strings out of 492970
+ 478582 string characters out of 6133938
+ 705702 words of memory out of 5000000
+ 30031 multiletter control sequences out of 15000+600000
+ 536649 words of font info for 80 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 58i,9n,117p,10403b,438s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on Bookdown.pdf (35 pages).
