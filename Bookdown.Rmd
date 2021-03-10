@@ -249,7 +249,7 @@ However, there are a couple of other link functions that satisfy the required as
 \[
 g(p)=\Phi^{-1}(p)
 \]
-which is just the inverse of the normal CDF $\Phi$. In other words, $\Phi^{-1}(p) = \tao$ where $\tao$ is the real number that satisfies $P(Z\leq\tao)=p$ with $Z$ being a standard normal random variable (mean 0 and variance 1).
+which is just the inverse of the normal CDF $\Phi$. In other words, $\Phi^{-1}(p) = \xi$ where $\xi$ is the real number that satisfies $P(Z\leq\xi)=p$ with $Z$ being a standard normal random variable (mean 0 and variance 1).
 
 One more notable link function for the binomial family is complimentary log-log (or c-log-log) model. This link function is 
 \[
@@ -303,8 +303,8 @@ The two components of a regression model are the random component and the system
 
 $$
 \begin{cases}
-  \text{var}[y_i] = \sigma^2/w_i \\
-  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+  \text{var}[y_i] &= \sigma^2/w_i \\
+  \mu_i &= \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
 \end{cases}
 $$
 

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 How are GLMs “different”? | An Introduction to Generalized Linear Models</title>
+  <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 How are GLMs “different”? | An Introduction to Generalized Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 How are GLMs “different”? | An Introduction to Generalized Linear Models" />
+  
+  <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  
+
+<meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
+
+
+<meta name="date" content="2021-03-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="linear.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GRMs</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Description of our book</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#what-came-before---linear-models"><i class="fa fa-check"></i><b>2.1</b> What came before - Linear models</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>2.2</b> Some definitions</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> Assumptions of linear models</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
+<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#random-and-systematic-component"><i class="fa fa-check"></i><b>2.5</b> Random and Systematic Component</a></li>
+<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#random-and-systematic-components-for-binary-and-count-data"><i class="fa fa-check"></i><b>2.6</b> Random and Systematic components for Binary and Count data</a></li>
+<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.7</b> Parameter estimation</a></li>
+<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
+<li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>3</b> How are GLMs “different”?</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#introdution"><i class="fa fa-check"></i><b>3.1</b> Introdution</a></li>
+<li class="chapter" data-level="3.2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#assumptions-of-a-glm"><i class="fa fa-check"></i><b>3.2</b> Assumptions of a GLM</a></li>
+<li class="chapter" data-level="3.3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#framework"><i class="fa fa-check"></i><b>3.3</b> Framework</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#exponential-dispersion-models"><i class="fa fa-check"></i><b>3.3.1</b> Exponential Dispersion models</a></li>
+<li class="chapter" data-level="3.3.2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#properties-of-edms"><i class="fa fa-check"></i><b>3.3.2</b> Properties of EDMs</a></li>
+<li class="chapter" data-level="3.3.3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#linking-the-edm-to-the-explanatory-data"><i class="fa fa-check"></i><b>3.3.3</b> Linking the EDM to the explanatory data</a></li>
+<li class="chapter" data-level="3.3.4" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#formal-definition-of-a-glm"><i class="fa fa-check"></i><b>3.3.4</b> Formal definition of a GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models - Emma</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression - Andrew</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#what-is-binomial-data"><i class="fa fa-check"></i><b>5.1</b> What is Binomial Data?</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#refresher-bernoulli-and-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Refresher: Bernoulli and Binomial</a></li>
+<li class="chapter" data-level="5.1.2" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#representing-the-bernoulli-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Representing the Bernoulli distribution</a></li>
+<li class="chapter" data-level="5.1.3" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#representing-the-binomial-distribution"><i class="fa fa-check"></i><b>5.1.3</b> Representing the binomial distribution</a></li>
+<li class="chapter" data-level="5.1.4" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#what-does-a-bunch-of-binomial-data-look-like-then"><i class="fa fa-check"></i><b>5.1.4</b> What does a bunch of binomial data look like then?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#why-doesnt-ols-work-for-binomial-data"><i class="fa fa-check"></i><b>5.2</b> Why doesn’t OLS work for Binomial Data?</a></li>
+<li class="chapter" data-level="5.3" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#link-functions-we-can-use"><i class="fa fa-check"></i><b>5.3</b> Link functions we can use</a></li>
+<li class="chapter" data-level="5.4" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html#ed50"><i class="fa fa-check"></i><b>5.4</b> ED50</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>6</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="poisson-regression.html"><a href="poisson-regression.html#what-is-poisson-data"><i class="fa fa-check"></i><b>6.1</b> What is Poisson data?</a></li>
+<li class="chapter" data-level="6.2" data-path="poisson-regression.html"><a href="poisson-regression.html#why-ordinary-least-squares-does-not-work-for-poisson-data"><i class="fa fa-check"></i><b>6.2</b> Why ordinary least squares does not work for Poisson data</a></li>
+<li class="chapter" data-level="6.3" data-path="poisson-regression.html"><a href="poisson-regression.html#link-functions-for-poisson-glms"><i class="fa fa-check"></i><b>6.3</b> Link functions for Poisson GLM’s</a></li>
+<li class="chapter" data-level="6.4" data-path="poisson-regression.html"><a href="poisson-regression.html#problems-of-overdispersion-and-solutions"><i class="fa fa-check"></i><b>6.4</b> Problems of overdispersion and solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="learnr-test.html"><a href="learnr-test.html"><i class="fa fa-check"></i><b>7</b> LearnR test</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to Generalized Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="how-are-glms-different" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> How are GLMs “different”?</h1>
+<div id="introdution" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introdution</h2>
+<p>So, we’ve talked about the issues that linear models can run into. The question now is how do we deal with these issues? What we’re going to need to do is expand the type of model we’re trying to fit. In linear regression we assumed two things: that the response variable <span class="math inline">\(Y_i\)</span> is distributed normally, with constant variance <span class="math inline">\(\sigma^2\)</span>, and that the mean of the response variable is a linear combination of the explanatory variables. These two assumptions can be stated as</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(Y_i \sim \mathcal{N}(\mu_i,\sigma^2)\)</span></li>
+<li><span class="math inline">\(\mu_i = \beta_0 + \beta_{1}X_{i,1}+...+\beta_{k}X_{i,k}\)</span></li>
+</ol>
+<p>In this chapter we’re going to make our model more general by expanding these two assumptions. The first assumption, which we will call the random component, is going to change from <span class="math inline">\(Y\)</span> being distributed normally to <span class="math inline">\(Y\)</span> being distributed according to <em>some probability family</em>. The second assumption is going to change from <span class="math inline">\(\mu_i\)</span> directly equaling the linear predictor to <em>some function</em> of <span class="math inline">\(\mu_i\)</span> being equal to this linear predictor.</p>
+</div>
+<div id="assumptions-of-a-glm" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Assumptions of a GLM</h2>
+<p>GLMs are made up of two components: a random component, and a structural component. In general, what we’re saying is that the response variable of interest is a random variable that follows a specific probability distribution (random component). This probability distribution is, in some way, related to a linear combination of the explanatory variables (systematic component). This linear combination of the explanatory variables is where the “linear” in “generalized linear model” comes from. In linear regression, which is a special case of the generalized linear model, the random component is that Y comes from a normal distribution: <span class="math inline">\(Y_i\sim N(\mu_i,\sigma^2)\)</span> and the systematic component is that the mean is some linear combination of the explanatory variables: <span class="math inline">\(\mu_i=\beta_0+\beta_1X_{1i}+...+\beta_kX_{ki}\)</span>. With GLMs, our goal is to extend this framework so that we’re not just limited to the normal distribution for the random component of our model, for reasons we discussed in the last chapter.</p>
+<p>However, when we fit these models, we need to be sure of a couple of things. We need to ensure that for a linear combination of explanatory variables, we can identify which distribution the response variable comes from. We also need to ensure that the parameters of that distribution we’re trying to fit are estimable. To ensure that we’re able to properly fit these models, GLMs consider a specific kind of family of distributions for the random component: the Exponential Dispersion Model.</p>
+</div>
+<div id="framework" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Framework</h2>
+<div id="exponential-dispersion-models" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Exponential Dispersion models</h3>
+<p>An exponential dispersion model is a specific type of random variable, whose pdf follows a specific form:
+<span class="math display">\[
+f_{Y}(y) = a(y,\phi)exp\left[\frac{y\theta - \kappa(\theta)}{\phi}   \right]
+\]</span>
+in this form, <span class="math inline">\(\theta\)</span> is called the <em>canonical parameter</em>, and <span class="math inline">\(\phi\)</span> is called the <em>dispersion parameter</em>. For our purposes, the function <span class="math inline">\(a(y,\phi)\)</span> is not of much interest, but it is needed to guarantee that <span class="math inline">\(f_Y(y)\)</span> integrates to 1, and is therefore a valid probability density function. <span class="math inline">\(\kappa(\theta)\)</span> is called the <em>cumulant</em> function, and will be useful to us in estimation. Another term for an exponential dispersion model is to say that the family of random variables is an exponential family.</p>
+<p>A surprising, and fortunate, number of families of distributions are exponential dispersion models. Notably, some of them are</p>
+<ul>
+<li>Normal random variables</li>
+<li>Bernoulli random variables</li>
+<li>Binomial random variables</li>
+<li>Poisson random variables</li>
+<li>Exponential random variables</li>
+<li>Gamma random variables</li>
+<li>Negative binomial random variables</li>
+</ul>
+<p>We’ll spare the details for most of these families, but to show the general idea for how we decide whether or not a family of random variables is an exponential dispersion model, we shall consider the poisson random variable.</p>
+<p><strong>Example:</strong> For a poisson random variable, the pmf is written as</p>
+<p><span class="math display">\[
+f_Y(y) = e^{-\lambda}\frac{\lambda^y}{y!}
+\]</span></p>
+<p>by applying the identity <span class="math inline">\(x=e^{log(x)}\)</span> to the numerator, we see that this is equivalent to</p>
+<p><span class="math display">\[
+f_Y(y) =\frac{1}{y!} exp\left[-\lambda + y log(\lambda) \right] 
+= \frac{1}{y!} exp\left[\frac{y log(\lambda) -\lambda}{1} \right] 
+\]</span></p>
+<p>and we see that the poisson random variable is an exponential dispersion model with dispersion parameter <span class="math inline">\(\phi = 1\)</span>, with canonical parameter <span class="math inline">\(\theta = log(\lambda)\)</span> and with cumulant function <span class="math inline">\(\kappa(\theta) = \lambda = e^\theta\)</span>. Notice how we left out the <span class="math inline">\(\frac{1}{y!}\)</span> term of the exponential because it was not needed to put the function into this important form. <span class="math inline">\(\Box\)</span></p>
+</div>
+<div id="properties-of-edms" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Properties of EDMs</h3>
+<p>Once we can get a probability distribution function into the exponential dispersion model form, we can connect this form to both the mean and variance of the random variable. The expected value (mean) of the random variable is simply the first derivative of the cumulant function with respect to the canonical parameter:
+<span class="math display">\[
+E[Y] =\mu= \frac{d}{d\theta}\kappa(\theta)
+\]</span>
+The cumulant function is also related to the variance of the random variable. The variance of the random variable is the dispersion parameter multiplied by the second derivative of the cumulant function with respect to the canonical parameter:
+<span class="math display">\[
+var(Y) = \phi \frac{d^2}{d\theta^2} \kappa(\theta)
+\]</span>
+The second part of this expression is an important quantity, called the variance function. Notice that it is equal to the first derivative of the expected value of Y as well:
+<span class="math display">\[
+V(\mu) = \frac{d^2}{d\theta^2} \kappa(\theta) = \frac{d}{d\theta}\mu
+\]</span>
+It is worth noting that, in addition to helping us estimate properties of <span class="math inline">\(Y\)</span>, the variance function uniquely determines the family of distributions (type of random variable) for a given EDM. For instance, following our previous example, since <span class="math inline">\(\kappa(theta) = e^{\theta}\)</span>, the variance function is <span class="math inline">\(V(\mu) = \frac{d^2}{d\theta^2} e^\theta = e^\theta = \lambda = \mu\)</span>. What this means is that <em>any</em> EDM with variance function <span class="math inline">\(V(\mu) = \mu\)</span> will be a poisson random variable.</p>
+</div>
+<div id="linking-the-edm-to-the-explanatory-data" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Linking the EDM to the explanatory data</h3>
+<p>Recall, just for a second, the goal of constructing these models. We have a response variable, <span class="math inline">\(Y_i\)</span>, and a collection of explanatory variables <span class="math inline">\(X_1, X_2, X_3,...X_k\)</span>. We want to be able to look at a combination of the explanatory variables and draw some conclusions about <span class="math inline">\(Y\)</span>. Perhaps we want to predict Y with a point estimator. If we make this sort of prediction, it’s also of interest to know how precise that estimate will be, so we may wish to find an interval estimate for the prediction as well. Ultimately, all of these things come from the distribution of <span class="math inline">\(Y\)</span>, so the thing that is of interest is to be able to know what the probability distribution of <span class="math inline">\(Y\)</span> is given the input values of the <span class="math inline">\(X_i\)</span>’s.</p>
+<p>As stated before, the L in GLM stands for linear, and these explanatory variables are where that linearity comes into play. In GLMs, we’re assuming that the quantity we’ll use to predict the response variable <span class="math inline">\(Y\)</span> is a linear combination of the explanatory data <span class="math inline">\(\beta_0+\beta_1X_{1}+...+\beta_kX_{k}\)</span>. We will call this quantity the linear predictor; a common shorthand way of writing it is to use the greek letter <span class="math inline">\(\eta = \beta_0+\beta_1X_{1}+...+\beta_kX_{k}\)</span>. In practice, we often have multiple repetitions of the explanatory variables, where <span class="math inline">\(Y_i\)</span> is a random variable who’s distribution is somehow linked to the covariates <span class="math inline">\(X_{1i}, X_{2i}, X_{3i},...X_{ki}\)</span>. In this case, we will denote the separate linear predictors as <span class="math inline">\(\eta_i = X_{1i}, X_{2i}, X_{3i},...X_{ki}\)</span>. Note that although the variables may change, the coefficients <span class="math inline">\(\beta_0, \; \beta_1, \; ... \; \beta_k\)</span> are the same for every <span class="math inline">\(\eta_i\)</span>. These <span class="math inline">\(\beta\)</span> coefficients are the thing we must estimate to fit our GLM.</p>
+<p>The question remains of <em>how</em> we connect <span class="math inline">\(\eta\)</span> to the distribution of <span class="math inline">\(Y\)</span>. First, we have to suppose what kind of distribution <span class="math inline">\(Y\)</span> is coming from (is it a poisson random variable? Binomial?) and then we need to find some function g() such that the expected value <span class="math inline">\(E[Y] = \mu\)</span> is simply <span class="math inline">\(g(\mu) = \eta\)</span>. For this, we have to place a couple restrictions on g. First, g must be a strictly monotonic function (strictly increasing or strictly decreasing) from some subset of the real numbers onto the set of all values that <span class="math inline">\(\mu\)</span> could be. We require the monotonicity to ensure that we don’t have multiple separate means being linked to the same linear predictor. This function also has to be differentiable to make sure that the tools we use to estimate <span class="math inline">\(\mu\)</span> don’t break. In practice, these requirements don’t come up very much, since typically there are a couple of link functions that get used for each family of probability densities.</p>
+<p>One special link function for each EDM family is the <em>canonical link function</em>. For an EDM family of distributions, the canonical link function is the function <span class="math inline">\(g(\mu)\)</span> that satisfies <span class="math inline">\(\eta=\theta=g(\mu)\)</span>.</p>
+<p>The canonical link function isn’t the only valid link function. Take for example the binomial family of distributions, and let <span class="math inline">\(Y\sim Binom(n,p)\)</span>, for some known n. Note that <span class="math inline">\(\mu = p\)</span>. In this case, the set of possible values of <span class="math inline">\(p\)</span> is the unit interval <span class="math inline">\((0,1)\)</span>. The canonical link function for this family is the logit function:
+<span class="math display">\[
+g(p) = log\left(\frac{p}{1-p}\right)
+\]</span></p>
+<p>However, there are a couple of other link functions that satisfy the required assumptions. Notably, we have the probit function:
+<span class="math display">\[
+g(p)=\Phi^{-1}(p)
+\]</span>
+which is just the inverse of the normal CDF <span class="math inline">\(\Phi\)</span>. In other words, <span class="math inline">\(\Phi^{-1}(p) = \xi\)</span> where <span class="math inline">\(\xi\)</span> is the real number that satisfies <span class="math inline">\(P(Z\leq\xi)=p\)</span> with <span class="math inline">\(Z\)</span> being a standard normal random variable (mean 0 and variance 1).</p>
+<p>One more notable link function for the binomial family is complimentary log-log (or c-log-log) model. This link function is
+<span class="math display">\[
+g(p) = log(-log(1-p))
+\]</span></p>
+<p>All three of these link functions map the real numbers to the unit interval (0,1). Note that since <span class="math inline">\(g(\mu)=\eta\)</span>, and since these link functions are invertible (guaranteed by differentiability and strict monotonicity), we can express this as <span class="math inline">\(\mu = g^{-1}(\eta)\)</span>. Often times this second form is a more intuitive way to think about how the linear predictors relate to the mean response.</p>
+<p>It can be seen that all three of these link functions are sigmoid functions, but that they have slightly different properties:</p>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>The consequences of these differences will not be discussed here, this example exists purely to illustrate that an EDM family can have multiple distinct link functions. The consequenses of these varying link functions varies from family to family.</p>
+</div>
+<div id="formal-definition-of-a-glm" class="section level3" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Formal definition of a GLM</h3>
+<p>Formally, a Generalized Linear Model is made of two components: the <em>probability family</em> and the <em>link function</em>. Given a set of data with response variable <span class="math inline">\(Y\)</span> and explanatory variables <span class="math inline">\(X_1, ... X_k\)</span>, we wish to build a Generalized Linear Model. We assume that each <span class="math inline">\(Y_i\)</span> follows a probability distribution from a given EDM family of distribution with mean <span class="math inline">\(\mu_i\)</span> and dispersion parameter <span class="math inline">\(\phi\)</span>: <span class="math inline">\(\mu_i\)</span> <span class="math inline">\(Y_i \sim EDM(\mu_i,\phi)\)</span>, where <span class="math inline">\(\mu_i\)</span> is such that <span class="math inline">\(g(\mu_i) = \beta_0 + \beta_1X_{i,1} + ... \beta_kX_{i,k}\)</span> for the link function <span class="math inline">\(g(\mu_i)\)</span> and some vector of parameters <span class="math inline">\((\beta_0...\beta_k)\)</span>. We assume all of this is true, and then estimate the parameters <span class="math inline">\((\beta_0...\beta_k)\)</span> using the data and maximum likelihood estimation algorithms. In this book, we will leave these estimation algorithms “under the hood” for brevity’s sake, and focus on some common applications of these GLMs. Generally, to fit one of these models in R, you will need to know the family and the link function, as defined above.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bookdown.pdf", "Bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
