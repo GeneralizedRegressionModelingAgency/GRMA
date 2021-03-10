@@ -3,11 +3,11 @@
 
 ## What came before - Linear models 
 
-If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (which we will explain later), we can perform either inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables)
+If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (see \@ref(linear) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables).
 
 The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:
 
-```{r}
+```{r, echo = F}
 library(tidyverse)
 x <- sample(seq(1,100,.5),50)
 y <- 2*x + rnorm(50,0,30)
@@ -18,7 +18,7 @@ ggplot(data.frame(x,y), aes(x = x, y = y)) +
 we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly. 
 
 
-```{r}
+```{r lineplot, echo = F}
 ggplot(data.frame(x,y), aes(x = x, y = y)) + 
         geom_point() + 
   geom_smooth(method='lm', formula= y~x, se = F)
@@ -50,9 +50,9 @@ We of course want our $\hat\beta_0$ and $\hat\beta_1$ to be a 'good' and 'close'
 
 
 
-## Assumptions of linear mordels 
+## Assumptions of linear models 
 
-A linear model might very well be a good model if our data look like (ref plot). However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+A linear model might very well be a good model if our data look like \@ref(fig:lineplot). However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
 
 
 Linear models assume:

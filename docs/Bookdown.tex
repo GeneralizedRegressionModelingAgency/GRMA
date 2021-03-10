@@ -113,7 +113,7 @@
 
 \title{An Introduction to Generalized Linear Models}
 \author{Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments}
-\date{2021-03-04}
+\date{2021-03-10}
 
 \begin{document}
 \maketitle
@@ -141,12 +141,6 @@ If you are reading this book, you might already be familiar with linear models. 
 
 The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{verbatim}
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
 \end{verbatim}
@@ -164,28 +158,11 @@ The reasoning of linear models is often intuitive, if we make a scatterplot our 
 ## x dplyr::lag()    masks stats::lag()
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{100}\NormalTok{,.}\DecValTok{5}\NormalTok{),}\DecValTok{50}\NormalTok{)}
-\NormalTok{y \textless{}{-}}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{x }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{50}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{30}\NormalTok{)}
-\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(x,y), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)) }\OperatorTok{+}\StringTok{ }
-\StringTok{        }\KeywordTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
 \includegraphics{Bookdown_files/figure-latex/unnamed-chunk-1-1.pdf}
 
 we might want to fit a straight line through the cloud of points, i.e.~modeling the relationship linearly.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(x,y), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)) }\OperatorTok{+}\StringTok{ }
-\StringTok{        }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom\_smooth}\NormalTok{(}\DataTypeTok{method=}\StringTok{\textquotesingle{}lm\textquotesingle{}}\NormalTok{, }\DataTypeTok{formula=}\NormalTok{ y}\OperatorTok{\textasciitilde{}}\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/lineplot-1.pdf}
 
 To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 @ref\{linear\}.
 
@@ -209,10 +186,10 @@ so our estimate/best guess of this true model relationship is
 \[ \hat y = \hat\beta_0 + \hat\beta_1 x\]
 We of course want our \(\hat\beta_0\) and \(\hat\beta_1\) to be a `good' and `close' estimate of the unknown quantities \(\beta_0\) and \(\beta_1\). Ideas of what `good' and `close' mean will be covered in the next section.
 
-\hypertarget{assumptions-of-linear-mordels}{%
-\section{Assumptions of linear mordels}\label{assumptions-of-linear-mordels}}
+\hypertarget{assumptions-of-linear-models}{%
+\section{Assumptions of linear models}\label{assumptions-of-linear-models}}
 
-A linear model might very well be a good model if our data look like (ref plot). However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+A linear model might very well be a good model if our data look like \ref{fig:lineplot}. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
 
 Linear models assume:
 
@@ -305,6 +282,45 @@ Perhaps some examples of data and students can tell what type of data it should 
 
 \hypertarget{linear}{%
 \chapter{Linear Models - Emma}\label{linear}}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\begin{figure}
+\centering
+\includegraphics{images/scooby_doo_meme.jpg}
+\caption{It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not\_really\_redditing.}
+\end{figure}
+
+At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.
+
+The two components of a regression model are the random component and the systematic component and for linear regression,
+
+\[
+\begin{cases}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+\end{cases}
+\]
+
+where \(w_i\) are prior weights and \(w_i\) and \(\text{E}[y_i] = \mu_i\) are known.
+
+When our linear regression has two \(\beta_j\) coefficients and the systematic compnent looks like \(\mu = \beta_0 + \beta_1x_1\), it is called \emph{simple linear regression}. If we have more than two \(\beta_j\) coefficients, our regression model is called \emph{multiple linear regression model} or \emph{multiple regression model}.
+
+When all prior weights \(w_i\) are equal to one, our regression model is refered to as \emph{ordinary linear regression model} as opposed to when our prior weights \(w_i\) have values other than one and is called a \emph{weighted linear regression model}.
+
+As mentioned before, the assumptions belonging to linear regression are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The relationship between \(\mu\) and each explanatory variable is \textbf{linear}.
+\item
+  The unexplained variation in our response is constant, otherwise known as \textbf{constant variance}.
+\item
+  Each datam is \textbf{independent} of all other data points.
+\end{enumerate}
 
 \hypertarget{logistic-regression---andrew}{%
 \chapter{Logistic Regression - Andrew}\label{logistic-regression---andrew}}

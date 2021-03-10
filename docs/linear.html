@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-04" />
+<meta name="date" content="2021-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#what-came-before---linear-models"><i class="fa fa-check"></i><b>2.1</b> What came before - Linear models</a></li>
 <li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>2.2</b> Some definitions</a></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-mordels"><i class="fa fa-check"></i><b>2.3</b> Assumptions of linear mordels</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> Assumptions of linear models</a></li>
 <li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
 <li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#random-and-systematic-component"><i class="fa fa-check"></i><b>2.5</b> Random and Systematic Component</a></li>
 <li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#random-and-systematic-components-for-binary-and-count-data"><i class="fa fa-check"></i><b>2.6</b> Random and Systematic components for Binary and Count data</a></li>
@@ -148,7 +148,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="glms-kat.html"><a href="glms-kat.html"><i class="fa fa-check"></i><b>3</b> GLMs - Kat</a></li>
-<li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models - Emma</a></li>
+<li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models - Emma</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="logistic-regression-andrew.html"><a href="logistic-regression-andrew.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression - Andrew</a></li>
 <li class="chapter" data-level="6" data-path="poisson-glms-leah.html"><a href="poisson-glms-leah.html"><i class="fa fa-check"></i><b>6</b> Poisson GLMs - Leah</a></li>
 <li class="chapter" data-level="7" data-path="learnr-test.html"><a href="learnr-test.html"><i class="fa fa-check"></i><b>7</b> LearnR test</a></li>
@@ -175,7 +178,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="linear" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Linear Models - Emma</h1>
+<div id="introduction" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<div class="figure">
+<img src="images/scooby_doo_meme.jpg" alt="" />
+<p class="caption">It’s linear models all the way down. Posted on reddit in r/statisticsmemes by u/not_really_redditing.</p>
+</div>
+<p>At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.</p>
+<p>The two components of a regression model are the random component and the systematic component and for linear regression,</p>
+<p><span class="math display">\[
+\begin{cases}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(w_i\)</span> are prior weights and <span class="math inline">\(w_i\)</span> and <span class="math inline">\(\text{E}[y_i] = \mu_i\)</span> are known.</p>
+<p>When our linear regression has two <span class="math inline">\(\beta_j\)</span> coefficients and the systematic compnent looks like <span class="math inline">\(\mu = \beta_0 + \beta_1x_1\)</span>, it is called <em>simple linear regression</em>. If we have more than two <span class="math inline">\(\beta_j\)</span> coefficients, our regression model is called <em>multiple linear regression model</em> or <em>multiple regression model</em>.</p>
+<p>When all prior weights <span class="math inline">\(w_i\)</span> are equal to one, our regression model is refered to as <em>ordinary linear regression model</em> as opposed to when our prior weights <span class="math inline">\(w_i\)</span> have values other than one and is called a <em>weighted linear regression model</em>.</p>
+<p>As mentioned before, the assumptions belonging to linear regression are:</p>
+<ol style="list-style-type: decimal">
+<li>The relationship between <span class="math inline">\(\mu\)</span> and each explanatory variable is <strong>linear</strong>.</li>
+<li>The unexplained variation in our response is constant, otherwise known as <strong>constant variance</strong>.</li>
+<li>Each datam is <strong>independent</strong> of all other data points.</li>
+</ol>
 
+</div>
 </div>
             </section>
 

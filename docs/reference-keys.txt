@@ -2,7 +2,7 @@ description-of-our-book
 intro
 what-came-before---linear-models
 some-definitions
-assumptions-of-linear-mordels
+assumptions-of-linear-models
 what-happens-when-we-break-the-assumptions-of-linear-models
 random-and-systematic-component
 random-and-systematic-components-for-binary-and-count-data
@@ -11,6 +11,7 @@ conclusion
 examples
 glms---kat
 linear
+introduction
 logistic-regression---andrew
 poisson-glms---leah
 learnr-test
