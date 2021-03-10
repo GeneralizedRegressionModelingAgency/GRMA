@@ -1,5 +1,4 @@
 intro
-description-of-our-book
 what-came-before---linear-models
 some-definitions
 assumptions-of-linear-models
