@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>An Introduction to Generalized Linear Models</title>
+  <title>Chapter 4 Logistic Regression | An Introduction to Generalized Linear Models</title>
   <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="An Introduction to Generalized Linear Models" />
+  <meta property="og:title" content="Chapter 4 Logistic Regression | An Introduction to Generalized Linear Models" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="An Introduction to Generalized Linear Models" />
+  <meta name="twitter:title" content="Chapter 4 Logistic Regression | An Introduction to Generalized Linear Models" />
   
   <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="how-are-glms-different.html"/>
+<link rel="prev" href="linear.html"/>
+<link rel="next" href="poisson-regression.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -205,115 +205,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">An Introduction to Generalized Linear Models</h1>
-<p class="author"><em>Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments</em></p>
-<p class="date"><em>2021-03-10</em></p>
-</div>
-<div id="intro" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<div id="description-of-our-book" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Description of our book</h2>
-<p>Someone please update this.</p>
-<p>We used <span class="citation">(Dunn and Smyth <a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span></p>
-<p>(also cite data we use…)</p>
-</div>
-<div id="what-came-before---linear-models" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> What came before - Linear models</h2>
-<p>If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (see <a href="linear.html#linear">3</a> ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables).</p>
-<p>The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:</p>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-## ✓ tibble  3.0.6     ✓ dplyr   1.0.4
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<p><img src="Bookdown_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly.</p>
-<p><img src="Bookdown_files/figure-html/lineplot-1.png" width="672" /></p>
-<p>To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 @ref{linear}.</p>
-<p><img src="images/put_a_bird.png" style="width:50.0%" /></p>
-</div>
-<div id="some-definitions" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Some definitions</h2>
-<p>Predictor - the thing on the y-axis
-Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won’t plot it then), and then this becomes multivariate regression.</p>
-<p>Something that is an estimated quantity will have a hat over it.
-For example, we might assume that there is some ‘true’ (but unknown) linear relationship between our explanatory variables and our predictor.</p>
-<p><span class="math display">\[ y = \beta_0 + \beta_1 x\]</span></p>
-<p>From our sample data, we use a linear model to make an estimate of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>,</p>
-<p>so our estimate/best guess of this true model relationship is</p>
-<p><span class="math display">\[ \hat y = \hat\beta_0 + \hat\beta_1 x\]</span>
-We of course want our <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> to be a ‘good’ and ‘close’ estimate of the unknown quantities <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Ideas of what ‘good’ and ‘close’ mean will be covered in the next section.</p>
-</div>
-<div id="assumptions-of-linear-models" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Assumptions of linear models</h2>
-<p>A linear model might very well be a good model if our data look like <a href="#fig:lineplot"><strong>??</strong></a>. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.</p>
-<p>Linear models assume:</p>
+<div id="logistic-regression" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Logistic Regression</h1>
+<p>We’ve asked you thus far to take our word regarding Generalized Linear Models (GLMs). In this chapter, we’re going to take a look at a certain type of data that we know violates our assumptions: binomial data. Here we’ll examine binomial data, see why ordinary least sqares falls apart, and consider some alternative methods (spoiler: it’s going to be one of our generalized linear models).</p>
+<div id="what-is-binomial-data" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> What is Binomial Data?</h2>
+<div id="refresher-bernoulli-and-binomial" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Refresher: Bernoulli and Binomial</h3>
+<p>Bernoulli and Binomial random variables are some of the most important to consider, because they get at real the roots of representing the stata of the world. A Bernoulli random variable considers the simplest possible datum: whether something is, or it isn’t. Numerically, we represent this as 1 or 0, just like computer data. And while I can use this to measure yes/no type data, such as “does a person own at least one pet?”, an astute observer will realise the same idea can apply to a variety concepts including:</p>
 <ul>
-<li>The relationship between the explanatory variables and the response is linear</li>
-<li>The samples are independent.</li>
-<li>The errors are normally distributed with mean 0 and constant variance</li>
+<li>success / failure,</li>
+<li>wins / losses,</li>
+<li>heads / tails,</li>
+<li>exists / doesn’t exist</li>
+<li>has / doesn’t have</li>
+<li>is a member of a group of interest / is not a member</li>
+<li>or even, was my prediction realized?</li>
 </ul>
-<p>We can write these assumptions down in notation as such.</p>
-<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
-where
-<span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span>
-In words, this means that each
-this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span> (notice how there is no subscript <span class="math inline">\(i\)</span> for the variance)</p>
-<p>If these assumptions hold, we then write our model as
-<span class="math display">\[ \hat y_i = \hat\beta_0 + \hat\beta_1 x_i\]</span></p>
-<p>How can we tell when these assumptions are violated?</p>
+<p>Often, whatever resulted in creating this single Bernoulli instance might be something that repeats. In fact, if we hope to apply statistics to it, there needs to be many instances. If we can assume a constant probability across all iterations of the events we’re interested in, but want to ask questions about them in aggregate, that’s Bernoulli Binomial (or just binomial for short). Some examples of questions that fall into binomial data would be:</p>
 <ul>
-<li>Knowledge of the data.</li>
-<li>Plots</li>
+<li>is this strategy effective (i.e. does it affect the rates of success or failure across many trials?)</li>
+<li>is this baseball team better than another (i.e. do they win more games, not just a game?)</li>
+<li>if I bet money on getting four heads in a row, what kind of odds makes that a good gamble?</li>
+<li>if a mailcarrier is moving to a new route, if I know how many homes are <span class="math inline">\(\mu\)</span>-probable to have an angry dog, what’s the liklihood that mail carrier will encounter an angry dog?</li>
+<li>if <span class="math inline">\(\mu\)</span>-proportion of students have a medical condition I’m interested in, how many students will I need to talk to in order for it to be more likely than not I’ll talk to x of them? Way more likely than not? Almost certain?</li>
+<li>if my predictions are p-percent accurate, and the cost of failure is m dollars, is it worth spending more money for more accurate predictions?</li>
+</ul>
+<p>Hopefully you’ll agree with me that questions of this type are actually extremely common.</p>
+</div>
+<div id="representing-the-bernoulli-distribution" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Representing the Bernoulli distribution</h3>
+<p>Different texts use different language, so it’s to explain how we’ll be talking about Bernoulli and binomial distributions here. First, here’s the /Bernoulli distribution/ probability mass function.</p>
+<p><span class="math display">\[\mathcal{P}(y;\mu)=\mu^{y}(1-\mu)^{1-\mu},\]</span>
+where <span class="math inline">\(y\in\{0, 1\}, 0\leq\mu\leq1\)</span>.</p>
+<p>This might be a bit different than what you’ve seen before, so lets talk about each variable.</p>
+<ul>
+<li><span class="math inline">\(\mathcal{P}\)</span>: (<span class="math inline">\(\texttt{\\mathcal\{P\}}\)</span> in TeX) is the probability mass function of a certain outcome. <span class="math inline">\(\mathcal{P}(y;\mu)\)</span> then is the probability of event <span class="math inline">\(y\)</span> when the success has a probability of <span class="math inline">\(\mu\)</span>.</li>
+<li><span class="math inline">\(y\)</span>: is the number of successes. Since this is a single trial, it can only be 0 or 1 (described by the statement <span class="math inline">\(y\in\{0, 1\}\)</span>).
+<ul>
+<li>Basically, it lets us choose whether we’re predicting success or predicting failure all in one function.</li>
+<li>If we’re interested in the liklihood of an event not occuring <span class="math inline">\(y=0\)</span>, <span class="math inline">\(\mu^0=1\)</span>, and the PMF simplifies to <span class="math inline">\(\mathcal{P(1,\mu)}=1-\mu\)</span>.</li>
+<li>Conversely, if we’re interetsed in an event occuring, <span class="math inline">\(y-1\)</span>, <span class="math inline">\((1-\mu)^{(1-1)}=1\)</span>, and the PMF simplifies to <span class="math inline">\(\mathcal{P(1,\mu)}=\mu\)</span>.</li>
+</ul></li>
+<li><span class="math inline">\(\mu\)</span>: (<span class="math inline">\(\texttt{\\mu}\)</span> in TeX) is the probability of the event. But wait, isn’t <span class="math inline">\(\mu\)</span> the mean, and also the expected value? <strong>Yes, exactly!</strong> Those are all the same in this PMF, so we use the same variable. Because many text books need you to consider those ideas separatey so you can discover that relationship, you might see it recorded elsewhere as <span class="math inline">\(p\)</span>, but since demonstrating that is beyond our scope here, we’ll use <span class="math inline">\(\mu\)</span> to reduce complexity.</li>
+<li>It complicates using the formula elsewhere, but we could rewrite this as:
+<span class="math display">\[
+\mathcal{P}(y;\mu)=
+\begin{cases}
+\mu&amp;\textrm{if }y=1\\
+1-\mu&amp;\textrm{if }y=0\\
+\end{cases}, 0\leq\mu\leq1
+\]</span></li>
 </ul>
 </div>
-<div id="what-happens-when-we-break-the-assumptions-of-linear-models" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> What happens when we break the assumptions of linear models</h2>
-<p>Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.</p>
+<div id="representing-the-binomial-distribution" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Representing the binomial distribution</h3>
+<p>Intuitively, you likely recall that if <span class="math inline">\(P(\textrm{heads on one coinflip})=\frac{1}{2}\)</span>, then <span class="math display">\[P(\textrm{heads twice on two coinflips})=P(\textrm{heads on one coinflip})^2=\frac{1}{2}\times\frac{1}{2}=\frac{1}{4}\]</span>. However, just like the above PMF accounts for yes and no, our binomial PMF <span class="math inline">\(\mathcal{P}\)</span> needs to account for yes and no, how many yesses we’re looking for, and how many trials there are overall. So here, we’ll use:</p>
+<p><span class="math display">\[\mathcal{P}(y;\mu,m)=\binom{m}{my}\mu^y(1-\mu)^{m(1-y)}\]</span>
+where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a positive integer, and }0&lt;\mu&lt;1.\)</span></p>
+<p>Like before, this format might be a bit different than what you may have seen elsewhere, so let’s break it down.</p>
+<ul>
+<li>A reminder, <span class="math inline">\(\binom{n}{k}\)</span>, (written <code>\texttt{\binom{n}{k}}</code> in TeX) is a combination <span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>. More detail <a href="https://en.wikipedia.org/wiki/Combination">here.</a></li>
+<li><span class="math inline">\(\mathcal{P}\)</span> (<span class="math inline">\(\texttt{\\mathcal\{P\}}\)</span> in TeX) is the probability mass function (PMF) aka probability function. <span class="math inline">\(\mathcal{P}(y;\mu,m)\)</span> then is the probability function of a binomial distribution for event <span class="math inline">\(y\)</span> in the case of <span class="math inline">\(m\)</span> Bernoulli trials with each trial having a probability of <span class="math inline">\(\mu\)</span>.</li>
+<li><span class="math inline">\(m\)</span> here is simply the number of trials easy.</li>
+<li><span class="math inline">\(y\)</span> here measures the <em>proportion</em> of successes (and actually it really is above as well–I’ll get to that in a moment).
+<ul>
+<li>For example, if there are 4 trials and we want to see two successes, <span class="math inline">\(y/m=2/4=0.5\)</span></li>
+<li>This interacts interestingly in the combinatorial component. That <span class="math inline">\(my\)</span> will always equal the numerator of <span class="math inline">\(y\)</span>. In the previous example then, the <em>choose</em> part of <span class="math inline">\(m\)</span> choose <span class="math inline">\(my\)</span> (aka <span class="math inline">\(\binom{m}{my}\)</span>) will equal <span class="math inline">\(\binom{4}{2}\)</span>.</li>
+</ul></li>
+<li>If <span class="math inline">\(y=0\)</span>, <span class="math inline">\(\binom{m}{m0}=\binom{m}{0}=1\)</span> (any choose 0, like any number raised to 0 equals 1). So, looking at this formula, if I want to know the odds of not getting any heads on four coin flips, then
+<ul>
+<li><span class="math display">\[\mathcal{P}(y;\mu,m)=\binom{m}{my}\mu^y(1-\mu)^{m(1-y)}=\binom{4}{4\times0}\mu^0(1-\mu)^{4(1-0)}=1\times1\times(1-\mu)^4\]</span></li>
+<li>So assuming a fair coin where <span class="math inline">\(\mu=\frac{1}{2}\)</span>, then <span class="math inline">\(\mathcal{P}(y;\mu,m)=\mu^4=(\frac{1}{2})^4=\frac{1}{16}\)</span>, which fits our expectations. Neat!</li>
+</ul></li>
+</ul>
 </div>
-<div id="random-and-systematic-component" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> Random and Systematic Component</h2>
-<p>We will now analyze the assumptions for linear models and explore how we can generalize them. (and create generalized linear models!)</p>
-<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
-<span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span></p>
-<p>We refer to the first equation as the Systematic Component, and the second equation as the Random Component.</p>
-<p>A Generalized Regression Model has a systematic component:</p>
-<p><span class="math display">\[ g(y_i) = \beta_0 + \beta_1 x + \epsilon_i\]</span>
-To generalized the systematic component, we use a link function <span class="math inline">\(g(y)\)</span>, so we now require some function of the response to be linearly related to our explanatory variables.</p>
-<p>and a random component:</p>
-<p><span class="math display">\[ \epsilon_i \sim \text{ iid } EDM(\phi) \]</span>
-In words, the errors are independently distributed according to some probability distribution in the Exponential Dispersion Family, which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all fall into this family.</p>
-<p>We note that normal linear models fall exactly into this framework, where <span class="math inline">\(g(y_i) = y_i\)</span> the identity function, and use the Normal distribution as our random component.</p>
-<p>Deciding on what Random and Systematic component to use requires u</p>
+<div id="what-does-a-bunch-of-binomial-data-look-like-then" class="section level3" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> What does a bunch of binomial data look like then?</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="logistic-regression.html#cb4-1"></a>possibilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="co"># either heads (1) or tails (0).</span></span>
+<span id="cb4-2"><a href="logistic-regression.html#cb4-2"></a>                        <span class="co"># c(...) makes a list of whatever you include in the ...</span></span>
+<span id="cb4-3"><a href="logistic-regression.html#cb4-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb4-4"><a href="logistic-regression.html#cb4-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
+<span id="cb4-5"><a href="logistic-regression.html#cb4-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 1 1 1 0 1 1 1</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="logistic-regression.html#cb6-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
+<span id="cb6-2"><a href="logistic-regression.html#cb6-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
+<span id="cb6-3"><a href="logistic-regression.html#cb6-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>
+<span id="cb6-4"><a href="logistic-regression.html#cb6-4"></a>                        <span class="co">#   second flip is just as likely to get heads or tails</span></span>
+<span id="cb6-5"><a href="logistic-regression.html#cb6-5"></a>                        <span class="co">#   as the first: we *do* replace.</span></span>
+<span id="cb6-6"><a href="logistic-regression.html#cb6-6"></a>                        <span class="co"># prob is a vector of probabilities for each x</span></span>
+<span id="cb6-7"><a href="logistic-regression.html#cb6-7"></a>                        <span class="co"># encasing the whole thing in parentheses shows the</span></span>
+<span id="cb6-8"><a href="logistic-regression.html#cb6-8"></a>                        <span class="co">#   value of the variable you set as you set it</span></span></code></pre></div>
+<p>So zeros and ones, we expect that (sorry if you’re the 2 in <span class="math inline">\(2^{10}\)</span> readers who see all zeroes or ones). Lets check a simple histogram.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="logistic-regression.html#cb7-1"></a><span class="kw">hist</span>(flip_data)         <span class="co"># hist() generates a simple historam. We could make</span></span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1"></a>                        <span class="co"># this prettier with ggplot2, but we don&#39;t need that right</span></span>
+<span id="cb8-2"><a href="logistic-regression.html#cb8-2"></a>                        <span class="co"># now.</span></span></code></pre></div>
 </div>
-<div id="random-and-systematic-components-for-binary-and-count-data" class="section level2" number="1.7">
-<h2><span class="header-section-number">1.7</span> Random and Systematic components for Binary and Count data</h2>
-<p>The two most common cases of GRMs are those for Binary and Count data</p>
-<p>For Binary data, the systemtatic component is, and the random component is: We call these types of GRMS logistic regression or …</p>
-<p>For Count data, the systematic component is, and the random component is. We call these types of GRMS</p>
 </div>
-<div id="parameter-estimation" class="section level2" number="1.8">
-<h2><span class="header-section-number">1.8</span> Parameter estimation</h2>
-<p>The last difference between linear models and generalized linear models is the way we estimate the parameters <span class="math inline">\(\beta\)</span>.</p>
+<div id="why-doesnt-ols-work-for-binomial-data" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Why doesn’t OLS work for Binomial Data?</h2>
 </div>
-<div id="conclusion" class="section level2" number="1.9">
-<h2><span class="header-section-number">1.9</span> Conclusion</h2>
-<p>Linear models are not always the best tool for describing relationship in data. Luckily we can generalize the ideas and framework developed in linear models to hold for more general cases to create GLMs. Using a more general framework and more general assumptions allows us to build tools that will hold for all GRMs. The most notable of these that we will further explore are GRMs for binary data (ch4) and count data (ch5)</p>
+<div id="link-functions-we-can-use" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Link functions we can use</h2>
 </div>
-<div id="examples" class="section level2" number="1.10">
-<h2><span class="header-section-number">1.10</span> Examples</h2>
-<p>Perhaps some examples of data and students can tell what type of data it should be modeled by?</p>
+<div id="ed50" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> ED50</h2>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-dunn2018generalized">
-<p>Dunn, Peter K, and Gordon K Smyth. 2018. <em>Generalized Linear Models with Examples in R</em>. Springer.</p>
 </div>
 </div>
             </section>
@@ -321,8 +319,8 @@ In words, the errors are independently distributed according to some probability
           </div>
         </div>
       </div>
-
-<a href="how-are-glms-different.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="poisson-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -10,10 +10,3 @@ link-citations: yes
 description: "This is a draft of the book that we will write for non-Statisticians to understand GRMS"
 ---
 
-# Description of our book 
-
-Someone please update this. 
-
-We used [@dunn2018generalized]
-
-(also cite data we use...)
