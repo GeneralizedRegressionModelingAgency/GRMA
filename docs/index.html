@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>An Introduction to Generalized Linear Models</title>
-  <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  <meta name="description" content="Generalized Linear Models for non-statistics graduate students" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="An Introduction to Generalized Linear Models" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  <meta property="og:description" content="Generalized Linear Models for non-statistics graduate students" />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="An Introduction to Generalized Linear Models" />
   
-  <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  <meta name="twitter:description" content="Generalized Linear Models for non-statistics graduate students" />
   
 
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-10" />
+<meta name="date" content="2021-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,15 +137,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#what-came-before---linear-models"><i class="fa fa-check"></i><b>2.1</b> What came before - Linear models</a></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>2.2</b> Some definitions</a></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> Assumptions of linear models</a></li>
-<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
-<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#random-and-systematic-component"><i class="fa fa-check"></i><b>2.5</b> Random and Systematic Component</a></li>
-<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#random-and-systematic-components-for-binary-and-count-data"><i class="fa fa-check"></i><b>2.6</b> Random and Systematic components for Binary and Count data</a></li>
-<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.7</b> Parameter estimation</a></li>
-<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
-<li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models---a-kind-of-generalized-linear-model"><i class="fa fa-check"></i><b>2.1</b> Linear models - a kind of Generalized Linear Model</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.2</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> What happens when we break the assumptions of linear models</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.4</b> Parameter estimation</a></li>
+<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#lms-and-glms-in-r"><i class="fa fa-check"></i><b>2.5</b> LMs and GLMs in R</a></li>
+<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#definitions"><i class="fa fa-check"></i><b>2.6</b> Some definitions</a></li>
+<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.7</b> Conclusion</a></li>
+<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.8</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>3</b> How are GLMs “different”?</a>
 <ul>
@@ -208,14 +207,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">An Introduction to Generalized Linear Models</h1>
 <p class="author"><em>Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments</em></p>
-<p class="date"><em>2021-03-10</em></p>
+<p class="date"><em>2021-03-11</em></p>
 </div>
 <div id="about-this-book" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> About this book</h1>
-<p>Include description of this project and intended audience</p>
-<p>We used <span class="citation">(Dunn and Smyth <a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span></p>
-<p>(also cite data we use…)</p>
-<p>Add acknowledgements</p>
+<p>Welcome to our bookdown book on Generalized Linear Models. This book is the result of the authors’ Reading and Conference Class at Oregon State University Winter term 2021. We hope you find it useful. The code generating this book can be found at <a href="https://github.com/GeneralizedRegressionModelingAgency/GRMA" class="uri">https://github.com/GeneralizedRegressionModelingAgency/GRMA</a>. If you find a problem or have questions, we encourage you to file an issue in our Github Repository.</p>
+<p>To learn this material ourselves, we used <strong>Generalized Linear Models With Examples in R</strong> by Peter K. Dunn and Gordon K. Smyth<span class="citation">(Dunn and Smyth <a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span>. If you are looking for more background reading or examples and applicaitons, we reccomend this book, as it is a good, accessible, resource to understand these models.</p>
+<p>In this book, we used the following data for examples: (add sources)</p>
+<p>A big thank you to James Molyneux for leading and organizing our reading and conference class.</p>
 
 </div>
 <h3>References</h3>

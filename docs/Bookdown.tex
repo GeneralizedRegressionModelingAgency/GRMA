@@ -114,7 +114,7 @@
 
 \title{An Introduction to Generalized Linear Models}
 \author{Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments}
-\date{2021-03-10}
+\date{2021-03-11}
 
 \begin{document}
 \maketitle
@@ -123,54 +123,197 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\hypertarget{about-this-book}{%
+\chapter{About this book}\label{about-this-book}}
+
+Welcome to our bookdown book on Generalized Linear Models. This book is the result of the authors' Reading and Conference Class at Oregon State University Winter term 2021. We hope you find it useful. The code generating this book can be found at \url{https://github.com/GeneralizedRegressionModelingAgency/GRMA}. If you find a problem or have questions, we encourage you to file an issue in our Github Repository.
+
+To learn this material ourselves, we used \textbf{Generalized Linear Models With Examples in R} by Peter K. Dunn and Gordon K. Smyth\citep{dunn2018generalized}. If you are looking for more background reading or examples and applicaitons, we reccomend this book, as it is a good, accessible, resource to understand these models.
+
+In this book, we used the following data for examples: (add sources)
+
+A big thank you to James Molyneux for leading and organizing our reading and conference class.
+
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-\hypertarget{description-of-our-book}{%
-\section{Description of our book}\label{description-of-our-book}}
+\hypertarget{linear-models---a-kind-of-generalized-linear-model}{%
+\section{Linear models - a kind of Generalized Linear Model}\label{linear-models---a-kind-of-generalized-linear-model}}
 
-Someone please update this.
+If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-We used \citep{dunn2018generalized}
+Let's review why we would fit a linear model. For linear regression, given our data, if we make some key assumptions (see Chapter \ref{linear} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
 
-(also cite data we use\ldots)
+The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:
 
-\hypertarget{what-came-before---linear-models}{%
-\section{What came before - Linear models}\label{what-came-before---linear-models}}
-
-If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (see \ref{linear} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables).
-
-The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:
-
-\begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.3     v purrr   0.3.4
-## v tibble  3.0.6     v dplyr   1.0.4
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.1
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
-
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-1-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/linearscatterplot-1.pdf}
 
 we might want to fit a straight line through the cloud of points, i.e.~modeling the relationship linearly.
 
-\includegraphics{Bookdown_files/figure-latex/lineplot-1.pdf}
-
-To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 @ref\{linear\}.
-
 \includegraphics[width=0.5\textwidth,height=\textheight]{images/put_a_bird.png}
 
-\hypertarget{some-definitions}{%
-\section{Some definitions}\label{some-definitions}}
+\includegraphics{Bookdown_files/figure-latex/linearline-1.pdf}
+
+To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 @ref\{linear\}. (will it? should it?) Linear models can also have multiple explanatory variables (\(X_1, \ldots X_n\) instead of just one \(X\)), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one \(X\).
+
+\hypertarget{assumptions-of-linear-models}{%
+\section{Assumptions of Linear Models}\label{assumptions-of-linear-models}}
+
+A linear model might very well be a good model if we have data like the above. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+
+Linear models assume:
+
+\begin{itemize}
+\tightlist
+\item
+  The relationship between the explanatory variables and the response is linear.
+\item
+  The samples are independent.
+\item
+  The errors are normally distributed with mean 0 and constant variance.
+\end{itemize}
+
+You might have seen these assumptions written in notation as such.
+
+\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
+where
+\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
+
+In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance \(\sigma^2\) (notice how there is no subscript \(i\) for the variance). If are performing multiple linear regression, the first assumption becomes \(Y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p\).
+
+To see how the linear model is a type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so we will be able to more easily see the parallels. Instead of the response \(y_i\), now consider the mean response \(\mu_i\), which for a given value of one predictor \(x\) is the mean, or expected value of all responses with the value of that explanatory variable.
+
+Then our assumptions become:
+
+\begin{equation}
+\mu_i = \beta_0 + \beta_1 x \label{eq:systematic-linear}
+\end{equation}
+
+\begin{equation}
+y_i \sim \text{ iid } N(\mu_i, \sigma^2)\label{eq:random-linear}
+\end{equation}
+
+We refer to the first condition \eqref{eq:systematic-linear} as the \textbf{Systematic Component} and the second condition \eqref{eq:random-linear} as the \textbf{Random Component}
+
+Generalized Linear Models are inspired by generalizing the random and systematic component of linear models.
+
+A Generalized Regression Model has a systematic component:
+
+\[ g(\mu_i) = \beta_0 + \beta_1 x + \epsilon_i\]
+To generalized the systematic component, we use a link function \(g(y)\), so we now require some function of the response to be linearly related to our explanatory variables.
+
+and a random component:
+
+\[y_i \sim \text{ iid } EDM(g(\mu_i), \phi) \]
+In words,\ldots{} to some probability distribution in the Exponential Dispersion Family (EDM), which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all belong to the Exponential Dispersion Family. The EDM distribution depends on the mean response, as well as a dispersion parameter \(\phi\). For many commonly use GLMs, and the ones discussed in this book, this \(\phi\) is known.
+
+We note that normal linear models fall easily into this framework, where \(g(y_i) = y_i\) the identity function, and use the Normal distribution as our random component.
+
+Deciding on what Random and Systematic component to use requires \ldots.
+
+\hypertarget{what-happens-when-we-break-the-assumptions-of-linear-models}{%
+\section{What happens when we break the assumptions of linear models}\label{what-happens-when-we-break-the-assumptions-of-linear-models}}
+
+How can we tell when these assumptions are violated? We can examine both the random and systematic component and see if our data can/should be modeled in such a way. This largely comes from knowledge of the data.
+
+Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.
+
+\hypertarget{parameter-estimation}{%
+\section{Parameter estimation}\label{parameter-estimation}}
+
+Another difference between linear models and generalized linear models is the way we estimate the parameters \(\beta\). For linear models, we find the minimize the sums of squares from the predictor to the response(s). This has a closed form solution, and can be calculated by hand (if one \textbf{really} wanted to). For generalized linear models, we estimate the \(\beta\) parameters using Maximum Likelihood Estimation. For the Normal linear model case, this is equivalent to minimizing the sums of squares. However, for other GLMs, there is no closed form solution, which requires us to perform an iterative algorithm to land at the parameter estimates. Luckily this is all done behind the scenes in R. Those interested in learning more about how parameter estimation works for GLMs can read Chapter 6 of \citep{dunn2018generalized}.
+
+\hypertarget{lms-and-glms-in-r}{%
+\section{LMs and GLMs in R}\label{lms-and-glms-in-r}}
+
+Fitting GLMs in R is very similar to fitting linear models in R. For linear models, we use the function \texttt{lm()}. For generalized regression models, we use the function \texttt{glm()}. Both require a formula input, but \texttt{glm()} also requires the user to specify the random and systematic part of a GLM, by specifying the \texttt{family} and \texttt{link} function. Help for fitting a GLM can be found by \texttt{?glm()} and reading more about the family argument.
+
+Let's use some simulated data to see how GLMs are fit in R, and
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(sim\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           y     x1    x2
+## 1 -417.3807 233.75 296.1
+## 2 -500.5594 182.00 293.1
+## 3 -801.3577 -64.00 219.5
+## 4 -784.3837  37.25 289.2
+## 5 -234.5331 201.50 216.0
+## 6 -884.8346  -4.00 296.8
+\end{verbatim}
+
+First, fit a linear model the normal way, using \texttt{lm()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_mod \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{x1}\OperatorTok{+}\NormalTok{x2, }\DataTypeTok{data =}\NormalTok{ sim\_data)}
+\KeywordTok{summary}\NormalTok{(lm\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = sim_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -67.685 -11.686   2.294  12.590  73.343 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -37.78447   25.53607   -1.48    0.143    
+## x1            2.04716    0.02713   75.45   <2e-16 ***
+## x2           -2.85890    0.09812  -29.14   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 24.83 on 72 degrees of freedom
+## Multiple R-squared:  0.9896, Adjusted R-squared:  0.9893 
+## F-statistic:  3419 on 2 and 72 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{glm\_mod \textless{}{-}}\StringTok{ }\KeywordTok{glm}\NormalTok{(y }\OperatorTok{\textasciitilde{}}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2, }\DataTypeTok{data =}\NormalTok{ sim\_data, }\DataTypeTok{family =}\NormalTok{ gaussian)}
+\KeywordTok{summary}\NormalTok{(lm\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = sim_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -67.685 -11.686   2.294  12.590  73.343 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -37.78447   25.53607   -1.48    0.143    
+## x1            2.04716    0.02713   75.45   <2e-16 ***
+## x2           -2.85890    0.09812  -29.14   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 24.83 on 72 degrees of freedom
+## Multiple R-squared:  0.9896, Adjusted R-squared:  0.9893 
+## F-statistic:  3419 on 2 and 72 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like \texttt{coef()}, \texttt{predict()}, etc, will perform as expected, when we pass a generalized linear model fitted using \texttt{glm()} in as the first argument.
+
+\hypertarget{definitions}{%
+\section{Some definitions}\label{definitions}}
+
+We close this chapter with some definitions of common terminology and explanation of notation that will be used.
 
 Predictor - the thing on the y-axis
 Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won't plot it then), and then this becomes multivariate regression.
@@ -186,87 +329,6 @@ so our estimate/best guess of this true model relationship is
 
 \[ \hat y = \hat\beta_0 + \hat\beta_1 x\]
 We of course want our \(\hat\beta_0\) and \(\hat\beta_1\) to be a `good' and `close' estimate of the unknown quantities \(\beta_0\) and \(\beta_1\). Ideas of what `good' and `close' mean will be covered in the next section.
-
-\hypertarget{assumptions-of-linear-models}{%
-\section{Assumptions of linear models}\label{assumptions-of-linear-models}}
-
-A linear model might very well be a good model if our data look like \ref{fig:lineplot}. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
-
-Linear models assume:
-
-\begin{itemize}
-\tightlist
-\item
-  The relationship between the explanatory variables and the response is linear
-\item
-  The samples are independent.
-\item
-  The errors are normally distributed with mean 0 and constant variance
-\end{itemize}
-
-We can write these assumptions down in notation as such.
-
-\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
-where
-\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
-In words, this means that each
-this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance \(\sigma^2\) (notice how there is no subscript \(i\) for the variance)
-
-If these assumptions hold, we then write our model as
-\[ \hat y_i = \hat\beta_0 + \hat\beta_1 x_i\]
-
-How can we tell when these assumptions are violated?
-
-\begin{itemize}
-\tightlist
-\item
-  Knowledge of the data.
-\item
-  Plots
-\end{itemize}
-
-\hypertarget{what-happens-when-we-break-the-assumptions-of-linear-models}{%
-\section{What happens when we break the assumptions of linear models}\label{what-happens-when-we-break-the-assumptions-of-linear-models}}
-
-Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.
-
-\hypertarget{random-and-systematic-component}{%
-\section{Random and Systematic Component}\label{random-and-systematic-component}}
-
-We will now analyze the assumptions for linear models and explore how we can generalize them. (and create generalized linear models!)
-
-\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
-\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
-
-We refer to the first equation as the Systematic Component, and the second equation as the Random Component.
-
-A Generalized Regression Model has a systematic component:
-
-\[ g(y_i) = \beta_0 + \beta_1 x + \epsilon_i\]
-To generalized the systematic component, we use a link function \(g(y)\), so we now require some function of the response to be linearly related to our explanatory variables.
-
-and a random component:
-
-\[ \epsilon_i \sim \text{ iid } EDM(\phi) \]
-In words, the errors are independently distributed according to some probability distribution in the Exponential Dispersion Family, which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all fall into this family.
-
-We note that normal linear models fall exactly into this framework, where \(g(y_i) = y_i\) the identity function, and use the Normal distribution as our random component.
-
-Deciding on what Random and Systematic component to use requires u
-
-\hypertarget{random-and-systematic-components-for-binary-and-count-data}{%
-\section{Random and Systematic components for Binary and Count data}\label{random-and-systematic-components-for-binary-and-count-data}}
-
-The two most common cases of GRMs are those for Binary and Count data
-
-For Binary data, the systemtatic component is, and the random component is: We call these types of GRMS logistic regression or \ldots{}
-
-For Count data, the systematic component is, and the random component is. We call these types of GRMS
-
-\hypertarget{parameter-estimation}{%
-\section{Parameter estimation}\label{parameter-estimation}}
-
-The last difference between linear models and generalized linear models is the way we estimate the parameters \(\beta\).
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -401,7 +463,7 @@ All three of these link functions map the real numbers to the unit interval (0,1
 
 It can be seen that all three of these link functions are sigmoid functions, but that they have slightly different properties:
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 The consequences of these differences will not be discussed here, this example exists purely to illustrate that an EDM family can have multiple distinct link functions. The consequenses of these varying link functions varies from family to family.
 
@@ -596,7 +658,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 0 1 1 1 1 1 1 1
+##  [1] 0 1 0 0 1 0 1 0 1 1
 \end{verbatim}
 
 \begin{Shaded}
@@ -620,7 +682,7 @@ So zeros and ones, we expect that (sorry if you're the 2 in \(2^{10}\) readers w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-4-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
