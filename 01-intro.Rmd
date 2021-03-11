@@ -1,37 +1,143 @@
 # Introduction {#intro}
 
 
-## What came before - Linear models 
+## Linear models - a kind of Generalized Linear Model
 
-If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (see \@ref(linear) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables).
+If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:
+Let's review why we would fit a linear model. For linear regression, given our data, if we make some key assumptions (see Chapter \@ref(linear) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
 
-```{r, echo = F}
-library(tidyverse)
+The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:
+
+```{r linearscatterplot, echo = F}
 x <- sample(seq(1,100,.5),50)
 y <- 2*x + rnorm(50,0,30)
-ggplot(data.frame(x,y), aes(x = x, y = y)) + 
-        geom_point()
+ggplot2::ggplot(data.frame(x,y), ggplot2::aes(x = x, y = y)) + 
+        ggplot2::geom_point()
 ```
 
 we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly. 
 
+![](images/put_a_bird.png){width=50%}
 
-```{r lineplot, echo = F}
-ggplot(data.frame(x,y), aes(x = x, y = y)) + 
-        geom_point() + 
-  geom_smooth(method='lm', formula= y~x, se = F)
+```{r linearline, echo = F}
+ggplot2::ggplot(data.frame(x,y), ggplot2::aes(x = x, y = y)) + 
+        ggplot2::geom_point() + 
+  ggplot2::geom_smooth(method='lm', formula= y~x, se = F)
 ```
 
 
-To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 \@ref{linear}.
+To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 \@ref{linear}. (will it? should it?) Linear models can also have multiple explanatory variables ($X_1, \ldots X_n$ instead of just one $X$), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one $X$. 
 
 
-![](images/put_a_bird.png){width=50%}
+## Assumptions of Linear Models 
+
+A linear model might very well be a good model if we have data like the above. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+
+Linear models assume:
+
+ - The relationship between the explanatory variables and the response is linear.
+ - The samples are independent. 
+ - The errors are normally distributed with mean 0 and constant variance.
 
 
-## Some definitions
+You might have seen these assumptions written in notation as such. 
+
+$$y_i  = \beta_0 + \beta_1 x + \epsilon_i $$
+where 
+$$ \epsilon_i \sim \text{iid } N(0,\sigma^2)$$
+
+In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance $\sigma^2$ (notice how there is no subscript $i$ for the variance). If are performing multiple linear regression, the first assumption becomes $Y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$.
+
+To see how the linear model is a type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so we will be able to more easily see the parallels. Instead of the response $y_i$, now consider the mean response $\mu_i$, which for a given value of one predictor $x$ is the mean, or expected value of all responses with the value of that explanatory variable.
+
+Then our assumptions become: 
+
+
+\begin{equation}
+\mu_i = \beta_0 + \beta_1 x (\#eq:systematic-linear)
+\end{equation}
+
+
+\begin{equation}
+y_i \sim \text{ iid } N(\mu_i, \sigma^2)(\#eq:random-linear)
+\end{equation}
+
+
+We refer to the first condition \@ref(eq:systematic-linear) as the **Systematic Component** and the second condition \@ref(eq:random-linear) as the **Random Component**
+
+
+Generalized Linear Models are inspired by generalizing the random and systematic component of linear models. 
+
+A Generalized Regression Model has a systematic component: 
+
+$$ g(\mu_i) = \beta_0 + \beta_1 x + \epsilon_i$$
+To generalized the systematic component, we use a link function $g(y)$, so we now require some function of the response to be linearly related to our explanatory variables. 
+
+and a random component: 
+
+$$y_i \sim \text{ iid } EDM(g(\mu_i), \phi) $$
+In words,... to some probability distribution in the Exponential Dispersion Family (EDM), which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all belong to the Exponential Dispersion Family. The EDM distribution depends on the mean response, as well as a dispersion parameter $\phi$. For many commonly use GLMs, and the ones discussed in this book, this $\phi$ is known. 
+
+We note that normal linear models fall easily into this framework, where $g(y_i) = y_i$ the identity function, and use the Normal distribution as our random component. 
+
+
+Deciding on what Random and Systematic component to use requires .... 
+
+## What happens when we break the assumptions of linear models 
+
+How can we tell when these assumptions are violated? We can examine both the random and systematic component and see if our data can/should be modeled in such a way. This largely comes from knowledge of the data. 
+
+
+Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data. 
+
+
+
+## Parameter estimation 
+
+Another difference between linear models and generalized linear models is the way we estimate the parameters $\beta$. For linear models, we find the minimize the sums of squares from the predictor to the response(s). This has a closed form solution, and can be calculated by hand (if one **really** wanted to). For generalized linear models, we estimate the $\beta$ parameters using Maximum Likelihood Estimation. For the Normal linear model case, this is equivalent to minimizing the sums of squares. However, for other GLMs, there is no closed form solution, which requires us to perform an iterative algorithm to land at the parameter estimates. Luckily this is all done behind the scenes in R. Those interested in learning more about how parameter estimation works for GLMs can read Chapter 6 of [@dunn2018generalized]. 
+
+
+## LMs and GLMs in R 
+
+Fitting GLMs in R is very similar to fitting linear models in R. For linear models, we use the function `lm()`. For generalized regression models, we use the function `glm()`. Both require a formula input, but `glm()` also requires the user to specify the random and systematic part of a GLM, by specifying the `family` and `link` function. Help for fitting a GLM can be found by `?glm()` and reading more about the family argument. 
+
+Let's use some simulated data to see how GLMs are fit in R, and 
+
+```{r, echo = F}
+x1 <- sample(seq(-100,250,.75),75)
+x2 <- sample(seq(200,300,.1),75)
+y <- 2*x1 -3*x2 + rnorm(75,0,25)
+
+sim_data <- data.frame(y, x1, x2)
+
+```
+
+```{r}
+head(sim_data)
+```
+
+First, fit a linear model the normal way, using `lm()`
+
+```{r}
+lm_mod <- lm(y~ x1+x2, data = sim_data)
+summary(lm_mod)
+```
+
+
+Now we show that we can use `glm()` the same way, specifying `family = "gaussian"`, which gives the identity link. 
+
+```{r}
+glm_mod <- glm(y ~x1+x2, data = sim_data, family = gaussian)
+summary(lm_mod)
+```
+
+So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like `coef()`, `predict()`, etc, will perform as expected, when we pass a generalized linear model fitted using `glm()` in as the first argument. 
+
+
+## Some definitions {#definitions}
+
+We close this chapter with some definitions of common terminology and explanation of notation that will be used. 
 
 Predictor - the thing on the y-axis
 Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won't plot it then), and then this becomes multivariate regression. 
@@ -50,82 +156,6 @@ We of course want our $\hat\beta_0$ and $\hat\beta_1$ to be a 'good' and 'close'
 
 
 
-## Assumptions of linear models 
-
-A linear model might very well be a good model if our data look like. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
-
-
-Linear models assume:
-
- - The relationship between the explanatory variables and the response is linear 
- - The samples are independent. 
- - The errors are normally distributed with mean 0 and constant variance
-
-
-We can write these assumptions down in notation as such. 
-
-$$y_i  = \beta_0 + \beta_1 x + \epsilon_i $$
-where 
-$$ \epsilon_i \sim \text{iid } N(0,\sigma^2)$$
-In words, this means that each 
-this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance $\sigma^2$ (notice how there is no subscript $i$ for the variance)
-
-
-If these assumptions hold, we then write our model as 
-$$ \hat y_i = \hat\beta_0 + \hat\beta_1 x_i$$
-
-
-How can we tell when these assumptions are violated? 
-
- - Knowledge of the data. 
- - Plots
-
-## What happens when we break the assumptions of linear models 
-
-Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data. 
-
-
-## Random and Systematic Component 
-
-We will now analyze the assumptions for linear models and explore how we can generalize them. (and create generalized linear models!)
-
-$$y_i  = \beta_0 + \beta_1 x + \epsilon_i $$
-$$ \epsilon_i \sim \text{iid } N(0,\sigma^2)$$
-
-We refer to the first equation as the Systematic Component, and the second equation as the Random Component.
-
-
-
-A Generalized Regression Model has a systematic component: 
-
-$$ g(y_i) = \beta_0 + \beta_1 x + \epsilon_i$$
-To generalized the systematic component, we use a link function $g(y)$, so we now require some function of the response to be linearly related to our explanatory variables. 
-
-and a random component: 
-
-$$ \epsilon_i \sim \text{ iid } EDM(\phi) $$
-In words, the errors are independently distributed according to some probability distribution in the Exponential Dispersion Family, which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all fall into this family. 
-
-We note that normal linear models fall exactly into this framework, where $g(y_i) = y_i$ the identity function, and use the Normal distribution as our random component. 
-
-
-Deciding on what Random and Systematic component to use requires u
-
-
-## Random and Systematic components for Binary and Count data
-
-The two most common cases of GRMs are those for Binary and Count data 
-
-For Binary data, the systemtatic component is, and the random component is: We call these types of GRMS logistic regression or ... 
-
-For Count data, the systematic component is, and the random component is. We call these types of GRMS 
-
-
-
-
-## Parameter estimation 
-
-The last difference between linear models and generalized linear models is the way we estimate the parameters $\beta$. 
 
 ## Conclusion
 

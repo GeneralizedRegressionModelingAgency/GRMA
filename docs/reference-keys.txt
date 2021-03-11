@@ -1,11 +1,13 @@
+eq:systematic-linear
+eq:random-linear
+about-this-book
 intro
-what-came-before---linear-models
-some-definitions
+linear-models---a-kind-of-generalized-linear-model
 assumptions-of-linear-models
 what-happens-when-we-break-the-assumptions-of-linear-models
-random-and-systematic-component
-random-and-systematic-components-for-binary-and-count-data
 parameter-estimation
+lms-and-glms-in-r
+definitions
 conclusion
 examples
 how-are-glms-different
@@ -33,4 +35,3 @@ why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
 problems-of-overdispersion-and-solutions
 learnr-test
-about-this-book
