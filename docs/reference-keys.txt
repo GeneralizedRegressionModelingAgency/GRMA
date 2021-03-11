@@ -3,7 +3,7 @@ eq:random-linear
 about-this-book
 intro
 linear-models---a-kind-of-generalized-linear-model
-assumptions-of-linear-models
+linear-assumptions
 what-happens-when-we-break-the-assumptions-of-linear-models
 parameter-estimation
 lms-and-glms-in-r
@@ -34,4 +34,3 @@ what-is-poisson-data
 why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
 problems-of-overdispersion-and-solutions
-learnr-test

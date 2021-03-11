@@ -5,7 +5,7 @@
 
 If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-Let's review why we would fit a linear model. For linear regression, given our data, if we make some key assumptions (see Chapter \@ref(linear) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
+Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \@ref(linear-assumptions) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
 
 The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:
 
@@ -30,7 +30,7 @@ ggplot2::ggplot(data.frame(x,y), ggplot2::aes(x = x, y = y)) +
 To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 \@ref{linear}. (will it? should it?) Linear models can also have multiple explanatory variables ($X_1, \ldots X_n$ instead of just one $X$), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one $X$. 
 
 
-## Assumptions of Linear Models 
+## Assumptions of Linear Models {#linear-assumptions}
 
 A linear model might very well be a good model if we have data like the above. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
 
@@ -47,7 +47,7 @@ $$y_i  = \beta_0 + \beta_1 x + \epsilon_i $$
 where 
 $$ \epsilon_i \sim \text{iid } N(0,\sigma^2)$$
 
-In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance $\sigma^2$ (notice how there is no subscript $i$ for the variance). If are performing multiple linear regression, the first assumption becomes $Y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$.
+In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance $\sigma^2$ (notice how there is no subscript $i$ for the variance). If are performing multiple linear regression, the first assumption becomes $y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \epsilon_i$.
 
 To see how the linear model is a type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so we will be able to more easily see the parallels. Instead of the response $y_i$, now consider the mean response $\mu_i$, which for a given value of one predictor $x$ is the mean, or expected value of all responses with the value of that explanatory variable.
 
@@ -165,3 +165,13 @@ Linear models are not always the best tool for describing relationship in data. 
 ## Examples 
 
 Perhaps some examples of data and students can tell what type of data it should be modeled by? 
+
+Explore the following case of where a linear model is NOT appropriate, and then fit a `glm()` call in R using an appropriate family and link function. 
+
+Note that this example might take a minute to load. 
+
+```{r, echo = F}
+knitr::include_url("https://emilypalmer.shinyapps.io/GRM_LearnR/", 
+  height = "800px")
+```
+
