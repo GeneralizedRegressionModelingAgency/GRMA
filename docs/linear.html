@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,6 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="linear.html"><a href="linear.html#a-good-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> A “Good” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.3" data-path="linear.html"><a href="linear.html#a-bad-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.3</b> A “Bad” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.4" data-path="linear.html"><a href="linear.html#summary"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression</a>
 <ul>
@@ -207,16 +210,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 4</span> Linear Models</h1>
 <div id="introduction" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
-<div class="figure">
-<img src="images/scooby_doo_meme.jpg" alt="" />
-<p class="caption">It’s linear models all the way down. Posted on reddit in r/statisticsmemes by u/not_really_redditing.</p>
-</div>
 <p>At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.</p>
 <p>The two components of a regression model are the random component and the systematic component and for linear regression,</p>
 <p><span class="math display">\[
 \begin{cases}
-  \text{var}[y_i] &amp;= \sigma^2/w_i \\
-  \mu_i &amp;= \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
 \end{cases}
 \]</span></p>
 <p>where <span class="math inline">\(w_i\)</span> are prior weights and <span class="math inline">\(w_i\)</span> and <span class="math inline">\(\text{E}[y_i] = \mu_i\)</span> are known.</p>
@@ -228,6 +227,146 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The unexplained variation in our response is constant, otherwise known as <strong>constant variance</strong>.</li>
 <li>Each datam is <strong>independent</strong> of all other data points.</li>
 </ol>
+</div>
+<div id="a-good-example-of-simple-linear-regression" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> A “Good” Example of Simple Linear Regression</h2>
+<p><code>trees</code> is a data set that comes with R. It has three variables, the diameter (mistakenly named girth in the data set), height and volume of each of the thirty-one trees in the data set. If we just type <code>data(trees)</code> into the Console, R will retreive it for us. This is the data set I’m going to use to showcase a good example of simple linear regression. At this time, let’s also make sure we have the <code>tidyverse</code> (which includes <code>ggplot</code> for graphing) loaded.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="linear.html#cb7-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb7-2"><a href="linear.html#cb7-2"></a><span class="kw">data</span>(trees)</span>
+<span id="cb7-3"><a href="linear.html#cb7-3"></a></span>
+<span id="cb7-4"><a href="linear.html#cb7-4"></a><span class="co"># Let&#39;s change the name from Girth to Diameter:</span></span>
+<span id="cb7-5"><a href="linear.html#cb7-5"></a>trees &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span></span>
+<span id="cb7-6"><a href="linear.html#cb7-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Diameter =</span> Girth) <span class="op">%&gt;%</span></span>
+<span id="cb7-7"><a href="linear.html#cb7-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Girth)</span>
+<span id="cb7-8"><a href="linear.html#cb7-8"></a></span>
+<span id="cb7-9"><a href="linear.html#cb7-9"></a><span class="kw">head</span>(trees)</span></code></pre></div>
+<pre><code>##   Height Volume Diameter
+## 1     70   10.3      8.3
+## 2     65   10.3      8.6
+## 3     63   10.2      8.8
+## 4     72   16.4     10.5
+## 5     81   18.8     10.7
+## 6     83   19.7     10.8</code></pre>
+<p>Let’s look at the scatterplot between these two variables, Diameter and Height.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="linear.html#cb9-1"></a><span class="kw">ggplot</span>(trees)<span class="op">+</span></span>
+<span id="cb9-2"><a href="linear.html#cb9-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Diameter, <span class="dt">y =</span>  Height))<span class="op">+</span></span>
+<span id="cb9-3"><a href="linear.html#cb9-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Diameter (inches)&quot;</span>)<span class="op">+</span></span>
+<span id="cb9-4"><a href="linear.html#cb9-4"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Height (feet)&quot;</span>)<span class="op">+</span></span>
+<span id="cb9-5"><a href="linear.html#cb9-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Diameter and Height of 31 Black Cherry Trees&quot;</span>)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>When plotting the explanatory variable (Diameter) against the response variable (Height), we are looking for linearity, since that is one of our conditions of fitting a linear model to our data. Though the relationship between these two variables seems to be moderate or moderately-weak, it does indeed look linear.</p>
+<p>The next condition is constant variance, which we evaluate by looking at the residuals. We first need to produce those residuals which we do by fitting the model. The <code>lm</code> function automatically saves residuals, among other information, about the model:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="linear.html#cb10-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>Diameter, <span class="dt">data =</span> trees)</span>
+<span id="cb10-2"><a href="linear.html#cb10-2"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Height ~ Diameter, data = trees)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.5816  -2.7686   0.3163   2.4728   9.9456 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  62.0313     4.3833  14.152 1.49e-14 ***
+## Diameter      1.0544     0.3222   3.272  0.00276 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.538 on 29 degrees of freedom
+## Multiple R-squared:  0.2697, Adjusted R-squared:  0.2445 
+## F-statistic: 10.71 on 1 and 29 DF,  p-value: 0.002758</code></pre>
+<p>We can view those residuals by typing <code>head(mod$residuals)</code>, let’s just look at the first six to get an idea of them.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="linear.html#cb12-1"></a><span class="kw">head</span>(mod<span class="op">$</span>residuals)</span></code></pre></div>
+<pre><code>##         1         2         3         4         5         6 
+## -0.782575 -6.098886 -8.309759 -1.102186  7.686940  9.581503</code></pre>
+<p>Next, we should view the actual residuals to check for normality and constant variance.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="linear.html#cb14-1"></a><span class="kw">ggplot</span>()<span class="op">+</span></span>
+<span id="cb14-2"><a href="linear.html#cb14-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> trees<span class="op">$</span>Diameter, <span class="dt">y =</span> mod<span class="op">$</span>residuals))<span class="op">+</span></span>
+<span id="cb14-3"><a href="linear.html#cb14-3"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)<span class="op">+</span></span>
+<span id="cb14-4"><a href="linear.html#cb14-4"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Diameter (inches)&quot;</span>)<span class="op">+</span></span>
+<span id="cb14-5"><a href="linear.html#cb14-5"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;residuals&quot;</span>)<span class="op">+</span></span>
+<span id="cb14-6"><a href="linear.html#cb14-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Residual plot&quot;</span>)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>When examining the residual plot, we are looking for two things: randomness and constant variance. Both are indications that our residuals are <span class="math inline">\(N(0,\sigma^2)\)</span>. If we don’t see randomness, i.e. there is a pattern, that indicates that are data are not linear. Constant variance is a necessary condition because when we assume the residuals are <span class="math inline">\(N(0,\sigma^2)\)</span>, the variance parameter is one estimate, <span class="math inline">\(\sigma^2\)</span>. If we see the variance of the residuals changing, then that indicates that the one variance parameter isn’t sufficient and since a normal distribution only has one variance parameter, it might not be the best model for the data.</p>
+<p>There does not seem to be a pattern to the residuals, so they look random. This again suggests our data are linear. As for constant variance, however, it seems have more variation in the middle than we do at the ends of our graph. It isn’t too bad though and we can proceed.</p>
+<p>Our last condition is independence. We evaluate independence by looking at how the data were collected. We can find out more information about the trees data set by typing <code>?trees</code> into the Console, which will bring up the help file on the data set. This data comes from 31 black cherry trees, felled for timber. Though we don’t have much information, the trees could be independent if they were randomly selected to be measured.</p>
+<p>The <code>trees</code> data set isn’t perfect for linear regression, but it meets most of our assumptions. I’ll now move on to an example of linear regression with a data set that is not linear.</p>
+</div>
+<div id="a-bad-example-of-simple-linear-regression" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> A “Bad” Example of Simple Linear Regression</h2>
+<p>First, we load in the <code>mtcars</code> data set, look at the first six obervations of each variable.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="linear.html#cb15-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb15-2"><a href="linear.html#cb15-2"></a><span class="kw">data</span>(mtcars)</span>
+<span id="cb15-3"><a href="linear.html#cb15-3"></a><span class="kw">head</span>(mtcars)</span></code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>Now, let’s take a look at a scatterplot of two variables in <code>mtcars</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="linear.html#cb17-1"></a><span class="kw">ggplot</span>(mtcars)<span class="op">+</span></span>
+<span id="cb17-2"><a href="linear.html#cb17-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg))<span class="op">+</span></span>
+<span id="cb17-3"><a href="linear.html#cb17-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Weight (in thousands of lbs)&quot;</span>)<span class="op">+</span></span>
+<span id="cb17-4"><a href="linear.html#cb17-4"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Miles per Gallon&quot;</span>)<span class="op">+</span></span>
+<span id="cb17-5"><a href="linear.html#cb17-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Car&#39;s Mileage based on Weight&quot;</span>)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>We can see that this graph looks mostly linear, there seems to be a strong, negative relationship between a car’s weight and and its mpg. There is some nonlinearity because of the three points for cars with a weight above 5,000 lbs; the graph look a bit curved so we should be cautious as we proceed.</p>
+<p>If we add a smoothed line to the plot, we can see that it is indeed curved.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="linear.html#cb18-1"></a><span class="kw">ggplot</span>(mtcars)<span class="op">+</span></span>
+<span id="cb18-2"><a href="linear.html#cb18-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg))<span class="op">+</span></span>
+<span id="cb18-3"><a href="linear.html#cb18-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg), <span class="dt">se =</span> <span class="ot">FALSE</span>)<span class="op">+</span></span>
+<span id="cb18-4"><a href="linear.html#cb18-4"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Weight (in thousands of lbs)&quot;</span>)<span class="op">+</span></span>
+<span id="cb18-5"><a href="linear.html#cb18-5"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Miles per Gallon&quot;</span>)<span class="op">+</span></span>
+<span id="cb18-6"><a href="linear.html#cb18-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Car&#39;s Mileage based on Weight&quot;</span>)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>This graph addresses one of the assumptions of linear regression: linearity. Next, let’s check whether there is constant variation. We do this with a residual plot. First, we have to fit a model to our data in order to obtain residuals.</p>
+<p>To fit a model, we use the <code>lm</code> function.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="linear.html#cb19-1"></a>fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</span>
+<span id="cb19-2"><a href="linear.html#cb19-2"></a><span class="kw">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+<p>Among other things, the <code>lm</code> function saves the residuals.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="linear.html#cb21-1"></a><span class="kw">head</span>(fit<span class="op">$</span>residuals)</span></code></pre></div>
+<pre><code>##         Mazda RX4     Mazda RX4 Wag        Datsun 710    Hornet 4 Drive 
+##        -2.2826106        -0.9197704        -2.0859521         1.2973499 
+## Hornet Sportabout           Valiant 
+##        -0.2001440        -0.6932545</code></pre>
+<p>We can plot the residuals against the weight and look for randomness and constant variance.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="linear.html#cb23-1"></a><span class="kw">ggplot</span>()<span class="op">+</span></span>
+<span id="cb23-2"><a href="linear.html#cb23-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>wt, <span class="dt">y =</span> fit<span class="op">$</span>residuals))<span class="op">+</span></span>
+<span id="cb23-3"><a href="linear.html#cb23-3"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)<span class="op">+</span></span>
+<span id="cb23-4"><a href="linear.html#cb23-4"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Weight (in thousands of lbs)&quot;</span>)<span class="op">+</span></span>
+<span id="cb23-5"><a href="linear.html#cb23-5"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;residuals&quot;</span>)<span class="op">+</span></span>
+<span id="cb23-6"><a href="linear.html#cb23-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Residual plot&quot;</span>)</span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The graph above seems to have a curved pattern. The cars that weigh the least have large residuals, all above the zero line. The residuals of the cars that weigh between 2,250 and 4,250 lbs are lower and seem to be centered on the zero line. The cars that weigh the heaviest also have large residuals. So, there seems to be a parabola shape to our data, indicating nonlinearity.</p>
+<p>As for constant variance, we could go either way. As we look at different car weights, the distance between the top-most point and the bottom-most point is fairly similar indicating we could have constant variance. That might be enough evidence for some folks, but others might point out that the though the cars that weigh the least and the cars that weigh between 2,250 and 4,250 lbs are similar, cars that weigh the most have very small variance comparatively.</p>
+<p>Lastly, we need independence. We evaluate independence by checking the data and how it was obtained. If you type <code>?mtcars</code> into the Console, the Help file with pop up for the <code>mtcars</code> data set. Here, we learn that the data came from a 1981 textbook on biometrics. While there isn’t much information on the data here, we can look to the data for answers. The data records many different attributes of certain make and models of cars. In general, one car of a particular make and model is unlikely to influence the attributes of another car. The only exception I can think of is cars of the same make. Perhaps two cars made by Mazda might not be totally independent, but this would be a more serious concern if we had observations of two cars with the same make and model but different years. So, this last condition is likely met.</p>
+<p>In general, using <code>wt</code> to explain <code>mpg</code> in the <code>mtcars</code> data set could have gone worse. The violations of the assumptions were quite small and some folks might find that thee transgressions to be ignorable. We should not take violations lightly, however, especially since there are steps we can take if our data isn’t meeting the assumptions. Transformations are always an option but if we have data of a particular kind, e.g. binary data or count data, we can use generalized linear models instead.</p>
+</div>
+<div id="summary" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Summary</h2>
+<p>Often we want to fit our data with a model to better understand our response variable or to try to predict new events. The ideal case (because it is common, widely used and easy to interpret) is that we can fit a linear model to the data. In order to do so, the relationship between the response variable and the explanatory variable(s) needs to be linear, we need to have constant variance, and the data needs to be independent.</p>
+<p>If these condtions are not met, then there are steps we can take. One of which is transformations, we will not be going over that. The other is to fit a generalized linear model, which doesn’t necessarily assume the data come from a normal distribution.</p>
 
 </div>
 </div>

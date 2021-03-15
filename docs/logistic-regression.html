@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,6 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="linear.html"><a href="linear.html#a-good-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> A “Good” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.3" data-path="linear.html"><a href="linear.html#a-bad-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.3</b> A “Bad” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.4" data-path="linear.html"><a href="linear.html#summary"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression</a>
 <ul>
@@ -280,25 +283,25 @@ where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a posit
 </div>
 <div id="what-does-a-bunch-of-binomial-data-look-like-then" class="section level3" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> What does a bunch of binomial data look like then?</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="logistic-regression.html#cb7-1"></a>possibilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="co"># either heads (1) or tails (0).</span></span>
-<span id="cb7-2"><a href="logistic-regression.html#cb7-2"></a>                        <span class="co"># c(...) makes a list of whatever you include in the ...</span></span>
-<span id="cb7-3"><a href="logistic-regression.html#cb7-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
-<span id="cb7-4"><a href="logistic-regression.html#cb7-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
-<span id="cb7-5"><a href="logistic-regression.html#cb7-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
-<pre><code>##  [1] 0 0 0 1 0 0 0 1 1 0</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="logistic-regression.html#cb9-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
-<span id="cb9-2"><a href="logistic-regression.html#cb9-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
-<span id="cb9-3"><a href="logistic-regression.html#cb9-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>
-<span id="cb9-4"><a href="logistic-regression.html#cb9-4"></a>                        <span class="co">#   second flip is just as likely to get heads or tails</span></span>
-<span id="cb9-5"><a href="logistic-regression.html#cb9-5"></a>                        <span class="co">#   as the first: we *do* replace.</span></span>
-<span id="cb9-6"><a href="logistic-regression.html#cb9-6"></a>                        <span class="co"># prob is a vector of probabilities for each x</span></span>
-<span id="cb9-7"><a href="logistic-regression.html#cb9-7"></a>                        <span class="co"># encasing the whole thing in parentheses shows the</span></span>
-<span id="cb9-8"><a href="logistic-regression.html#cb9-8"></a>                        <span class="co">#   value of the variable you set as you set it</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="logistic-regression.html#cb24-1"></a>possibilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="co"># either heads (1) or tails (0).</span></span>
+<span id="cb24-2"><a href="logistic-regression.html#cb24-2"></a>                        <span class="co"># c(...) makes a list of whatever you include in the ...</span></span>
+<span id="cb24-3"><a href="logistic-regression.html#cb24-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb24-4"><a href="logistic-regression.html#cb24-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
+<span id="cb24-5"><a href="logistic-regression.html#cb24-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
+<pre><code>##  [1] 1 0 0 0 1 1 1 0 1 1</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
+<span id="cb26-2"><a href="logistic-regression.html#cb26-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
+<span id="cb26-3"><a href="logistic-regression.html#cb26-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>
+<span id="cb26-4"><a href="logistic-regression.html#cb26-4"></a>                        <span class="co">#   second flip is just as likely to get heads or tails</span></span>
+<span id="cb26-5"><a href="logistic-regression.html#cb26-5"></a>                        <span class="co">#   as the first: we *do* replace.</span></span>
+<span id="cb26-6"><a href="logistic-regression.html#cb26-6"></a>                        <span class="co"># prob is a vector of probabilities for each x</span></span>
+<span id="cb26-7"><a href="logistic-regression.html#cb26-7"></a>                        <span class="co"># encasing the whole thing in parentheses shows the</span></span>
+<span id="cb26-8"><a href="logistic-regression.html#cb26-8"></a>                        <span class="co">#   value of the variable you set as you set it</span></span></code></pre></div>
 <p>So zeros and ones, we expect that (sorry if you’re the 2 in <span class="math inline">\(2^{10}\)</span> readers who see all zeroes or ones). Lets check a simple histogram.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="logistic-regression.html#cb10-1"></a><span class="kw">hist</span>(flip_data)         <span class="co"># hist() generates a simple historam. We could make</span></span></code></pre></div>
-<p><img src="Bookdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="logistic-regression.html#cb11-1"></a>                        <span class="co"># this prettier with ggplot2, but we don&#39;t need that right</span></span>
-<span id="cb11-2"><a href="logistic-regression.html#cb11-2"></a>                        <span class="co"># now.</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="logistic-regression.html#cb27-1"></a><span class="kw">hist</span>(flip_data)         <span class="co"># hist() generates a simple historam. We could make</span></span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="logistic-regression.html#cb28-1"></a>                        <span class="co"># this prettier with ggplot2, but we don&#39;t need that right</span></span>
+<span id="cb28-2"><a href="logistic-regression.html#cb28-2"></a>                        <span class="co"># now.</span></span></code></pre></div>
 </div>
 </div>
 <div id="why-doesnt-ols-work-for-binomial-data" class="section level2" number="5.2">
