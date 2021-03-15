@@ -15,7 +15,7 @@ description: "Generalized Linear Models for non-statistics graduate students"
 Welcome to our bookdown book on Generalized Linear Models. This book is the result of the authors' Reading and Conference Class at Oregon State University Winter term 2021. We hope you find it useful. The code generating this book can be found at https://github.com/GeneralizedRegressionModelingAgency/GRMA. If you find a problem or have questions, we encourage you to file an issue in our Github Repository. 
 
 
-To learn this material ourselves, we used __Generalized Linear Models With Examples in R__ by Peter K. Dunn and Gordon K. Smyth[@dunn2018generalized]. If you are looking for more background reading or examples and applicaitons, we reccomend this book, as it is a good, accessible, resource to understand these models. 
+To learn this material ourselves, we used __Generalized Linear Models With Examples in R__ by Peter K. Dunn and Gordon K. Smyth[@dunn2018generalized]. If you are looking for more background reading or examples and applications, we recommend this book, as it is a good, accessible, resource to understand these models. 
 
 In this book, we used the following data for examples: (add sources)
 
