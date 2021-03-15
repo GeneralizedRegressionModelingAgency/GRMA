@@ -5,8 +5,10 @@ account: emilypalmer
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3597361
-bundleId: 4193278
+bundleId: 4291859
 url: https://emilypalmer.shinyapps.io/GRM_LearnR/
-when: 1612734791.14863
+when: 1614714460.73949
 asMultiple: FALSE
 asStatic: FALSE
+additionalFiles: GRM_LearnR_files/figure-html/unnamed-chunk-1-1.png|GRM_LearnR.Rmd|GRM_LearnR.html
+ignoredFiles: _bookdown.yml|_output.yml|.nojekyll|01-intro.Rmd|02-GLM_setup.Rmd|03-Linear_Models.Rmd|04-Logistic_Regression.Rmd|05-PoissonGlms.Rmd|06-learnR_example.Rmd|07-references.Rmd|book.bib|index.Rmd|packages.bib|preamble.tex|README.md|style.css|workflow.md|_bookdown_files/Bookdown_files/figure-html/nice-fig-1.png|_bookdown_files/Bookdown_files/figure-latex/nice-fig-1.pdf|Emma/test.Rmd|images/put_a_bird.png|Kat/problem4.8.html|Kat/problem4.8.rmd|Leah/Git test.Rmd|learnR_data/data_ex1.csv|learnR_data/learnR_data_saving.R|_book|Andrew|docs|Emily

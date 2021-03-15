@@ -2,6 +2,10 @@
 title: "Tutorial"
 output: learnr::tutorial
 runtime: shiny_prerendered
+resource_files:
+- GRM_LearnR_files/figure-html/unnamed-chunk-1-1.png
+- GRM_LearnR.Rmd
+- GRM_LearnR.html
 ---
 
 ```{r setup, include=FALSE}
@@ -14,12 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Example case where Linear models fail 
 
 ```{r, echo = F}
-xs <- rnorm(30)
-z <- 3*xs
-p <-  1/(1+exp(-z)) 
-ys = rbinom(30,1,p )
-
-data <- data.frame(x = xs, y = ys)
+data <- read_csv("https://raw.githubusercontent.com/empalmer/GRMA/main/learnR_data/data_ex1.csv")
 
 ggplot(data)+ 
   geom_point(aes(x,y))
@@ -56,7 +55,7 @@ quiz(
 Write the R code required to run a generalized linear model using the given `data` data frame. 
 
 ```{r glm_call, exercise=TRUE, exercise.eval = TRUE}
-data
+data <- read_csv("https://raw.githubusercontent.com/empalmer/GRMA/main/learnR_data/data_ex1.csv")
 ```
 
 ```{r glm_call-hint}

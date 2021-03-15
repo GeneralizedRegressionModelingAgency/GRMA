@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Poisson Regression | An Introduction to Generalized Linear Models</title>
+  <meta name="description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Poisson Regression | An Introduction to Generalized Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Poisson Regression | An Introduction to Generalized Linear Models" />
+  
+  <meta name="twitter:description" content="This is a draft of the book that we will write for non-Statisticians to understand GRMS" />
+  
+
+<meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
+
+
+<meta name="date" content="2021-03-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="logistic-regression.html"/>
+<link rel="next" href="learnr-test.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GRMs</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#what-came-before---linear-models"><i class="fa fa-check"></i><b>1.1</b> What came before - Linear models</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#some-definitions"><i class="fa fa-check"></i><b>1.2</b> Some definitions</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>1.3</b> Assumptions of linear models</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>1.4</b> What happens when we break the assumptions of linear models</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#random-and-systematic-component"><i class="fa fa-check"></i><b>1.5</b> Random and Systematic Component</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#random-and-systematic-components-for-binary-and-count-data"><i class="fa fa-check"></i><b>1.6</b> Random and Systematic components for Binary and Count data</a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>1.7</b> Parameter estimation</a></li>
+<li class="chapter" data-level="1.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>1.8</b> Conclusion</a></li>
+<li class="chapter" data-level="1.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>1.9</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>2</b> How are GLMs “different”?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#introdution"><i class="fa fa-check"></i><b>2.1</b> Introdution</a></li>
+<li class="chapter" data-level="2.2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#assumptions-of-a-glm"><i class="fa fa-check"></i><b>2.2</b> Assumptions of a GLM</a></li>
+<li class="chapter" data-level="2.3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#framework"><i class="fa fa-check"></i><b>2.3</b> Framework</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#exponential-dispersion-models"><i class="fa fa-check"></i><b>2.3.1</b> Exponential Dispersion models</a></li>
+<li class="chapter" data-level="2.3.2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#properties-of-edms"><i class="fa fa-check"></i><b>2.3.2</b> Properties of EDMs</a></li>
+<li class="chapter" data-level="2.3.3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#linking-the-edm-to-the-explanatory-data"><i class="fa fa-check"></i><b>2.3.3</b> Linking the EDM to the explanatory data</a></li>
+<li class="chapter" data-level="2.3.4" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#formal-definition-of-a-glm"><i class="fa fa-check"></i><b>2.3.4</b> Formal definition of a GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>3</b> Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>4</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#what-is-binomial-data"><i class="fa fa-check"></i><b>4.1</b> What is Binomial Data?</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#refresher-bernoulli-and-binomial"><i class="fa fa-check"></i><b>4.1.1</b> Refresher: Bernoulli and Binomial</a></li>
+<li class="chapter" data-level="4.1.2" data-path="logistic-regression.html"><a href="logistic-regression.html#representing-the-bernoulli-distribution"><i class="fa fa-check"></i><b>4.1.2</b> Representing the Bernoulli distribution</a></li>
+<li class="chapter" data-level="4.1.3" data-path="logistic-regression.html"><a href="logistic-regression.html#representing-the-binomial-distribution"><i class="fa fa-check"></i><b>4.1.3</b> Representing the binomial distribution</a></li>
+<li class="chapter" data-level="4.1.4" data-path="logistic-regression.html"><a href="logistic-regression.html#what-does-a-bunch-of-binomial-data-look-like-then"><i class="fa fa-check"></i><b>4.1.4</b> What does a bunch of binomial data look like then?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#why-doesnt-ols-work-for-binomial-data"><i class="fa fa-check"></i><b>4.2</b> Why doesn’t OLS work for Binomial Data?</a></li>
+<li class="chapter" data-level="4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#link-functions-we-can-use"><i class="fa fa-check"></i><b>4.3</b> Link functions we can use</a></li>
+<li class="chapter" data-level="4.4" data-path="logistic-regression.html"><a href="logistic-regression.html#ed50"><i class="fa fa-check"></i><b>4.4</b> ED50</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="poisson-regression.html"><a href="poisson-regression.html#what-is-poisson-data"><i class="fa fa-check"></i><b>5.1</b> What is Poisson data?</a></li>
+<li class="chapter" data-level="5.2" data-path="poisson-regression.html"><a href="poisson-regression.html#why-ordinary-least-squares-does-not-work-for-poisson-data"><i class="fa fa-check"></i><b>5.2</b> Why ordinary least squares does not work for Poisson data</a></li>
+<li class="chapter" data-level="5.3" data-path="poisson-regression.html"><a href="poisson-regression.html#link-functions-for-poisson-glms"><i class="fa fa-check"></i><b>5.3</b> Link functions for Poisson GLM’s</a></li>
+<li class="chapter" data-level="5.4" data-path="poisson-regression.html"><a href="poisson-regression.html#problems-of-overdispersion-and-solutions"><i class="fa fa-check"></i><b>5.4</b> Problems of overdispersion and solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="learnr-test.html"><a href="learnr-test.html"><i class="fa fa-check"></i><b>6</b> LearnR test</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to Generalized Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="poisson-regression" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Poisson Regression</h1>
+<div id="what-is-poisson-data" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> What is Poisson data?</h2>
+<p>Poisson data occurs when there is a need to model counts. The counts of events being modeled should be independent and the upper limit of the counts is much greater than the majority of the counts or even may not exist. Possion GLMs can also be used to model rates, used to compare counts across the unit of populations, when a Binomial GLM would not be appropriate. This occurs when populations are large and the rate of occurance is very small, usually less than 1%. The Poisson distribution has probability function P(y|<span class="math inline">\(\mu\)</span>) = <span class="math inline">\(e^{-\mu}\mu^y/y!\)</span> for y = 0, 1, 2,… and <span class="math inline">\(\mu\)</span> &gt; 0.</p>
+</div>
+<div id="why-ordinary-least-squares-does-not-work-for-poisson-data" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Why ordinary least squares does not work for Poisson data</h2>
+<p>Ordinary least squares (OLS) regression cannot be used for Poisson data. Count data violates the constant variance assumption of OLS because as the counts are smaller and approach 0, the variance of the response must decrease, and as the counts grow larger, the variance of the response will tend to increase. The normal distribution is also not adequate for modeling the random component of count data because counts are both non-negative and discrete. The Poisson distribution is a more suitable option to model count data.</p>
+</div>
+<div id="link-functions-for-poisson-glms" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Link functions for Poisson GLM’s</h2>
+<p>The most common link function used for Poisson regression is the logrithmic link function because it guarentees that <span class="math inline">\(\mu\)</span> will be greater than 0 and makes interpretation of the regression parameters more straightforward, since they are interpreted as having multiplicative effects. The systematic component of a Poisson GLM is <span class="math inline">\(\mu = e^{\beta_0 + \beta_1x_1 + ... + \beta_px_p}\)</span> and increasing <span class="math inline">\(x_j\)</span> by one will increase <span class="math inline">\(\mu\)</span> by a factor of <span class="math inline">\(\beta_j\)</span>. Other link functions, while less commmon, can be used for a Poisson GLM. The identity link function, where <span class="math inline">\(\eta = \mu\)</span>, or the sqrt link function, where <span class="math inline">\(\eta = \sqrt{\mu}\)</span>, are two options. When all of the explanatory variables are quantitative, the data are modeled by a Poisson regression model. Additionally, quantile residuals should be used to asses the model fit since the data are discrete. Count data can also be represented in contingency tables so that observations can be cross-classified in their relevant categories. These data are modeled using a log-linear model, where all of the explanatory variables are qualitative.</p>
+</div>
+<div id="problems-of-overdispersion-and-solutions" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Problems of overdispersion and solutions</h2>
+<p>A characteristic of the Poisson distribution is that the mean <span class="math inline">\(\mu\)</span> equals the variance. However, when modeling real data, this assumption can be a bit <span class="math inline">\({fishy}\)</span>, since the variance is usually greater than <span class="math inline">\(\mu\)</span>, which is overdispersion. Overdispersion occurs because the events being counted have a positive correlation and so are not independent. Overdispersion is an issue in Poisson GLM’s because the standard errors of the estimated <span class="math inline">\(\beta_j\)</span> will be underestimated, making the model’s explanatory variables appear more significant than they actually are. Models fit using the Poisson family can be checked for overdispersion by comparing the residual deviance compared to the residual degrees of freedom. If the residual deviance is greater than the degrees of freedom, the model is overdispersed, and if the residual deviance is much less than the degrees of freedom, the model is underdispersed, a less frequent occurence. A large residual deviance compared to the residual degrees of freedom could also indicate a lack of fit, but this can be checked by eliminating outliers and fits the a model with the most explanatory variables possible. The residual deviance will still be large if overdispersion is the issue. Similarly, the Pearson goodness-of-fit statistic can be compared to the residual degrees of freedom to check for overdispersion. This method should be used when the counts are small, so asymptotic approximations would not be appropriate. Here, large goodness-of-fit statistics indicate a poor fit. If there is overdispersion after fitting a Poisson GLM, the model can be fit using other related families. By modeling the data using a hierarchical model to add more variability, <span class="math inline">\(\mu\)</span> can be treated as a random variable, resulting in the response variable of interest following a negative binomial distribution. The expectation of <span class="math inline">\(y_i\)</span> is <span class="math inline">\(\mu_i\)</span> and the variance of <span class="math inline">\(y_i\)</span> is now <span class="math inline">\(\mu_i + \psi\mu_i^2\)</span>, where <span class="math inline">\(\psi\mu_i^2\)</span> is the added overdispersion term and <span class="math inline">\(\psi\)</span> is larger when overdispersion is greater. The MASS package contains the function glm.nb() to model negative binomial GLMs. The standard link function is the log-link function so that <span class="math inline">\(\mu\)</span> &gt; 0, and similar to the Poisson GLM, quantile residuals should be used. Quasi-Poisson models are another alternative to Poisson GLMs when there is overdispersion. The variance of <span class="math inline">\(y_i\)</span> is now <span class="math inline">\(\phi\mu_i\)</span>, where <span class="math inline">\(\phi\)</span> &gt; 1 represents overdispersion and raises standard errors to a factor of <span class="math inline">\(\sqrt{\phi}\)</span>. Quasi-Poisson models can be fit in R by family = quasipoisson(). Quantile residuals cannot be found because the quasi-Poisson model is not a probability model but standardized deviance residuals can be examoned.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="learnr-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Bookdown.pdf", "Bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

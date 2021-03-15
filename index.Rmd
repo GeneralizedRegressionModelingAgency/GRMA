@@ -1,14 +1,22 @@
 --- 
-title: "TBD GRM Book"
-author: "Emily Palmer et.al."
+title: "An Introduction to Generalized Linear Models"
+author: "Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This is a draft of the book that we will write for non-Statisticians to understand GRMS"
+description: "Generalized Linear Models for non-statistics graduate students"
 ---
 
+# About this book
+
+Welcome to our bookdown book on Generalized Linear Models. This book is the result of the authors' Reading and Conference Class at Oregon State University Winter term 2021. We hope you find it useful. The code generating this book can be found at https://github.com/GeneralizedRegressionModelingAgency/GRMA. If you find a problem or have questions, we encourage you to file an issue in our Github Repository. 
 
 
+To learn this material ourselves, we used __Generalized Linear Models With Examples in R__ by Peter K. Dunn and Gordon K. Smyth[@dunn2018generalized]. If you are looking for more background reading or examples and applicaitons, we reccomend this book, as it is a good, accessible, resource to understand these models. 
+
+In this book, we used the following data for examples: (add sources)
+
+A big thank you to James Molyneux for leading and organizing our reading and conference class. 
