@@ -1,5 +1,7 @@
 # Linear Models {#linear}
 
+![It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not_really_redditing.](images/scooby_doo_meme.jpg)
+
 ## Introduction
 
 At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.

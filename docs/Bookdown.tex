@@ -237,13 +237,13 @@ Let's use some simulated data to see how GLMs are fit in R, and
 \end{Shaded}
 
 \begin{verbatim}
-##           y     x1    x2
-## 1 -678.0054   2.00 223.4
-## 2 -848.6161 -64.75 237.8
-## 3 -197.2991 202.25 201.6
-## 4 -834.2980 -85.75 225.2
-## 5 -381.3143 194.75 267.7
-## 6 -773.6472 -70.75 219.8
+##            y     x1    x2
+## 1  -641.7828 136.25 296.0
+## 2  -902.4051  -2.50 285.6
+## 3 -1013.4459 -97.00 274.7
+## 4  -760.1348  12.50 262.7
+## 5  -380.4852 196.25 249.9
+## 6  -521.1956 179.00 287.8
 \end{verbatim}
 
 First, fit a linear model the normal way, using \texttt{lm()}
@@ -262,19 +262,19 @@ First, fit a linear model the normal way, using \texttt{lm()}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -59.999 -17.966   2.516  22.005  69.337 
+## -45.433 -12.103   0.442  17.111  46.223 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 11.15952   30.63225   0.364    0.717    
-## x1           1.98268    0.03514  56.423   <2e-16 ***
-## x2          -3.04296    0.12302 -24.735   <2e-16 ***
+## (Intercept) 26.40168   21.40957   1.233    0.222    
+## x1           1.97829    0.02344  84.414   <2e-16 ***
+## x2          -3.10752    0.08519 -36.478   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 31.48 on 72 degrees of freedom
-## Multiple R-squared:  0.9814, Adjusted R-squared:  0.9808 
-## F-statistic:  1894 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 21.54 on 72 degrees of freedom
+## Multiple R-squared:  0.9916, Adjusted R-squared:  0.9913 
+## F-statistic:  4235 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
@@ -293,19 +293,19 @@ Now we show that we can use \texttt{glm()} the same way, specifying \texttt{fami
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -59.999 -17.966   2.516  22.005  69.337 
+## -45.433 -12.103   0.442  17.111  46.223 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 11.15952   30.63225   0.364    0.717    
-## x1           1.98268    0.03514  56.423   <2e-16 ***
-## x2          -3.04296    0.12302 -24.735   <2e-16 ***
+## (Intercept) 26.40168   21.40957   1.233    0.222    
+## x1           1.97829    0.02344  84.414   <2e-16 ***
+## x2          -3.10752    0.08519 -36.478   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 31.48 on 72 degrees of freedom
-## Multiple R-squared:  0.9814, Adjusted R-squared:  0.9808 
-## F-statistic:  1894 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 21.54 on 72 degrees of freedom
+## Multiple R-squared:  0.9916, Adjusted R-squared:  0.9913 
+## F-statistic:  4235 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like \texttt{coef()}, \texttt{predict()}, etc, will perform as expected, when we pass a generalized linear model fitted using \texttt{glm()} in as the first argument.
@@ -478,6 +478,12 @@ Formally, a Generalized Linear Model is made of two components: the \emph{probab
 
 \hypertarget{linear}{%
 \chapter{Linear Models}\label{linear}}
+
+\begin{figure}
+\centering
+\includegraphics{images/scooby_doo_meme.jpg}
+\caption{It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not\_really\_redditing.}
+\end{figure}
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -898,7 +904,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 0 1 1 0 0 1 0 0
+##  [1] 1 1 1 1 1 1 1 1 0 0
 \end{verbatim}
 
 \begin{Shaded}
@@ -943,25 +949,115 @@ So zeros and ones, we expect that (sorry if you're the 2 in \(2^{10}\) readers w
 \hypertarget{poisson-regression}{%
 \chapter{Poisson Regression}\label{poisson-regression}}
 
+After learning about one type of GLM using Binomial data in the previous section, this chapter will explore another common type of data where GLMs are used - Poisson data.
+
 \hypertarget{what-is-poisson-data}{%
 \section{What is Poisson data?}\label{what-is-poisson-data}}
 
-Poisson data occurs when there is a need to model counts. The counts of events being modeled should be independent and the upper limit of the counts is much greater than the majority of the counts or even may not exist. Possion GLMs can also be used to model rates, used to compare counts across the unit of populations, when a Binomial GLM would not be appropriate. This occurs when populations are large and the rate of occurance is very small, usually less than 1\%. The Poisson distribution has probability function P(y\textbar{}\(\mu\)) = \(e^{-\mu}\mu^y/y!\) for y = 0, 1, 2,\ldots{} and \(\mu\) \textgreater{} 0.
+To begin, we will start with the types of Poisson data that you may come across. Poisson data occurs when there is a need to model counts. Count data appears often in real world applications, so modeling this data accurately is an important skill to have. The counts of events being modeled should be independent and the upper limit of the counts should be much greater than the majority of the counts - this limit may not even exist. Possion GLMs can also be used to model rates when a Binomial GLM would not be appropriate. This occurs when populations are large and the rate of occurance is very small, usually less than 1\%. The Poisson distribution has probability function P(y\textbar{}\(\mu\)) = \(e^{-\mu}\mu^y/y!\) for y = 0, 1, 2,\ldots{} and \(\mu\) \textgreater{} 0.
 
 \hypertarget{why-ordinary-least-squares-does-not-work-for-poisson-data}{%
 \section{Why ordinary least squares does not work for Poisson data}\label{why-ordinary-least-squares-does-not-work-for-poisson-data}}
 
-Ordinary least squares (OLS) regression cannot be used for Poisson data. Count data violates the constant variance assumption of OLS because as the counts are smaller and approach 0, the variance of the response must decrease, and as the counts grow larger, the variance of the response will tend to increase. The normal distribution is also not adequate for modeling the random component of count data because counts are both non-negative and discrete. The Poisson distribution is a more suitable option to model count data.
+Similar to other types of GLMs that you have seen previously, ordinary least squares (OLS) regression cannot be used for Poisson data. Count data violates the constant variance assumption of OLS because as the counts get smaller and approach 0, the variance of the response must decrease, and as the counts grow larger, the variance of the response will tend to increase. The normal distribution is also not adequate for modeling the random component of count data because counts are both non-negative and discrete. The Poisson distribution is a more suitable option to model count data.
 
 \hypertarget{link-functions-for-poisson-glms}{%
 \section{Link functions for Poisson GLM's}\label{link-functions-for-poisson-glms}}
 
-The most common link function used for Poisson regression is the logrithmic link function because it guarentees that \(\mu\) will be greater than 0 and makes interpretation of the regression parameters more straightforward, since they are interpreted as having multiplicative effects. The systematic component of a Poisson GLM is \(\mu = e^{\beta_0 + \beta_1x_1 + ... + \beta_px_p}\) and increasing \(x_j\) by one will increase \(\mu\) by a factor of \(\beta_j\). Other link functions, while less commmon, can be used for a Poisson GLM. The identity link function, where \(\eta = \mu\), or the sqrt link function, where \(\eta = \sqrt{\mu}\), are two options. When all of the explanatory variables are quantitative, the data are modeled by a Poisson regression model. Additionally, quantile residuals should be used to asses the model fit since the data are discrete. Count data can also be represented in contingency tables so that observations can be cross-classified in their relevant categories. These data are modeled using a log-linear model, where all of the explanatory variables are qualitative.
+The most common link function used for Poisson regression is the logrithmic link function because it guarentees that \(\mu\) will be greater than 0. It also makes interpretation of the regression parameters more straightforward, since they are interpreted as having multiplicative effects. The systematic component of a Poisson GLM is \(\mu = e^{\beta_0 + \beta_1x_1 + ... + \beta_px_p}\) and increasing \(x_j\) by one will increase \(\mu\) by a factor of \(\beta_j\). Other link functions, while less commmon, can be used for a Poisson GLM. The identity link function, where \(\eta = \mu\), or the sqrt link function, where \(\eta = \sqrt{\mu}\), are two additional options. When all of the explanatory variables are quantitative, the data are modeled by a Poisson regression model using one of the three previous link functions. Additionally, quantile residuals should be used to asses the model fit since the data are discrete. Count data can also be represented in contingency tables so that observations can be cross-classified in their respective categories. These data are modeled using a log-linear model, where all of the explanatory variables are qualitative.
+
+\hypertarget{poisson-example}{%
+\section{Poisson Example}\label{poisson-example}}
+
+Now that we have had a chance to go over some of the characteristics of Poisson GLMs, let's look at an example involving baseball data. The dataset that we will use is a subset of data from the Lahman package, which is an extensive collection of baseball statistics since the 1800s. This package is an excellant resource for fellow baseball fans to practice fitting various GLM models, including Binomial regressions. The dataset that we will be focusing on is the batting statistics from every World Series during the liveball era. If you do not have the following packages, please take a moment to install them using the install.packages command. To start, we will need to load the Lahman package and the tidyverse package to access our World Series data, which is a subset of the Postseason dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(Lahman)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Lahman
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(tidyverse)}
+\KeywordTok{data}\NormalTok{(BattingPost)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we can manipulate the data to focus only on the World Series batting statistics from the liveball era:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{liveball\_ws \textless{}{-}}\StringTok{ }\NormalTok{BattingPost }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{\textgreater{}=}\StringTok{ }\DecValTok{1920}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(round }\OperatorTok{==}\StringTok{ "WS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Our response variable is going to be the runs scored by each player during each World Series from the liveball era. Initially, we can imagine that this will be a good canidate for Poisson regresssion because runs are a quantitative count. The number of runs scored by each player is also probably 0 to 1 typically, but there will be cases where a higher number of runs are occasionally scored and technically there is no upper limit to how many runs that is. Let's graph the response variable and see if this seems to be the case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ liveball\_ws, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ R)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{color =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Runs Scored"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Runs Scored During the World Series"}\NormalTok{, }
+       \DataTypeTok{subtitle =} \StringTok{"Live Ball Era"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_x\_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{10}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+This indeed looks like a great candidate for Poisson regression. We could even imagine overlaying a Poisson distribution with a \(\mu\) parameter of about 1 and see that it follows our response variable well. In fact, the mean number of runs scored in this dataset is 1.04, which would be the estimated \(\mu\) value. Let's now fit a model using batting-related outcome variables as our explanatory variables. We will model runs scored using the number of hits, doubles, triples, and home runs a player recored in each World Series:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{runmod \textless{}{-}}\StringTok{ }\KeywordTok{glm}\NormalTok{(R }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{H }\OperatorTok{+}\StringTok{ }\NormalTok{X2B }\OperatorTok{+}\StringTok{ }\NormalTok{X3B }\OperatorTok{+}\StringTok{ }\NormalTok{HR, }\DataTypeTok{data =}\NormalTok{ liveball\_ws, }\DataTypeTok{family =} \StringTok{"poisson"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(runmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = R ~ H + X2B + X3B + HR, family = "poisson", data = liveball_ws)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.7850  -0.8260  -0.8260   0.4824   3.8405  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -1.075579   0.027460 -39.170  < 2e-16 ***
+## H            0.253262   0.005771  43.884  < 2e-16 ***
+## X2B          0.044604   0.017234   2.588  0.00965 ** 
+## X3B          0.087291   0.036760   2.375  0.01757 *  
+## HR           0.266188   0.015666  16.991  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 9503.5  on 4279  degrees of freedom
+## Residual deviance: 4161.1  on 4275  degrees of freedom
+## AIC: 8949.7
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+All of the variables here are significant at the standard .05 significance level, so they are all important for modeling the number of runs scored. Another point of interest to note from the model summary output is that the residual deviance of 4119 is smaller than its degress of freedom 4225 and much smaller than the null deviance of 9383. We will discuss why we should look at the residual deviance versus its degrees of freedom in the next section, but for now, the key takeaway is that the Poisson distribution was a good choice to model our data. Additionally, compared to our higher null deviance, our model does a good job of explaining the variability of runs scored. If baseball is a topic that interests you, I would encourage you to download the Lahman package and see if you can improve on this model by lowering the AIC.
 
 \hypertarget{problems-of-overdispersion-and-solutions}{%
 \section{Problems of overdispersion and solutions}\label{problems-of-overdispersion-and-solutions}}
 
-A characteristic of the Poisson distribution is that the mean \(\mu\) equals the variance. However, when modeling real data, this assumption can be a bit \({fishy}\), since the variance is usually greater than \(\mu\), which is overdispersion. Overdispersion occurs because the events being counted have a positive correlation and so are not independent. Overdispersion is an issue in Poisson GLM's because the standard errors of the estimated \(\beta_j\) will be underestimated, making the model's explanatory variables appear more significant than they actually are. Models fit using the Poisson family can be checked for overdispersion by comparing the residual deviance compared to the residual degrees of freedom. If the residual deviance is greater than the degrees of freedom, the model is overdispersed, and if the residual deviance is much less than the degrees of freedom, the model is underdispersed, a less frequent occurence. A large residual deviance compared to the residual degrees of freedom could also indicate a lack of fit, but this can be checked by eliminating outliers and fits the a model with the most explanatory variables possible. The residual deviance will still be large if overdispersion is the issue. Similarly, the Pearson goodness-of-fit statistic can be compared to the residual degrees of freedom to check for overdispersion. This method should be used when the counts are small, so asymptotic approximations would not be appropriate. Here, large goodness-of-fit statistics indicate a poor fit. If there is overdispersion after fitting a Poisson GLM, the model can be fit using other related families. By modeling the data using a hierarchical model to add more variability, \(\mu\) can be treated as a random variable, resulting in the response variable of interest following a negative binomial distribution. The expectation of \(y_i\) is \(\mu_i\) and the variance of \(y_i\) is now \(\mu_i + \psi\mu_i^2\), where \(\psi\mu_i^2\) is the added overdispersion term and \(\psi\) is larger when overdispersion is greater. The MASS package contains the function glm.nb() to model negative binomial GLMs. The standard link function is the log-link function so that \(\mu\) \textgreater{} 0, and similar to the Poisson GLM, quantile residuals should be used. Quasi-Poisson models are another alternative to Poisson GLMs when there is overdispersion. The variance of \(y_i\) is now \(\phi\mu_i\), where \(\phi\) \textgreater{} 1 represents overdispersion and raises standard errors to a factor of \(\sqrt{\phi}\). Quasi-Poisson models can be fit in R by family = quasipoisson(). Quantile residuals cannot be found because the quasi-Poisson model is not a probability model but standardized deviance residuals can be examoned.
+A characteristic of the Poisson distribution is that the mean \(\mu\) equals the variance. However, when modeling real data, this assumption can be a bit \({fishy}\), since the variance is usually greater than \(\mu\), resulting in overdispersion. Overdispersion occurs because the events being counted have a positive correlation and are not completely independent. We did not have to worry about overdispersion in our previous example, but you will likely come across it in other datasets. Overdispersion is an issue for Poisson GLMs because the standard errors of the \(\beta_j\) estimates will be underestimated, making the model's explanatory variables appear more significant than they actually are. Models fit using the Poisson family can be checked for overdispersion by comparing the residual deviance to the residual degrees of freedom. If the residual deviance is greater than the degrees of freedom, the model is overdispersed, and if the residual deviance is much less than the degrees of freedom, the model is underdispersed, a less frequent occurence. A large residual deviance compared to the residual degrees of freedom could also indicate a lack of fit, but this can be checked by eliminating outliers and fitting the model with the most explanatory variables possible. The residual deviance will still be large if overdispersion is the issue. Similarly, the Pearson goodness-of-fit statistic can be compared to the residual degrees of freedom to check for overdispersion. If the counts are small, so asymptotic approximations might not be accurate, large goodness-of-fit statistics generally indicate a poor model fit.
+
+If there is overdispersion after fitting a Poisson GLM, the model can be fit using other related families. By modeling the data using a hierarchical model to add more variability, \(\mu\) can be treated as a random variable, resulting in the response variable of interest following a negative binomial distribution. The expectation of \(y_i\) is \(\mu_i\) and the variance of \(y_i\) is now \(\mu_i + \psi\mu_i^2\), where \(\psi\mu_i^2\) is the added overdispersion term and \(\psi\) is larger when overdispersion is greater. The MASS package contains the function glm.nb() to model negative binomial GLMs. The standard link function is the log-link function so that \(\mu\) \textgreater{} 0, and similar to the Poisson GLM, quantile residuals should be used. Quasi-Poisson models are another alternative to Poisson GLMs when there is overdispersion. The variance of \(y_i\) is now \(\phi\mu_i\), where \(\phi\) \textgreater{} 1 represents overdispersion and raises standard errors to a factor of \(\sqrt{\phi}\). Quasi-Poisson models can be fit in R by family = quasipoisson() using the usual glm function. Quantile residuals cannot be found because the quasi-Poisson model is not a probability model but standardized deviance residuals can be examoned.
 
   \bibliography{book.bib,packages.bib}
 

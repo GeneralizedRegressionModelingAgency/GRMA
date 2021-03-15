@@ -114,7 +114,7 @@
 
 \title{An Introduction to Generalized Linear Models}
 \author{Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments}
-\date{2021-03-10}
+\date{2021-03-15}
 
 \begin{document}
 \maketitle
@@ -123,53 +123,197 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-Include description of this project and intended audience
+\hypertarget{about-this-book}{%
+\chapter{About this book}\label{about-this-book}}
 
-We used \citep{dunn2018generalized}
+Welcome to our bookdown book on Generalized Linear Models. This book is the result of the authors' Reading and Conference Class at Oregon State University Winter term 2021. We hope you find it useful. The code generating this book can be found at \url{https://github.com/GeneralizedRegressionModelingAgency/GRMA}. If you find a problem or have questions, we encourage you to file an issue in our Github Repository.
 
-(also cite data we use\ldots)
+To learn this material ourselves, we used \textbf{Generalized Linear Models With Examples in R} by Peter K. Dunn and Gordon K. Smyth\citep{dunn2018generalized}. If you are looking for more background reading or examples and applicaitons, we reccomend this book, as it is a good, accessible, resource to understand these models.
 
-Add acknowledgements
+In this book, we used the following data for examples: (add sources)
+
+A big thank you to James Molyneux for leading and organizing our reading and conference class.
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-\hypertarget{what-came-before---linear-models}{%
-\section{What came before - Linear models}\label{what-came-before---linear-models}}
+\hypertarget{linear-models---a-kind-of-generalized-linear-model}{%
+\section{Linear models - a kind of Generalized Linear Model}\label{linear-models---a-kind-of-generalized-linear-model}}
 
-If you are reading this book, you might already be familiar with linear models. Given our data, if we make some key assumptions (see \ref{linear} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables).
+If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-The reasoning of linear models is often intuitive, if we make a scatterplot our data, and see this:
+Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \ref{linear-assumptions} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to increase the kinds and ways we can use data to answer questions.
 
-\begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
+The reasoning behind linear models can be intuitive; if we have two continuous variables, and make a scatterplot our data, and see this:
 
-\begin{verbatim}
-## v ggplot2 3.3.3     v purrr   0.3.4
-## v tibble  3.0.6     v dplyr   1.0.4
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.1
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
-
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-1-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/linearscatterplot-1.pdf}
 
 we might want to fit a straight line through the cloud of points, i.e.~modeling the relationship linearly.
 
-\includegraphics{Bookdown_files/figure-latex/lineplot-1.pdf}
-
-To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in chapter 3 @ref\{linear\}.
-
 \includegraphics[width=0.5\textwidth,height=\textheight]{images/put_a_bird.png}
 
-\hypertarget{some-definitions}{%
-\section{Some definitions}\label{some-definitions}}
+\includegraphics{Bookdown_files/figure-latex/linearline-1.pdf}
+
+To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 @ref\{linear\}. (will it? should it?) Linear models can also have multiple explanatory variables (\(X_1, \ldots X_n\) instead of just one \(X\)), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one \(X\).
+
+\hypertarget{linear-assumptions}{%
+\section{Assumptions of Linear Models}\label{linear-assumptions}}
+
+A linear model might very well be a good model if we have data like the above. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
+
+Linear models assume:
+
+\begin{itemize}
+\tightlist
+\item
+  The relationship between the explanatory variables and the response is linear.
+\item
+  The samples are independent.
+\item
+  The errors are normally distributed with mean 0 and constant variance.
+\end{itemize}
+
+You might have seen these assumptions written in notation as such.
+
+\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
+where
+\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
+
+In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance \(\sigma^2\) (notice how there is no subscript \(i\) for the variance). If are performing multiple linear regression, the first assumption becomes \(y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \epsilon_i\).
+
+To see how the linear model is a type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so we will be able to more easily see the parallels. Instead of the response \(y_i\), now consider the mean response \(\mu_i\), which for a given value of one predictor \(x\) is the mean, or expected value of all responses with the value of that explanatory variable.
+
+Then our assumptions become:
+
+\begin{equation}
+\mu_i = \beta_0 + \beta_1 x \label{eq:systematic-linear}
+\end{equation}
+
+\begin{equation}
+y_i \sim \text{ iid } N(\mu_i, \sigma^2)\label{eq:random-linear}
+\end{equation}
+
+We refer to the first condition \eqref{eq:systematic-linear} as the \textbf{Systematic Component} and the second condition \eqref{eq:random-linear} as the \textbf{Random Component}
+
+Generalized Linear Models are inspired by generalizing the random and systematic component of linear models.
+
+A Generalized Regression Model has a systematic component:
+
+\[ g(\mu_i) = \beta_0 + \beta_1 x + \epsilon_i\]
+To generalized the systematic component, we use a link function \(g(y)\), so we now require some function of the response to be linearly related to our explanatory variables.
+
+and a random component:
+
+\[y_i \sim \text{ iid } EDM(g(\mu_i), \phi) \]
+In words,\ldots{} to some probability distribution in the Exponential Dispersion Family (EDM), which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all belong to the Exponential Dispersion Family. The EDM distribution depends on the mean response, as well as a dispersion parameter \(\phi\). For many commonly use GLMs, and the ones discussed in this book, this \(\phi\) is known.
+
+We note that normal linear models fall easily into this framework, where \(g(y_i) = y_i\) the identity function, and use the Normal distribution as our random component.
+
+Deciding on what Random and Systematic component to use requires \ldots.
+
+\hypertarget{what-happens-when-we-break-the-assumptions-of-linear-models}{%
+\section{What happens when we break the assumptions of linear models}\label{what-happens-when-we-break-the-assumptions-of-linear-models}}
+
+How can we tell when these assumptions are violated? We can examine both the random and systematic component and see if our data can/should be modeled in such a way. This largely comes from knowledge of the data.
+
+Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.
+
+\hypertarget{parameter-estimation}{%
+\section{Parameter estimation}\label{parameter-estimation}}
+
+Another difference between linear models and generalized linear models is the way we estimate the parameters \(\beta\). For linear models, we find the minimize the sums of squares from the predictor to the response(s). This has a closed form solution, and can be calculated by hand (if one \textbf{really} wanted to). For generalized linear models, we estimate the \(\beta\) parameters using Maximum Likelihood Estimation. For the Normal linear model case, this is equivalent to minimizing the sums of squares. However, for other GLMs, there is no closed form solution, which requires us to perform an iterative algorithm to land at the parameter estimates. Luckily this is all done behind the scenes in R. Those interested in learning more about how parameter estimation works for GLMs can read Chapter 6 of \citep{dunn2018generalized}.
+
+\hypertarget{lms-and-glms-in-r}{%
+\section{LMs and GLMs in R}\label{lms-and-glms-in-r}}
+
+Fitting GLMs in R is very similar to fitting linear models in R. For linear models, we use the function \texttt{lm()}. For generalized regression models, we use the function \texttt{glm()}. Both require a formula input, but \texttt{glm()} also requires the user to specify the random and systematic part of a GLM, by specifying the \texttt{family} and \texttt{link} function. Help for fitting a GLM can be found by \texttt{?glm()} and reading more about the family argument.
+
+Let's use some simulated data to see how GLMs are fit in R, and
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(sim\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           y     x1    x2
+## 1 -545.2605 116.00 256.0
+## 2 -891.5809 -67.75 247.2
+## 3 -522.0179 142.25 268.2
+## 4 -663.7865 -24.25 221.3
+## 5 -378.3086 149.00 222.0
+## 6 -759.1701   5.00 265.5
+\end{verbatim}
+
+First, fit a linear model the normal way, using \texttt{lm()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_mod \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{x1}\OperatorTok{+}\NormalTok{x2, }\DataTypeTok{data =}\NormalTok{ sim\_data)}
+\KeywordTok{summary}\NormalTok{(lm\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = sim_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -66.681 -15.393  -1.519  19.935  51.233 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  7.77469   26.87975   0.289    0.773    
+## x1           2.02578    0.02632  76.970   <2e-16 ***
+## x2          -3.04415    0.10529 -28.912   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 24.41 on 72 degrees of freedom
+## Multiple R-squared:  0.9894, Adjusted R-squared:  0.9891 
+## F-statistic:  3362 on 2 and 72 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{glm\_mod \textless{}{-}}\StringTok{ }\KeywordTok{glm}\NormalTok{(y }\OperatorTok{\textasciitilde{}}\NormalTok{x1}\OperatorTok{+}\NormalTok{x2, }\DataTypeTok{data =}\NormalTok{ sim\_data, }\DataTypeTok{family =}\NormalTok{ gaussian)}
+\KeywordTok{summary}\NormalTok{(lm\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = sim_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -66.681 -15.393  -1.519  19.935  51.233 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  7.77469   26.87975   0.289    0.773    
+## x1           2.02578    0.02632  76.970   <2e-16 ***
+## x2          -3.04415    0.10529 -28.912   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 24.41 on 72 degrees of freedom
+## Multiple R-squared:  0.9894, Adjusted R-squared:  0.9891 
+## F-statistic:  3362 on 2 and 72 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like \texttt{coef()}, \texttt{predict()}, etc, will perform as expected, when we pass a generalized linear model fitted using \texttt{glm()} in as the first argument.
+
+\hypertarget{definitions}{%
+\section{Some definitions}\label{definitions}}
+
+We close this chapter with some definitions of common terminology and explanation of notation that will be used.
 
 Predictor - the thing on the y-axis
 Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won't plot it then), and then this becomes multivariate regression.
@@ -186,87 +330,6 @@ so our estimate/best guess of this true model relationship is
 \[ \hat y = \hat\beta_0 + \hat\beta_1 x\]
 We of course want our \(\hat\beta_0\) and \(\hat\beta_1\) to be a `good' and `close' estimate of the unknown quantities \(\beta_0\) and \(\beta_1\). Ideas of what `good' and `close' mean will be covered in the next section.
 
-\hypertarget{assumptions-of-linear-models}{%
-\section{Assumptions of linear models}\label{assumptions-of-linear-models}}
-
-A linear model might very well be a good model if our data look like. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.
-
-Linear models assume:
-
-\begin{itemize}
-\tightlist
-\item
-  The relationship between the explanatory variables and the response is linear
-\item
-  The samples are independent.
-\item
-  The errors are normally distributed with mean 0 and constant variance
-\end{itemize}
-
-We can write these assumptions down in notation as such.
-
-\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
-where
-\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
-In words, this means that each
-this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance \(\sigma^2\) (notice how there is no subscript \(i\) for the variance)
-
-If these assumptions hold, we then write our model as
-\[ \hat y_i = \hat\beta_0 + \hat\beta_1 x_i\]
-
-How can we tell when these assumptions are violated?
-
-\begin{itemize}
-\tightlist
-\item
-  Knowledge of the data.
-\item
-  Plots
-\end{itemize}
-
-\hypertarget{what-happens-when-we-break-the-assumptions-of-linear-models}{%
-\section{What happens when we break the assumptions of linear models}\label{what-happens-when-we-break-the-assumptions-of-linear-models}}
-
-Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.
-
-\hypertarget{random-and-systematic-component}{%
-\section{Random and Systematic Component}\label{random-and-systematic-component}}
-
-We will now analyze the assumptions for linear models and explore how we can generalize them. (and create generalized linear models!)
-
-\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]
-\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]
-
-We refer to the first equation as the Systematic Component, and the second equation as the Random Component.
-
-A Generalized Regression Model has a systematic component:
-
-\[ g(y_i) = \beta_0 + \beta_1 x + \epsilon_i\]
-To generalized the systematic component, we use a link function \(g(y)\), so we now require some function of the response to be linearly related to our explanatory variables.
-
-and a random component:
-
-\[ \epsilon_i \sim \text{ iid } EDM(\phi) \]
-In words, the errors are independently distributed according to some probability distribution in the Exponential Dispersion Family, which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all fall into this family.
-
-We note that normal linear models fall exactly into this framework, where \(g(y_i) = y_i\) the identity function, and use the Normal distribution as our random component.
-
-Deciding on what Random and Systematic component to use requires u
-
-\hypertarget{random-and-systematic-components-for-binary-and-count-data}{%
-\section{Random and Systematic components for Binary and Count data}\label{random-and-systematic-components-for-binary-and-count-data}}
-
-The two most common cases of GRMs are those for Binary and Count data
-
-For Binary data, the systemtatic component is, and the random component is: We call these types of GRMS logistic regression or \ldots{}
-
-For Count data, the systematic component is, and the random component is. We call these types of GRMS
-
-\hypertarget{parameter-estimation}{%
-\section{Parameter estimation}\label{parameter-estimation}}
-
-The last difference between linear models and generalized linear models is the way we estimate the parameters \(\beta\).
-
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
@@ -276,6 +339,10 @@ Linear models are not always the best tool for describing relationship in data. 
 \section{Examples}\label{examples}}
 
 Perhaps some examples of data and students can tell what type of data it should be modeled by?
+
+Explore the following case of where a linear model is NOT appropriate, and then fit a \texttt{glm()} call in R using an appropriate family and link function.
+
+Note that this example might take a minute to load.
 
 \hypertarget{how-are-glms-different}{%
 \chapter{How are GLMs ``different''?}\label{how-are-glms-different}}
@@ -400,7 +467,7 @@ All three of these link functions map the real numbers to the unit interval (0,1
 
 It can be seen that all three of these link functions are sigmoid functions, but that they have slightly different properties:
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 The consequences of these differences will not be discussed here, this example exists purely to illustrate that an EDM family can have multiple distinct link functions. The consequenses of these varying link functions varies from family to family.
 
@@ -415,20 +482,14 @@ Formally, a Generalized Linear Model is made of two components: the \emph{probab
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-\begin{figure}
-\centering
-\includegraphics{images/scooby_doo_meme.jpg}
-\caption{It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not\_really\_redditing.}
-\end{figure}
-
 At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.
 
 The two components of a regression model are the random component and the systematic component and for linear regression,
 
 \[
 \begin{cases}
-  \text{var}[y_i] &= \sigma^2/w_i \\
-  \mu_i &= \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
 \end{cases}
 \]
 
@@ -450,6 +511,248 @@ As mentioned before, the assumptions belonging to linear regression are:
 \item
   Each datam is \textbf{independent} of all other data points.
 \end{enumerate}
+
+\hypertarget{a-good-example-of-simple-linear-regression}{%
+\section{A ``Good'' Example of Simple Linear Regression}\label{a-good-example-of-simple-linear-regression}}
+
+\texttt{trees} is a data set that comes with R. It has three variables, the diameter (mistakenly named girth in the data set), height and volume of each of the thirty-one trees in the data set. If we just type \texttt{data(trees)} into the Console, R will retreive it for us. This is the data set I'm going to use to showcase a good example of simple linear regression. At this time, let's also make sure we have the \texttt{tidyverse} (which includes \texttt{ggplot} for graphing) loaded.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{data}\NormalTok{(trees)}
+
+\CommentTok{\# Let\textquotesingle{}s change the name from Girth to Diameter:}
+\NormalTok{trees \textless{}{-}}\StringTok{ }\NormalTok{trees }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Diameter =}\NormalTok{ Girth) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{{-}}\NormalTok{Girth)}
+
+\KeywordTok{head}\NormalTok{(trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Height Volume Diameter
+## 1     70   10.3      8.3
+## 2     65   10.3      8.6
+## 3     63   10.2      8.8
+## 4     72   16.4     10.5
+## 5     81   18.8     10.7
+## 6     83   19.7     10.8
+\end{verbatim}
+
+Let's look at the scatterplot between these two variables, Diameter and Height.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(trees)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Diameter, }\DataTypeTok{y =}\NormalTok{  Height))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Diameter (inches)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Height (feet)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Diameter and Height of 31 Black Cherry Trees"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+When plotting the explanatory variable (Diameter) against the response variable (Height), we are looking for linearity, since that is one of our conditions of fitting a linear model to our data. Though the relationship between these two variables seems to be moderate or moderately-weak, it does indeed look linear.
+
+The next condition is constant variance, which we evaluate by looking at the residuals. We first need to produce those residuals which we do by fitting the model. The \texttt{lm} function automatically saves residuals, among other information, about the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(Height }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Diameter, }\DataTypeTok{data =}\NormalTok{ trees)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Height ~ Diameter, data = trees)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.5816  -2.7686   0.3163   2.4728   9.9456 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  62.0313     4.3833  14.152 1.49e-14 ***
+## Diameter      1.0544     0.3222   3.272  0.00276 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.538 on 29 degrees of freedom
+## Multiple R-squared:  0.2697, Adjusted R-squared:  0.2445 
+## F-statistic: 10.71 on 1 and 29 DF,  p-value: 0.002758
+\end{verbatim}
+
+We can view those residuals by typing \texttt{head(mod\$residuals)}, let's just look at the first six to get an idea of them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(mod}\OperatorTok{$}\NormalTok{residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1         2         3         4         5         6 
+## -0.782575 -6.098886 -8.309759 -1.102186  7.686940  9.581503
+\end{verbatim}
+
+Next, we should view the actual residuals to check for normality and constant variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ trees}\OperatorTok{$}\NormalTok{Diameter, }\DataTypeTok{y =}\NormalTok{ mod}\OperatorTok{$}\NormalTok{residuals))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Diameter (inches)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"residuals"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residual plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+When examining the residual plot, we are looking for two things: randomness and constant variance. Both are indications that our residuals are \(N(0,\sigma^2)\). If we don't see randomness, i.e.~there is a pattern, that indicates that are data are not linear. Constant variance is a necessary condition because when we assume the residuals are \(N(0,\sigma^2)\), the variance parameter is one estimate, \(\sigma^2\). If we see the variance of the residuals changing, then that indicates that the one variance parameter isn't sufficient and since a normal distribution only has one variance parameter, it might not be the best model for the data.
+
+There does not seem to be a pattern to the residuals, so they look random. This again suggests our data are linear. As for constant variance, however, it seems have more variation in the middle than we do at the ends of our graph. It isn't too bad though and we can proceed.
+
+Our last condition is independence. We evaluate independence by looking at how the data were collected. We can find out more information about the trees data set by typing \texttt{?trees} into the Console, which will bring up the help file on the data set. This data comes from 31 black cherry trees, felled for timber. Though we don't have much information, the trees could be independent if they were randomly selected to be measured.
+
+The \texttt{trees} data set isn't perfect for linear regression, but it meets most of our assumptions. I'll now move on to an example of linear regression with a data set that is not linear.
+
+\hypertarget{a-bad-example-of-simple-linear-regression}{%
+\section{A ``Bad'' Example of Simple Linear Regression}\label{a-bad-example-of-simple-linear-regression}}
+
+First, we load in the \texttt{mtcars} data set, look at the first six obervations of each variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{data}\NormalTok{(mtcars)}
+\KeywordTok{head}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+\end{verbatim}
+
+Now, let's take a look at a scatterplot of two variables in \texttt{mtcars}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(mtcars)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Miles per Gallon"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Car\textquotesingle{}s Mileage based on Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+We can see that this graph looks mostly linear, there seems to be a strong, negative relationship between a car's weight and and its mpg. There is some nonlinearity because of the three points for cars with a weight above 5,000 lbs; the graph look a bit curved so we should be cautious as we proceed.
+
+If we add a smoothed line to the plot, we can see that it is indeed curved.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(mtcars)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_smooth}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg), }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Miles per Gallon"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Car\textquotesingle{}s Mileage based on Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+This graph addresses one of the assumptions of linear regression: linearity. Next, let's check whether there is constant variation. We do this with a residual plot. First, we have to fit a model to our data in order to obtain residuals.
+
+To fit a model, we use the \texttt{lm} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{wt, }\DataTypeTok{data =}\NormalTok{ mtcars)}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  37.2851     1.8776  19.858  < 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
+\end{verbatim}
+
+Among other things, the \texttt{lm} function saves the residuals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(fit}\OperatorTok{$}\NormalTok{residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Mazda RX4     Mazda RX4 Wag        Datsun 710    Hornet 4 Drive 
+##        -2.2826106        -0.9197704        -2.0859521         1.2973499 
+## Hornet Sportabout           Valiant 
+##        -0.2001440        -0.6932545
+\end{verbatim}
+
+We can plot the residuals against the weight and look for randomness and constant variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ mtcars}\OperatorTok{$}\NormalTok{wt, }\DataTypeTok{y =}\NormalTok{ fit}\OperatorTok{$}\NormalTok{residuals))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"residuals"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residual plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+The graph above seems to have a curved pattern. The cars that weigh the least have large residuals, all above the zero line. The residuals of the cars that weigh between 2,250 and 4,250 lbs are lower and seem to be centered on the zero line. The cars that weigh the heaviest also have large residuals. So, there seems to be a parabola shape to our data, indicating nonlinearity.
+
+As for constant variance, we could go either way. As we look at different car weights, the distance between the top-most point and the bottom-most point is fairly similar indicating we could have constant variance. That might be enough evidence for some folks, but others might point out that the though the cars that weigh the least and the cars that weigh between 2,250 and 4,250 lbs are similar, cars that weigh the most have very small variance comparatively.
+
+Lastly, we need independence. We evaluate independence by checking the data and how it was obtained. If you type \texttt{?mtcars} into the Console, the Help file with pop up for the \texttt{mtcars} data set. Here, we learn that the data came from a 1981 textbook on biometrics. While there isn't much information on the data here, we can look to the data for answers. The data records many different attributes of certain make and models of cars. In general, one car of a particular make and model is unlikely to influence the attributes of another car. The only exception I can think of is cars of the same make. Perhaps two cars made by Mazda might not be totally independent, but this would be a more serious concern if we had observations of two cars with the same make and model but different years. So, this last condition is likely met.
+
+In general, using \texttt{wt} to explain \texttt{mpg} in the \texttt{mtcars} data set could have gone worse. The violations of the assumptions were quite small and some folks might find that thee transgressions to be ignorable. We should not take violations lightly, however, especially since there are steps we can take if our data isn't meeting the assumptions. Transformations are always an option but if we have data of a particular kind, e.g.~binary data or count data, we can use generalized linear models instead.
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+Often we want to fit our data with a model to better understand our response variable or to try to predict new events. The ideal case (because it is common, widely used and easy to interpret) is that we can fit a linear model to the data. In order to do so, the relationship between the response variable and the explanatory variable(s) needs to be linear, we need to have constant variance, and the data needs to be independent.
+
+If these condtions are not met, then there are steps we can take. One of which is transformations, we will not be going over that. The other is to fit a generalized linear model, which doesn't necessarily assume the data come from a normal distribution.
 
 \hypertarget{logistic-regression}{%
 \chapter{Logistic Regression}\label{logistic-regression}}
@@ -595,7 +898,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 0 1 1 1 0 1 1 1
+##  [1] 1 0 0 1 1 0 1 0 0 1
 \end{verbatim}
 
 \begin{Shaded}
@@ -619,7 +922,7 @@ So zeros and ones, we expect that (sorry if you're the 2 in \(2^{10}\) readers w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-4-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -659,19 +962,6 @@ The most common link function used for Poisson regression is the logrithmic link
 \section{Problems of overdispersion and solutions}\label{problems-of-overdispersion-and-solutions}}
 
 A characteristic of the Poisson distribution is that the mean \(\mu\) equals the variance. However, when modeling real data, this assumption can be a bit \({fishy}\), since the variance is usually greater than \(\mu\), which is overdispersion. Overdispersion occurs because the events being counted have a positive correlation and so are not independent. Overdispersion is an issue in Poisson GLM's because the standard errors of the estimated \(\beta_j\) will be underestimated, making the model's explanatory variables appear more significant than they actually are. Models fit using the Poisson family can be checked for overdispersion by comparing the residual deviance compared to the residual degrees of freedom. If the residual deviance is greater than the degrees of freedom, the model is overdispersed, and if the residual deviance is much less than the degrees of freedom, the model is underdispersed, a less frequent occurence. A large residual deviance compared to the residual degrees of freedom could also indicate a lack of fit, but this can be checked by eliminating outliers and fits the a model with the most explanatory variables possible. The residual deviance will still be large if overdispersion is the issue. Similarly, the Pearson goodness-of-fit statistic can be compared to the residual degrees of freedom to check for overdispersion. This method should be used when the counts are small, so asymptotic approximations would not be appropriate. Here, large goodness-of-fit statistics indicate a poor fit. If there is overdispersion after fitting a Poisson GLM, the model can be fit using other related families. By modeling the data using a hierarchical model to add more variability, \(\mu\) can be treated as a random variable, resulting in the response variable of interest following a negative binomial distribution. The expectation of \(y_i\) is \(\mu_i\) and the variance of \(y_i\) is now \(\mu_i + \psi\mu_i^2\), where \(\psi\mu_i^2\) is the added overdispersion term and \(\psi\) is larger when overdispersion is greater. The MASS package contains the function glm.nb() to model negative binomial GLMs. The standard link function is the log-link function so that \(\mu\) \textgreater{} 0, and similar to the Poisson GLM, quantile residuals should be used. Quasi-Poisson models are another alternative to Poisson GLMs when there is overdispersion. The variance of \(y_i\) is now \(\phi\mu_i\), where \(\phi\) \textgreater{} 1 represents overdispersion and raises standard errors to a factor of \(\sqrt{\phi}\). Quasi-Poisson models can be fit in R by family = quasipoisson(). Quantile residuals cannot be found because the quasi-Poisson model is not a probability model but standardized deviance residuals can be examoned.
-
-\hypertarget{learnr-test}{%
-\chapter{LearnR test}\label{learnr-test}}
-
-Here is an embedded learnR tutorial from a published shiny app.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{include\_url}\NormalTok{(}\StringTok{"https://emilypalmer.shinyapps.io/GRM\_LearnR/"}\NormalTok{, }
-  \DataTypeTok{height =} \StringTok{"600px"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 
   \bibliography{book.bib,packages.bib}
 
