@@ -1,11 +1,13 @@
+eq:systematic-linear
+eq:random-linear
+about-this-book
 intro
-what-came-before---linear-models
-some-definitions
-assumptions-of-linear-models
+linear-models---a-kind-of-generalized-linear-model
+linear-assumptions
 what-happens-when-we-break-the-assumptions-of-linear-models
-random-and-systematic-component
-random-and-systematic-components-for-binary-and-count-data
 parameter-estimation
+lms-and-glms-in-r
+definitions
 conclusion
 examples
 how-are-glms-different
@@ -18,6 +20,9 @@ linking-the-edm-to-the-explanatory-data
 formal-definition-of-a-glm
 linear
 introduction
+a-good-example-of-simple-linear-regression
+a-bad-example-of-simple-linear-regression
+summary
 logistic-regression
 what-is-binomial-data
 refresher-bernoulli-and-binomial
@@ -32,4 +37,3 @@ what-is-poisson-data
 why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
 problems-of-overdispersion-and-solutions
-learnr-test
