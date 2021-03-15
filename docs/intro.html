@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="how-are-glms-different.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -139,14 +138,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models---a-kind-of-generalized-linear-model"><i class="fa fa-check"></i><b>2.1</b> Linear models - a kind of Generalized Linear Model</a></li>
 <li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#linear-assumptions"><i class="fa fa-check"></i><b>2.2</b> Assumptions of Linear Models</a></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> What happens when we break the assumptions of linear models</a></li>
-<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.4</b> Parameter estimation</a></li>
-<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#lms-and-glms-in-r"><i class="fa fa-check"></i><b>2.5</b> LMs and GLMs in R</a></li>
-<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#definitions"><i class="fa fa-check"></i><b>2.6</b> Some definitions</a></li>
-<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.7</b> Conclusion</a></li>
-<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.8</b> Examples</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#reframing-linear-model"><i class="fa fa-check"></i><b>2.3</b> Reframing Linear Models as Generalized Linear Models</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
+<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.5</b> Parameter estimation</a></li>
+<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#lms-and-glms-in-r"><i class="fa fa-check"></i><b>2.6</b> LMs and GLMs in R</a></li>
+<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#definitions"><i class="fa fa-check"></i><b>2.7</b> Some definitions</a></li>
+<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
+<li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>3</b> How are GLMs “different”?</a>
+<li class="chapter" data-level="3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>3</b> How are GLMs “different?”</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#introdution"><i class="fa fa-check"></i><b>3.1</b> Introdution</a></li>
 <li class="chapter" data-level="3.2" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html#assumptions-of-a-glm"><i class="fa fa-check"></i><b>3.2</b> Assumptions of a GLM</a></li>
@@ -210,15 +210,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).</p>
 <p>Let’s review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions <a href="intro.html#linear-assumptions">2.2</a> ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.</p>
 <p>The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:</p>
-<p><img src="Bookdown_files/figure-html/linearscatterplot-1.png" width="672" /></p>
-<p>we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly.</p>
+<div class="figure"><span id="fig:linearscatterplot"></span>
+<img src="Bookdown_files/figure-html/linearscatterplot-1.png" alt="A scatterplot of points for two numeric variables." width="672" />
+<p class="caption">
+Figure 2.1: A scatterplot of points for two numeric variables.
+</p>
+</div>
+<p>We might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly.</p>
 <p><img src="images/put_a_bird.png" style="width:50.0%" /></p>
-<p><img src="Bookdown_files/figure-html/linearline-1.png" width="672" /></p>
-<p>To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 @ref{linear}. (will it? should it?) Linear models can also have multiple explanatory variables (<span class="math inline">\(X_1, \ldots X_n\)</span> instead of just one <span class="math inline">\(X\)</span>), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one <span class="math inline">\(X\)</span>.</p>
+<div class="figure"><span id="fig:linearline"></span>
+<img src="Bookdown_files/figure-html/linearline-1.png" alt="A scatterplot of points now with a _line of best fit_ added." width="672" />
+<p class="caption">
+Figure 2.2: A scatterplot of points now with a <em>line of best fit</em> added.
+</p>
+</div>
+<p>To interpret this relationship and make predictions, we need to know the slope and intercept of this line. This is done by minimizing the least squares, which will be explored in Chapter 3 @ref{linear}. (will it? should it?)
+<!-- ZZQ I think it might be a good idea to include a short section on how we fit linear models because it highlights how estimating parameters in GLMs is so different. -->
+Linear models can also have multiple explanatory variables (<span class="math inline">\(X_1, \ldots X_p\)</span> instead of just one <span class="math inline">\(X\)</span>), and this becomes multiple linear regression. The visualization of this kind of data is more difficult, and for example purposes, we will only use one explanatory variable, <span class="math inline">\(X\)</span>.</p>
 </div>
 <div id="linear-assumptions" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Assumptions of Linear Models</h2>
-<p>A linear model might very well be a good model if we have data like the above. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.</p>
+<p>A linear model might very well be a good model if we have data like that shown in Figures <a href="intro.html#fig:linearscatterplot">2.1</a> and <a href="intro.html#fig:linearline">2.2</a>. However, there are many cases where it might be inappropriate to use a linear model. To understand these cases, we first review the assumptions of linear models.</p>
 <p>Linear models assume:</p>
 <ul>
 <li>The relationship between the explanatory variables and the response is linear.</li>
@@ -226,98 +238,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The errors are normally distributed with mean 0 and constant variance.</li>
 </ul>
 <p>You might have seen these assumptions written in notation as such.</p>
-<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x + \epsilon_i \]</span>
-where
-<span class="math display">\[ \epsilon_i \sim \text{iid } N(0,\sigma^2)\]</span></p>
-<p>In words, this means that the errors are independent and identically distributed by the normal distribution, with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span> (notice how there is no subscript <span class="math inline">\(i\)</span> for the variance). If are performing multiple linear regression, the first assumption becomes <span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \epsilon_i\)</span>.</p>
-<p>To see how the linear model is a type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so we will be able to more easily see the parallels. Instead of the response <span class="math inline">\(y_i\)</span>, now consider the mean response <span class="math inline">\(\mu_i\)</span>, which for a given value of one predictor <span class="math inline">\(x\)</span> is the mean, or expected value of all responses with the value of that explanatory variable.</p>
+<p><span class="math display">\[y_i  = \beta_0 + \beta_1 x_i + \epsilon_i \]</span>
+where <span class="math inline">\((x_i, y_i)\)</span> represents the observed values for observation <span class="math inline">\(i = 1, 2, \ldots, n\)</span> and
+<span class="math display">\[ \epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)\]</span></p>
+<p>In words, this means that the errors are independent and identically distributed from a normal distribution with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span> (Notice how there is no subscript <span class="math inline">\(i\)</span> for the variance. This means that all our our <span class="math inline">\(y_i\)</span> values will have the same variation, regardless of what their associated values of <span class="math inline">\(x_i\)</span> are). If we are performing multiple linear regression with up to <span class="math inline">\(p\)</span> explanatory variables then this first assumption becomes <span class="math inline">\(y_i = \beta_0 + \beta_1 x_{1,i} + \ldots + \beta_p x_{p,i} + \epsilon_i\)</span>. That is, our response variable, <span class="math inline">\(Y\)</span>, is a <em>linear function</em> of the explanatory variables <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>.</p>
+</div>
+<div id="reframing-linear-model" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Reframing Linear Models as Generalized Linear Models</h2>
+<p>To see how the linear model is just a special type of Generalized Linear Model, we will slightly modify how we think of these assumptions, so as to be able to more easily see the parallels. Instead of the response <span class="math inline">\(y_i\)</span>, now consider the mean response <span class="math inline">\(\mu_i\)</span>, which for a given value of one predictor <span class="math inline">\(x_i\)</span> is the mean, or expected value of all responses with the value of that explanatory variable.</p>
 <p>Then our assumptions become:</p>
 <p><span class="math display" id="eq:systematic-linear">\[\begin{equation}
-\mu_i = \beta_0 + \beta_1 x \tag{2.1}
+\mu_i = \beta_0 + \beta_1 x_i \tag{2.1}
 \end{equation}\]</span></p>
 <p><span class="math display" id="eq:random-linear">\[\begin{equation}
-y_i \sim \text{ iid } N(\mu_i, \sigma^2)\tag{2.2}
+y_i \overset{\text{iid}}{\sim} N(\mu_i, \sigma^2)\tag{2.2}
 \end{equation}\]</span></p>
-<p>We refer to the first condition <a href="intro.html#eq:systematic-linear">(2.1)</a> as the <strong>Systematic Component</strong> and the second condition <a href="intro.html#eq:random-linear">(2.2)</a> as the <strong>Random Component</strong></p>
-<p>Generalized Linear Models are inspired by generalizing the random and systematic component of linear models.</p>
-<p>A Generalized Regression Model has a systematic component:</p>
-<p><span class="math display">\[ g(\mu_i) = \beta_0 + \beta_1 x + \epsilon_i\]</span>
-To generalized the systematic component, we use a link function <span class="math inline">\(g(y)\)</span>, so we now require some function of the response to be linearly related to our explanatory variables.</p>
-<p>and a random component:</p>
-<p><span class="math display">\[y_i \sim \text{ iid } EDM(g(\mu_i), \phi) \]</span>
-In words,… to some probability distribution in the Exponential Dispersion Family (EDM), which will be discussed in the next chapter. Normal, Binomial, and Poisson distributions all belong to the Exponential Dispersion Family. The EDM distribution depends on the mean response, as well as a dispersion parameter <span class="math inline">\(\phi\)</span>. For many commonly use GLMs, and the ones discussed in this book, this <span class="math inline">\(\phi\)</span> is known.</p>
+<p>We refer to the first condition, Equation <a href="intro.html#eq:systematic-linear">(2.1)</a>, as the <strong>Systematic Component</strong> and the second condition, Equation <a href="intro.html#eq:random-linear">(2.2)</a>, as the <strong>Random Component</strong>. In this framework, the systematic component describes how the explanatory variables impact some parameter, in this case the mean. Once we model how the mean parameter changes depending on the explanatory variable, the random component then describes the variability we see in the response given the value of the parameter.</p>
+<p>Generalized Linear Models are inspired by this idea of generalizing the random and systematic component of linear models. More broadly, a Generalized Regression Model has a systematic component</p>
+<p><span class="math display">\[ g(\mu_i) = \beta_0 + \beta_1 x_i + \epsilon_i\]</span></p>
+<p>where, in order to generalize the systematic component, we use a link function <span class="math inline">\(g(y)\)</span> which then requires some function of the response to be linearly related to our explanatory variables.</p>
+<p>The random component can then be written in general as:</p>
+<p><span class="math display">\[y_i \overset{\text{iid}}{\sim} EDM(g(\mu_i), \phi) \]</span></p>
+<p>Where EDM stands for a probability distribution from the Exponential Dispersion Family (EDM). We discuss these EDMs in greater detail in the next chapter but we can note for now that the Normal, Binomial, and Poisson distributions all belong to the Exponential Dispersion Family. The EDM distribution we use depends on the mean response, as well as a dispersion parameter <span class="math inline">\(\phi\)</span>. For many commonly use GLMs, and the ones discussed in this book, this <span class="math inline">\(\phi\)</span> is known.</p>
 <p>We note that normal linear models fall easily into this framework, where <span class="math inline">\(g(y_i) = y_i\)</span> the identity function, and use the Normal distribution as our random component.</p>
-<p>Deciding on what Random and Systematic component to use requires ….</p>
+<p>Deciding on what Random and Systematic component to use in a model requires ….
+<!-- ZZQ: Here's my attempt at wrapping this section up -->
+us to have some idea about both the possible values our response variable takes as well as having some idea about which probability distribution might have generated our response.</p>
 </div>
-<div id="what-happens-when-we-break-the-assumptions-of-linear-models" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> What happens when we break the assumptions of linear models</h2>
+<div id="what-happens-when-we-break-the-assumptions-of-linear-models" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> What happens when we break the assumptions of linear models</h2>
 <p>How can we tell when these assumptions are violated? We can examine both the random and systematic component and see if our data can/should be modeled in such a way. This largely comes from knowledge of the data.</p>
 <p>Linear models are generally robust, and can be reasonable when assumptions are not exactly met. However, if we know assumptions are not met, and how they are not met, it is appropriate to use a more appropriate model for the data.</p>
+<!-- ZZQ: Maybe here we can create an example plot from a Bernoulli random variable. That way, we can (1) show that a linear model will still "fit" the data but (2) the residuals no long show that the assumptions are satisfied and (3) the output of the linear model no long makes sense (i.e. if our response is {0,1} then a model predicting some value less than 0 or greater than 1 doesn't make sense.) -->
 </div>
-<div id="parameter-estimation" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Parameter estimation</h2>
-<p>Another difference between linear models and generalized linear models is the way we estimate the parameters <span class="math inline">\(\beta\)</span>. For linear models, we find the minimize the sums of squares from the predictor to the response(s). This has a closed form solution, and can be calculated by hand (if one <strong>really</strong> wanted to). For generalized linear models, we estimate the <span class="math inline">\(\beta\)</span> parameters using Maximum Likelihood Estimation. For the Normal linear model case, this is equivalent to minimizing the sums of squares. However, for other GLMs, there is no closed form solution, which requires us to perform an iterative algorithm to land at the parameter estimates. Luckily this is all done behind the scenes in R. Those interested in learning more about how parameter estimation works for GLMs can read Chapter 6 of <span class="citation">(Dunn and Smyth <a href="#ref-dunn2018generalized" role="doc-biblioref">2018</a>)</span>.</p>
+<div id="parameter-estimation" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Parameter estimation</h2>
+<!-- ZZQ: Should this section be placed in CHapter 3? -->
+<p>Another difference between linear models and generalized linear models is the way we estimate the parameters <span class="math inline">\(\beta\)</span>. For linear models, we find the minimize the sums of squares from the predictor to the response(s). This has a closed form solution, and can be calculated by hand (if one <strong>really</strong> wanted to). For generalized linear models, we estimate the <span class="math inline">\(\beta\)</span> parameters using Maximum Likelihood Estimation. For the Normal linear model case, this is equivalent to minimizing the sums of squares. However, for other GLMs, there is no closed form solution, which requires us to perform an iterative algorithm to land at the parameter estimates. Luckily this is all done behind the scenes in R. Those interested in learning more about how parameter estimation works for GLMs can read Chapter 6 of <span class="citation">(<a href="references.html#ref-dunn2018generalized" role="doc-biblioref">Dunn and Smyth 2018</a>)</span>.</p>
 </div>
-<div id="lms-and-glms-in-r" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> LMs and GLMs in R</h2>
+<div id="lms-and-glms-in-r" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> LMs and GLMs in R</h2>
 <p>Fitting GLMs in R is very similar to fitting linear models in R. For linear models, we use the function <code>lm()</code>. For generalized regression models, we use the function <code>glm()</code>. Both require a formula input, but <code>glm()</code> also requires the user to specify the random and systematic part of a GLM, by specifying the <code>family</code> and <code>link</code> function. Help for fitting a GLM can be found by <code>?glm()</code> and reading more about the family argument.</p>
 <p>Let’s use some simulated data to see how GLMs are fit in R, and</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">head</span>(sim_data)</span></code></pre></div>
-<pre><code>##           y     x1    x2
-## 1 -824.5303   2.75 263.6
-## 2 -449.9934 107.75 229.6
-## 3 -867.4818   2.00 291.7
-## 4 -643.9280 106.25 288.3
-## 5 -754.4598  -7.75 238.1
-## 6 -492.6394 161.75 270.1</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_data)</span></code></pre></div>
+<pre><code>##            y     x1    x2
+## 1  -701.8547 -50.50 218.6
+## 2  -544.3165  65.75 226.1
+## 3 -1055.7447 -95.50 297.7
+## 4  -925.6289 -88.00 249.5
+## 5  -994.3047 -85.00 279.9
+## 6  -800.1979 -22.00 258.7</code></pre>
 <p>First, fit a linear model the normal way, using <code>lm()</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a>lm_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2, <span class="dt">data =</span> sim_data)</span>
-<span id="cb3-2"><a href="intro.html#cb3-2"></a><span class="kw">summary</span>(lm_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1" aria-hidden="true" tabindex="-1"></a>lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sim_data)</span>
+<span id="cb3-2"><a href="intro.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2, data = sim_data)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -68.70 -15.58  -0.29  15.22  76.44 
+##     Min      1Q  Median      3Q     Max 
+## -45.051 -17.727  -1.809  16.277  51.750 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.07474   23.29544   0.776     0.44    
-## x1           2.00891    0.03120  64.391   &lt;2e-16 ***
-## x2          -3.06973    0.09345 -32.848   &lt;2e-16 ***
+## (Intercept) -2.09766   26.58723  -0.079    0.937    
+## x1           1.96587    0.02698  72.867   &lt;2e-16 ***
+## x2          -2.98367    0.10308 -28.945   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 25.04 on 72 degrees of freedom
-## Multiple R-squared:  0.9867, Adjusted R-squared:  0.9863 
-## F-statistic:  2662 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 24.69 on 72 degrees of freedom
+## Multiple R-squared:  0.9891, Adjusted R-squared:  0.9888 
+## F-statistic:  3279 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Now we show that we can use <code>glm()</code> the same way, specifying <code>family = "gaussian"</code>, which gives the identity link.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>glm_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span>x1<span class="op">+</span>x2, <span class="dt">data =</span> sim_data, <span class="dt">family =</span> gaussian)</span>
-<span id="cb5-2"><a href="intro.html#cb5-2"></a><span class="kw">summary</span>(lm_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1" aria-hidden="true" tabindex="-1"></a>glm_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sim_data, <span class="at">family =</span> <span class="st">&quot;gaussian&quot;</span>)</span>
+<span id="cb5-2"><a href="intro.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2, data = sim_data)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -68.70 -15.58  -0.29  15.22  76.44 
+##     Min      1Q  Median      3Q     Max 
+## -45.051 -17.727  -1.809  16.277  51.750 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.07474   23.29544   0.776     0.44    
-## x1           2.00891    0.03120  64.391   &lt;2e-16 ***
-## x2          -3.06973    0.09345 -32.848   &lt;2e-16 ***
+## (Intercept) -2.09766   26.58723  -0.079    0.937    
+## x1           1.96587    0.02698  72.867   &lt;2e-16 ***
+## x2          -2.98367    0.10308 -28.945   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 25.04 on 72 degrees of freedom
-## Multiple R-squared:  0.9867, Adjusted R-squared:  0.9863 
-## F-statistic:  2662 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 24.69 on 72 degrees of freedom
+## Multiple R-squared:  0.9891, Adjusted R-squared:  0.9888 
+## F-statistic:  3279 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like <code>coef()</code>, <code>predict()</code>, etc, will perform as expected, when we pass a generalized linear model fitted using <code>glm()</code> in as the first argument.</p>
 </div>
-<div id="definitions" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Some definitions</h2>
+<div id="definitions" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Some definitions</h2>
 <p>We close this chapter with some definitions of common terminology and explanation of notation that will be used.</p>
 <p>Predictor - the thing on the y-axis
 Explanatory variable - the stuff on the x-axis. Note that we can have more than one (but won’t plot it then), and then this becomes multivariate regression.</p>
@@ -329,24 +347,18 @@ For example, we might assume that there is some ‘true’ (but unknown) linear 
 <p><span class="math display">\[ \hat y = \hat\beta_0 + \hat\beta_1 x\]</span>
 We of course want our <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> to be a ‘good’ and ‘close’ estimate of the unknown quantities <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Ideas of what ‘good’ and ‘close’ mean will be covered in the next section.</p>
 </div>
-<div id="conclusion" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> Conclusion</h2>
+<div id="conclusion" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Conclusion</h2>
 <p>Linear models are not always the best tool for describing relationship in data. Luckily we can generalize the ideas and framework developed in linear models to hold for more general cases to create GLMs. Using a more general framework and more general assumptions allows us to build tools that will hold for all GRMs. The most notable of these that we will further explore are GRMs for binary data (ch4) and count data (ch5)</p>
 </div>
-<div id="examples" class="section level2" number="2.8">
-<h2><span class="header-section-number">2.8</span> Examples</h2>
+<div id="examples" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> Examples</h2>
 <p>Perhaps some examples of data and students can tell what type of data it should be modeled by?</p>
 <p>Explore the following case of where a linear model is NOT appropriate, and then fit a <code>glm()</code> call in R using an appropriate family and link function.</p>
 <p>Note that this example might take a minute to load.</p>
 <iframe src="https://emilypalmer.shinyapps.io/GRM_LearnR/" width="672" height="800px">
 </iframe>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-dunn2018generalized">
-<p>Dunn, Peter K, and Gordon K Smyth. 2018. <em>Generalized Linear Models with Examples in R</em>. Springer.</p>
 </div>
 </div>
             </section>
