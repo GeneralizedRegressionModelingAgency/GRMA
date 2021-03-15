@@ -36,4 +36,5 @@ poisson-regression
 what-is-poisson-data
 why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
+poisson-example
 problems-of-overdispersion-and-solutions
