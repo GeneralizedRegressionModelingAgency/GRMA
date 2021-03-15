@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  15 MAR 2021 16:38
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  15 MAR 2021 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1282,7 +1282,10 @@ File: Bookdown_files/figure-latex/linearline-1.pdf Graphic file (type pdf)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[7] [8] [9] [10]
+[7]
+Underfull \vbox (badness 1168) has occurred while \output is active []
+
+[8] [9] [10]
 Overfull \hbox (64.54013pt too wide) has occurred while \output is active
 \TU/lmr/m/sl/10 2.4.  WHAT HAPPENS WHEN WE BREAK THE ASSUMPTIONS OF LINEAR MODE
 LS \TU/lmr/m/n/10 11
@@ -1299,8 +1302,8 @@ _data)[]
 
 
 Overfull \hbox (1.5pt too wide) in paragraph at lines 326--326
-[]\TU/lmtt/m/n/10 ## (Dispersion parameter for gaussian family taken to be 558.
-2641)[] 
+[]\TU/lmtt/m/n/10 ## (Dispersion parameter for gaussian family taken to be 773.
+5935)[] 
  []
 
 [13] [14]

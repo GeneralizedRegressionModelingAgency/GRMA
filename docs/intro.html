@@ -286,13 +286,13 @@ us to have some idea about both the possible values our response variable takes 
 <p>Fitting GLMs in R is very similar to fitting linear models in R. For linear models, we use the function <code>lm()</code>. For generalized regression models, we use the function <code>glm()</code>. Both require a formula input, but <code>glm()</code> also requires the user to specify the random and systematic part of a GLM, by specifying the <code>family</code> and <code>link</code> function. Help for fitting a GLM can be found by <code>?glm()</code> and reading more about the family argument.</p>
 <p>Let’s use some simulated data to see how GLMs are fit in R, and</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">head</span>(sim_data)</span></code></pre></div>
-<pre><code>##            y     x1    x2
-## 1  -832.2944 -10.00 263.8
-## 2  -756.4966 -36.25 235.6
-## 3  -296.4678 201.50 222.8
-## 4  -515.7868  36.50 201.2
-## 5  -594.4129  83.75 252.1
-## 6 -1082.2134 -79.00 289.8</code></pre>
+<pre><code>##           y     x1    x2
+## 1 -773.3304 -66.25 213.2
+## 2 -341.5198 246.50 277.8
+## 3 -966.8550 -70.00 282.1
+## 4 -330.2822 210.50 254.6
+## 5 -610.0071 146.00 296.5
+## 6 -718.5686  36.50 264.2</code></pre>
 <p>First, fit a linear model the normal way, using <code>lm()</code></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a>lm_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data)</span>
 <span id="cb3-2"><a href="intro.html#cb3-2"></a><span class="kw">summary</span>(lm_mod)</span></code></pre></div>
@@ -302,19 +302,19 @@ us to have some idea about both the possible values our response variable takes 
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -73.111 -18.340  -0.667  19.104  83.169 
+## -58.754 -14.070   0.641  15.151  48.743 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.80956   30.55870   0.616     0.54    
-## x1           2.01244    0.03492  57.622   &lt;2e-16 ***
-## x2          -3.08560    0.11789 -26.175   &lt;2e-16 ***
+## (Intercept) -6.22134   24.20088  -0.257    0.798    
+## x1           1.97638    0.02730  72.404   &lt;2e-16 ***
+## x2          -2.96299    0.09424 -31.440   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 29.26 on 72 degrees of freedom
-## Multiple R-squared:  0.9846, Adjusted R-squared:  0.9842 
-## F-statistic:  2305 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 23.4 on 72 degrees of freedom
+## Multiple R-squared:  0.9888, Adjusted R-squared:  0.9885 
+## F-statistic:  3186 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Now we show that we can use <code>glm()</code> the same way, specifying <code>family = "gaussian"</code>, which gives the identity link.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>glm_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</span>
 <span id="cb5-2"><a href="intro.html#cb5-2"></a><span class="kw">summary</span>(glm_mod)</span></code></pre></div>
@@ -324,21 +324,21 @@ us to have some idea about both the possible values our response variable takes 
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -73.111  -18.340   -0.667   19.104   83.169  
+## -58.754  -14.070    0.641   15.151   48.743  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.80956   30.55870   0.616     0.54    
-## x1           2.01244    0.03492  57.622   &lt;2e-16 ***
-## x2          -3.08560    0.11789 -26.175   &lt;2e-16 ***
+## (Intercept) -6.22134   24.20088  -0.257    0.798    
+## x1           1.97638    0.02730  72.404   &lt;2e-16 ***
+## x2          -2.96299    0.09424 -31.440   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 855.8591)
+## (Dispersion parameter for gaussian family taken to be 547.5034)
 ## 
-##     Null deviance: 4006485  on 74  degrees of freedom
-## Residual deviance:   61622  on 72  degrees of freedom
-## AIC: 724.19
+##     Null deviance: 3528340  on 74  degrees of freedom
+## Residual deviance:   39420  on 72  degrees of freedom
+## AIC: 690.68
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
 <p>As you can see from the summary outputs, we get results which are very similar, as we should, since both functions fit the same model. However, some outputs of our linear model are slightly different when we compare them to the GLM version. For instance, we no longer have values for the residual standard errors, R-squared values and F-statistics. Instead, in the GLM, we have summary values like the null and residual deviance along with the AIC. We’ll talk more about these differences in future chapters. But for now, know that many of the functions we used for linear models, like <code>coef()</code>, <code>predict()</code>, etc, will perform as expected, when we pass a generalized linear model fitted using <code>glm()</code> in as the first argument.</p>

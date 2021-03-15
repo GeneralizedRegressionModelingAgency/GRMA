@@ -290,7 +290,7 @@ where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a posit
 <span id="cb24-3"><a href="logistic-regression.html#cb24-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
 <span id="cb24-4"><a href="logistic-regression.html#cb24-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
 <span id="cb24-5"><a href="logistic-regression.html#cb24-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
-<pre><code>##  [1] 0 1 0 0 1 1 0 1 0 0</code></pre>
+<pre><code>##  [1] 1 1 0 0 0 1 1 0 0 0</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
 <span id="cb26-2"><a href="logistic-regression.html#cb26-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
 <span id="cb26-3"><a href="logistic-regression.html#cb26-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>
