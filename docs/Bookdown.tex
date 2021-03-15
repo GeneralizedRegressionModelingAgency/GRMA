@@ -251,12 +251,12 @@ Let's use some simulated data to see how GLMs are fit in R, and
 
 \begin{verbatim}
 ##           y     x1    x2
-## 1 -502.3435  65.00 210.0
-## 2 -593.9759  89.00 253.2
-## 3 -627.7104   3.50 214.8
-## 4 -983.9718 -98.50 259.2
-## 5 -883.0194 -31.75 279.2
-## 6 -478.6563 145.25 246.3
+## 1 -786.7001  35.75 277.4
+## 2 -854.6331 -78.25 233.0
+## 3 -702.1706  80.00 294.1
+## 4 -935.8824 -34.75 288.6
+## 5 -249.0226 190.25 206.5
+## 6 -401.1268 195.50 267.3
 \end{verbatim}
 
 First, fit a linear model the normal way, using \texttt{lm()}
@@ -275,19 +275,19 @@ First, fit a linear model the normal way, using \texttt{lm()}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -71.975 -10.197  -2.357  11.055  71.149 
+## -77.921 -13.169  -0.579  15.589  55.405 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  7.78066   21.37539   0.364    0.717    
-## x1           1.99509    0.02973  67.114   <2e-16 ***
-## x2          -3.04105    0.08768 -34.682   <2e-16 ***
+## (Intercept) 10.32672   26.37681   0.392    0.697    
+## x1           1.95805    0.03167  61.832   <2e-16 ***
+## x2          -3.03767    0.10609 -28.634   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 23.63 on 72 degrees of freedom
-## Multiple R-squared:  0.9858, Adjusted R-squared:  0.9854 
-## F-statistic:  2497 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 27.81 on 72 degrees of freedom
+## Multiple R-squared:  0.9841, Adjusted R-squared:  0.9836 
+## F-statistic:  2224 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
@@ -306,21 +306,21 @@ Now we show that we can use \texttt{glm()} the same way, specifying \texttt{fami
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -71.975  -10.197   -2.357   11.055   71.149  
+## -77.921  -13.169   -0.579   15.589   55.405  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  7.78066   21.37539   0.364    0.717    
-## x1           1.99509    0.02973  67.114   <2e-16 ***
-## x2          -3.04105    0.08768 -34.682   <2e-16 ***
+## (Intercept) 10.32672   26.37681   0.392    0.697    
+## x1           1.95805    0.03167  61.832   <2e-16 ***
+## x2          -3.03767    0.10609 -28.634   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 558.2641)
+## (Dispersion parameter for gaussian family taken to be 773.5935)
 ## 
-##     Null deviance: 2828191  on 74  degrees of freedom
-## Residual deviance:   40195  on 72  degrees of freedom
-## AIC: 692.14
+##     Null deviance: 3495888  on 74  degrees of freedom
+## Residual deviance:   55699  on 72  degrees of freedom
+## AIC: 716.61
 ## 
 ## Number of Fisher Scoring iterations: 2
 \end{verbatim}
@@ -921,7 +921,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 0 1 0 0 0 0 1 0
+##  [1] 0 1 0 1 0 0 1 0 0 1
 \end{verbatim}
 
 \begin{Shaded}

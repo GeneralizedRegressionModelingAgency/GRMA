@@ -141,7 +141,7 @@ summary(glm_mod)
 ```
 
 As you can see from the summary outputs, we get results which are very similar, as we should, since both functions fit the same model. However, some outputs of our linear model are slightly different when we compare them to the GLM version. For instance, we no longer have values for the residual standard errors, R-squared values and F-statistics. Instead, in the GLM, we have summary values like the null and residual deviance along with the AIC. We'll talk more about these differences in future chapters. But for now, know that many of the functions we used for linear models, like `coef()`, `predict()`, etc, will perform as expected, when we pass a generalized linear model fitted using `glm()` in as the first argument. 
-
+ 
 
 ## Some definitions {#definitions}
 
