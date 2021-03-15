@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  15 MAR 2021 16:20
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.4.16)  15 MAR 2021 16:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1260,11 +1260,11 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 7.01224pt on input line 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.98067pt on input line 3.
-)
+[3])
 \tf@toc=\write4
 \openout4 = `Bookdown.toc'.
 
-[3] [4]
+[4]
 Chapter 1.
 [5
 
@@ -1275,10 +1275,6 @@ Chapter 2.
 File: Bookdown_files/figure-latex/linearscatterplot-1.pdf Graphic file (type pd
 f)
 <use Bookdown_files/figure-latex/linearscatterplot-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[7]
 File: images/put_a_bird.png Graphic file (type bmp)
 <images/put_a_bird.png>
 File: Bookdown_files/figure-latex/linearline-1.pdf Graphic file (type pdf)
@@ -1286,16 +1282,28 @@ File: Bookdown_files/figure-latex/linearline-1.pdf Graphic file (type pdf)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[8] [9] [10]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 235.
-
+[7] [8] [9] [10]
 Overfull \hbox (64.54013pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/10 2.3.  WHAT HAPPENS WHEN WE BREAK THE ASSUMPTIONS OF LINEAR MODE
+\TU/lmr/m/sl/10 2.4.  WHAT HAPPENS WHEN WE BREAK THE ASSUMPTIONS OF LINEAR MODE
 LS \TU/lmr/m/n/10 11
  []
 
-[11] [12] [13] [14]
+[11]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 248.
+[12]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 326--326
+[]\TU/lmtt/m/n/10 ## glm(formula = y ~ x1 + x2, family = "gaussian", data = sim
+_data)[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 326--326
+[]\TU/lmtt/m/n/10 ## (Dispersion parameter for gaussian family taken to be 558.
+2641)[] 
+ []
+
+[13] [14]
 Chapter 3.
 [15
 
@@ -1308,7 +1316,7 @@ Chapter 4.
 File: images/scooby_doo_meme.jpg Graphic file (type bmp)
 <images/scooby_doo_meme.jpg>
 
-LaTeX Warning: Float too large for page by 36.50941pt on input line 486.
+LaTeX Warning: Float too large for page by 36.50941pt on input line 503.
 
 [21
 
@@ -1324,43 +1332,43 @@ File: Bookdown_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf
 )
 <use Bookdown_files/figure-latex/unnamed-chunk-11-1.pdf>
 [25]
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ##                    mpg cyl disp  hp drat    wt  qsec vs am
  gear carb[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
     4    4[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
     4    4[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
     4    1[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
     3    1[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
     3    2[] 
  []
 
 
-Overfull \hbox (27.75pt too wide) in paragraph at lines 653--653
+Overfull \hbox (27.75pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
     3    1[] 
  []
@@ -1376,13 +1384,13 @@ File: Bookdown_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [27] [28]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 731--731
+Overfull \hbox (43.5pt too wide) in paragraph at lines 748--748
 []\TU/lmtt/m/n/10 ##         Mazda RX4     Mazda RX4 Wag        Datsun 710    H
 ornet 4 Drive[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 731--731
+Overfull \hbox (43.5pt too wide) in paragraph at lines 748--748
 []\TU/lmtt/m/n/10 ##        -2.2826106        -0.9197704        -2.0859521     
     1.2973499[] 
  []
@@ -1395,7 +1403,7 @@ Chapter 5.
 [31
 
 ] [32]
-Overfull \hbox (32.9342pt too wide) detected at line 887
+Overfull \hbox (32.9342pt too wide) detected at line 904
 [][][][] [][] [][] [] [][][][][] [] [][][] [] [][][][][] [] [][][] [] [] [] [] 
 [] [][] [] [][][]
  []
@@ -1411,35 +1419,38 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 Chapter 6.
-[37] [38]
+[37]
+File: images/bsb.jpg Graphic file (type bmp)
+<images/bsb.jpg>
+[38]
 File: Bookdown_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf
 )
 <use Bookdown_files/figure-latex/unnamed-chunk-22-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [39]
-Overfull \hbox (75.0pt too wide) in paragraph at lines 1051--1051
+Overfull \hbox (75.0pt too wide) in paragraph at lines 1070--1070
 []\TU/lmtt/m/n/10 ## glm(formula = R ~ H + X2B + X3B + HR, family = "poisson", 
 data = liveball_ws)[] 
  []
 
+[40] [41] (./Bookdown.bbl [42])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1083.
+[43
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[40] (./Bookdown.bbl [41] [42
-
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1064.
-[43]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1064.
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1083.
 (./Bookdown.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1064.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1064.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1064.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1083.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1083.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1083.
  ) 
 Here is how much of TeX's memory you used:
- 26328 strings out of 492970
- 479871 string characters out of 6133938
- 704905 words of memory out of 5000000
- 30055 multiletter control sequences out of 15000+600000
+ 26336 strings out of 492970
+ 480002 string characters out of 6133938
+ 703194 words of memory out of 5000000
+ 30062 multiletter control sequences out of 15000+600000
  536649 words of font info for 80 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,9n,117p,10403b,491s stack positions out of 5000i,500n,10000p,200000b,80000s

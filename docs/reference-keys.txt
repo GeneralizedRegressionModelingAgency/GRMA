@@ -1,9 +1,12 @@
+fig:linearscatterplot
+fig:linearline
 eq:systematic-linear
 eq:random-linear
 about-this-book
 intro
 linear-models---a-kind-of-generalized-linear-model
 linear-assumptions
+reframing-linear-model
 what-happens-when-we-break-the-assumptions-of-linear-models
 parameter-estimation
 lms-and-glms-in-r
@@ -38,6 +41,3 @@ why-ordinary-least-squares-does-not-work-for-poisson-data
 link-functions-for-poisson-glms
 poisson-example
 problems-of-overdispersion-and-solutions
-fig:linearscatterplot
-fig:linearline
-reframing-linear-model

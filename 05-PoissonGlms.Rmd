@@ -16,7 +16,7 @@ The most common link function used for Poisson regression is the logrithmic link
 
 ## Poisson Example
 
-<!-- ![](bsb.jpg) --> 
+![](images/bsb.jpg)
 
 Now that we have had a chance to go over some of the characteristics of Poisson GLMs, let's look at an example involving baseball data. The dataset that we will use is a subset of data from the Lahman package, which is an extensive collection of baseball statistics since the 1800s. This package is an excellant resource for fellow baseball fans to practice fitting various GLM models, including Binomial regressions. The dataset that we will be focusing on is the batting statistics from every World Series during the liveball era. If you do not have the following packages, please take a moment to install them  using the install.packages command. To start, we will need to load the Lahman package and the tidyverse package to access our World Series data, which is a subset of the Postseason dataset:
 

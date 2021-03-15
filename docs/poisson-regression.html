@@ -139,12 +139,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models---a-kind-of-generalized-linear-model"><i class="fa fa-check"></i><b>2.1</b> Linear models - a kind of Generalized Linear Model</a></li>
 <li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#linear-assumptions"><i class="fa fa-check"></i><b>2.2</b> Assumptions of Linear Models</a></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.3</b> What happens when we break the assumptions of linear models</a></li>
-<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.4</b> Parameter estimation</a></li>
-<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#lms-and-glms-in-r"><i class="fa fa-check"></i><b>2.5</b> LMs and GLMs in R</a></li>
-<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#definitions"><i class="fa fa-check"></i><b>2.6</b> Some definitions</a></li>
-<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.7</b> Conclusion</a></li>
-<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.8</b> Examples</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#reframing-linear-model"><i class="fa fa-check"></i><b>2.3</b> Reframing Linear Models as Generalized Linear Models</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#what-happens-when-we-break-the-assumptions-of-linear-models"><i class="fa fa-check"></i><b>2.4</b> What happens when we break the assumptions of linear models</a></li>
+<li class="chapter" data-level="2.5" data-path="intro.html"><a href="intro.html#parameter-estimation"><i class="fa fa-check"></i><b>2.5</b> Parameter estimation</a></li>
+<li class="chapter" data-level="2.6" data-path="intro.html"><a href="intro.html#lms-and-glms-in-r"><i class="fa fa-check"></i><b>2.6</b> LMs and GLMs in R</a></li>
+<li class="chapter" data-level="2.7" data-path="intro.html"><a href="intro.html#definitions"><i class="fa fa-check"></i><b>2.7</b> Some definitions</a></li>
+<li class="chapter" data-level="2.8" data-path="intro.html"><a href="intro.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
+<li class="chapter" data-level="2.9" data-path="intro.html"><a href="intro.html#examples"><i class="fa fa-check"></i><b>2.9</b> Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="how-are-glms-different.html"><a href="how-are-glms-different.html"><i class="fa fa-check"></i><b>3</b> How are GLMs “different”?</a>
 <ul>
@@ -224,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="poisson-example" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Poisson Example</h2>
-<!-- ![](bsb.jpg) -->
+<p><img src="images/bsb.jpg" /></p>
 <p>Now that we have had a chance to go over some of the characteristics of Poisson GLMs, let’s look at an example involving baseball data. The dataset that we will use is a subset of data from the Lahman package, which is an extensive collection of baseball statistics since the 1800s. This package is an excellant resource for fellow baseball fans to practice fitting various GLM models, including Binomial regressions. The dataset that we will be focusing on is the batting statistics from every World Series during the liveball era. If you do not have the following packages, please take a moment to install them using the install.packages command. To start, we will need to load the Lahman package and the tidyverse package to access our World Series data, which is a subset of the Postseason dataset:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="poisson-regression.html#cb29-1"></a><span class="kw">require</span>(Lahman)</span></code></pre></div>
 <pre><code>## Loading required package: Lahman</code></pre>
