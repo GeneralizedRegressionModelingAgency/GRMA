@@ -5,9 +5,9 @@
 
 If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \@ref(linear-assumptions) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
+Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \@ref(linear-assumptions) ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to increase the kinds and ways we can use data to answer questions.
 
-The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:
+The reasoning behind linear models can be intuitive; if we have two continuous variables, and make a scatterplot our data, and see this:
 
 ```{r linearscatterplot, echo = F}
 x <- sample(seq(1,100,.5),50)

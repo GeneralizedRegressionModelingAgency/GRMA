@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,6 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="linear.html"><a href="linear.html"><i class="fa fa-check"></i><b>4</b> Linear Models</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="linear.html"><a href="linear.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="linear.html"><a href="linear.html#a-good-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> A “Good” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.3" data-path="linear.html"><a href="linear.html#a-bad-example-of-simple-linear-regression"><i class="fa fa-check"></i><b>4.3</b> A “Bad” Example of Simple Linear Regression</a></li>
+<li class="chapter" data-level="4.4" data-path="linear.html"><a href="linear.html#summary"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression</a>
 <ul>
@@ -208,8 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="linear-models---a-kind-of-generalized-linear-model" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Linear models - a kind of Generalized Linear Model</h2>
 <p>If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).</p>
-<p>Let’s review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions <a href="intro.html#linear-assumptions">2.2</a> ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.</p>
-<p>The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:</p>
+<p>Let’s review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions <a href="intro.html#linear-assumptions">2.2</a> ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to increase the kinds and ways we can use data to answer questions.</p>
+<p>The reasoning behind linear models can be intuitive; if we have two continuous variables, and make a scatterplot our data, and see this:</p>
 <p><img src="Bookdown_files/figure-html/linearscatterplot-1.png" width="672" /></p>
 <p>we might want to fit a straight line through the cloud of points, i.e. modeling the relationship linearly.</p>
 <p><img src="images/put_a_bird.png" style="width:50.0%" /></p>
@@ -264,12 +267,12 @@ In words,… to some probability distribution in the Exponential Dispersion Fami
 <p>Let’s use some simulated data to see how GLMs are fit in R, and</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1"></a><span class="kw">head</span>(sim_data)</span></code></pre></div>
 <pre><code>##           y     x1    x2
-## 1 -824.5303   2.75 263.6
-## 2 -449.9934 107.75 229.6
-## 3 -867.4818   2.00 291.7
-## 4 -643.9280 106.25 288.3
-## 5 -754.4598  -7.75 238.1
-## 6 -492.6394 161.75 270.1</code></pre>
+## 1 -735.0476  10.25 249.2
+## 2 -928.6816 -82.75 254.4
+## 3 -851.8756 -81.25 226.7
+## 4 -658.4933  80.75 270.9
+## 5 -901.3781 -10.00 298.7
+## 6 -968.5548 -76.75 274.1</code></pre>
 <p>First, fit a linear model the normal way, using <code>lm()</code></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1"></a>lm_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2, <span class="dt">data =</span> sim_data)</span>
 <span id="cb3-2"><a href="intro.html#cb3-2"></a><span class="kw">summary</span>(lm_mod)</span></code></pre></div>
@@ -278,20 +281,20 @@ In words,… to some probability distribution in the Exponential Dispersion Fami
 ## lm(formula = y ~ x1 + x2, data = sim_data)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -68.70 -15.58  -0.29  15.22  76.44 
+##     Min      1Q  Median      3Q     Max 
+## -66.778 -14.535  -1.483  16.442  58.109 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.07474   23.29544   0.776     0.44    
-## x1           2.00891    0.03120  64.391   &lt;2e-16 ***
-## x2          -3.06973    0.09345 -32.848   &lt;2e-16 ***
+## (Intercept) 11.44907   25.15928   0.455     0.65    
+## x1           2.03096    0.02687  75.595   &lt;2e-16 ***
+## x2          -3.06899    0.10013 -30.651   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 25.04 on 72 degrees of freedom
-## Multiple R-squared:  0.9867, Adjusted R-squared:  0.9863 
-## F-statistic:  2662 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 23.81 on 72 degrees of freedom
+## Multiple R-squared:  0.9902, Adjusted R-squared:  0.9899 
+## F-statistic:  3619 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Now we show that we can use <code>glm()</code> the same way, specifying <code>family = "gaussian"</code>, which gives the identity link.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1"></a>glm_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span>x1<span class="op">+</span>x2, <span class="dt">data =</span> sim_data, <span class="dt">family =</span> gaussian)</span>
 <span id="cb5-2"><a href="intro.html#cb5-2"></a><span class="kw">summary</span>(lm_mod)</span></code></pre></div>
@@ -300,20 +303,20 @@ In words,… to some probability distribution in the Exponential Dispersion Fami
 ## lm(formula = y ~ x1 + x2, data = sim_data)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -68.70 -15.58  -0.29  15.22  76.44 
+##     Min      1Q  Median      3Q     Max 
+## -66.778 -14.535  -1.483  16.442  58.109 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 18.07474   23.29544   0.776     0.44    
-## x1           2.00891    0.03120  64.391   &lt;2e-16 ***
-## x2          -3.06973    0.09345 -32.848   &lt;2e-16 ***
+## (Intercept) 11.44907   25.15928   0.455     0.65    
+## x1           2.03096    0.02687  75.595   &lt;2e-16 ***
+## x2          -3.06899    0.10013 -30.651   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 25.04 on 72 degrees of freedom
-## Multiple R-squared:  0.9867, Adjusted R-squared:  0.9863 
-## F-statistic:  2662 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 23.81 on 72 degrees of freedom
+## Multiple R-squared:  0.9902, Adjusted R-squared:  0.9899 
+## F-statistic:  3619 on 2 and 72 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like <code>coef()</code>, <code>predict()</code>, etc, will perform as expected, when we pass a generalized linear model fitted using <code>glm()</code> in as the first argument.</p>
 </div>
 <div id="definitions" class="section level2" number="2.6">

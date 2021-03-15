@@ -2,18 +2,14 @@
 
 ## Introduction
 
-![It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not_really_redditing.](images/scooby_doo_meme.jpg)
-
-
-
 At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.
 
 The two components of a regression model are the random component and the systematic component and for linear regression,
 
 $$
 \begin{cases}
-  \text{var}[y_i] &= \sigma^2/w_i \\
-  \mu_i &= \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
 \end{cases}
 $$
 
@@ -29,4 +25,128 @@ As mentioned before, the assumptions belonging to linear regression are:
 2. The unexplained variation in our response is constant, otherwise known as **constant variance**.
 3. Each datam is **independent** of all other data points. 
 
+## A "Good" Example of Simple Linear Regression
+
+`trees` is a data set that comes with R. It has three variables, the diameter (mistakenly named girth in the data set), height and volume of each of the thirty-one trees in the data set. If we just type `data(trees)` into the Console, R will retreive it for us. This is the data set I'm going to use to showcase a good example of simple linear regression. At this time, let's also make sure we have the `tidyverse` (which includes `ggplot` for graphing) loaded.
+```{r message = FALSE}
+library(tidyverse)
+data(trees)
+
+# Let's change the name from Girth to Diameter:
+trees <- trees %>%
+  mutate(Diameter = Girth) %>%
+  select(-Girth)
+
+head(trees)
+```
+
+Let's look at the scatterplot between these two variables, Diameter and Height.
+```{r}
+ggplot(trees)+
+  geom_point(aes(x = Diameter, y =  Height))+
+  xlab("Diameter (inches)")+
+  ylab("Height (feet)")+
+  ggtitle("Diameter and Height of 31 Black Cherry Trees")
+```
+
+When plotting the explanatory variable (Diameter) against the response variable (Height), we are looking for linearity, since that is one of our conditions of fitting a linear model to our data. Though the relationship between these two variables seems to be moderate or moderately-weak, it does indeed look linear.
+
+The next condition is constant variance, which we evaluate by looking at the residuals. We first need to produce those residuals which we do by fitting the model. The `lm` function automatically saves residuals, among other information, about the model:
+```{r}
+mod <- lm(Height ~ Diameter, data = trees)
+summary(mod)
+```
+
+We can view those residuals by typing `head(mod$residuals)`, let's just look at the first six to get an idea of them.
+```{r}
+head(mod$residuals)
+```
+
+Next, we should view the actual residuals to check for normality and constant variance.
+```{r}
+ggplot()+
+  geom_point(aes(x = trees$Diameter, y = mod$residuals))+
+  geom_hline(yintercept = 0)+
+  xlab("Diameter (inches)")+
+  ylab("residuals")+
+  ggtitle("Residual plot")
+```
+
+When examining the residual plot, we are looking for two things: randomness and constant variance. Both are indications that our residuals are $N(0,\sigma^2)$. If we don't see randomness, i.e. there is a pattern, that indicates that are data are not linear. Constant variance is a necessary condition because when we assume the residuals are $N(0,\sigma^2)$, the variance parameter is one estimate, $\sigma^2$. If we see the variance of the residuals changing, then that indicates that the one variance parameter isn't sufficient and since a normal distribution only has one variance parameter, it might not be the best model for the data.
+
+There does not seem to be a pattern to the residuals, so they look random. This again suggests our data are linear. As for constant variance, however, it seems have more variation in the middle than we do at the ends of our graph. It isn't too bad though and we can proceed. 
+
+Our last condition is independence. We evaluate independence by looking at how the data were collected. We can find out more information about the trees data set by typing `?trees` into the Console, which will bring up the help file on the data set. This data comes from 31 black cherry trees, felled for timber. Though we don't have much information, the trees could be independent if they were randomly selected to be measured. 
+
+The `trees` data set isn't perfect for linear  regression, but it meets most of our assumptions. I'll now move on to an example of linear regression with a data set that is not linear.
+
+
+## A "Bad" Example of Simple Linear Regression
+
+First, we load in the `mtcars` data set, look at the first six obervations of each variable.
+```{r message=FALSE}
+library(tidyverse)
+data(mtcars)
+head(mtcars)
+```
+
+Now, let's take a look at a scatterplot of two variables in `mtcars`.
+```{r}
+ggplot(mtcars)+
+  geom_point(aes(x = wt, y = mpg))+
+  xlab("Weight (in thousands of lbs)")+
+  ylab("Miles per Gallon")+
+  ggtitle("Car's Mileage based on Weight")
+```
+
+We can see that this graph looks mostly linear, there seems to be a strong, negative relationship between a car's weight and and its mpg. There is some nonlinearity because of the three points for cars with a weight above 5,000 lbs; the graph look a bit curved so we should be cautious as we proceed.
+
+
+If we add a smoothed line to the plot, we can see that it is indeed curved.
+```{r message = FALSE}
+ggplot(mtcars)+
+  geom_point(aes(x = wt, y = mpg))+
+  geom_smooth(aes(x = wt, y = mpg), se = FALSE)+
+  xlab("Weight (in thousands of lbs)")+
+  ylab("Miles per Gallon")+
+  ggtitle("Car's Mileage based on Weight")
+```
+
+
+This graph addresses one of the assumptions of linear regression: linearity. Next, let's check whether there is constant variation. We do this with a residual plot. First, we have to fit a model to our data in order to obtain residuals.
+
+To fit a model, we use the `lm` function.
+```{r}
+fit <- lm(mpg ~ wt, data = mtcars)
+summary(fit)
+```
+
+Among other things, the `lm` function saves the residuals.
+```{r}
+head(fit$residuals)
+```
+
+We can plot the residuals against the weight and look for randomness and constant variance.
+```{r}
+ggplot()+
+  geom_point(aes(x = mtcars$wt, y = fit$residuals))+
+  geom_hline(yintercept = 0)+
+  xlab("Weight (in thousands of lbs)")+
+  ylab("residuals")+
+  ggtitle("Residual plot")
+```
+
+The graph above seems to have a curved pattern. The cars that weigh the least have large residuals, all above the zero line. The residuals of the cars that weigh between 2,250 and 4,250 lbs are lower and seem to be centered on the zero line. The cars that weigh the heaviest also have large residuals. So, there seems to be a parabola shape to our data, indicating nonlinearity.
+
+As for constant variance, we could go either way. As we look at different car weights, the distance between the top-most point and the bottom-most point is fairly similar indicating we could have constant variance. That might be enough evidence for some folks, but others might point out that the though the cars that weigh the least and the cars that weigh between 2,250 and 4,250 lbs are similar, cars that weigh the most have very small variance comparatively. 
+
+Lastly, we need independence. We evaluate independence by checking the data and how it was obtained. If you type `?mtcars` into the Console, the Help file with pop up for the `mtcars` data set. Here, we learn that the data came from a 1981 textbook on biometrics. While there isn't much information on the data here, we can look to the data for answers. The data records many different attributes of certain make and models of cars. In general, one car of a particular make and model is unlikely to influence the attributes of another car. The only exception I can think of is cars of the same make. Perhaps two cars made by Mazda might not be totally independent, but this would be a more serious concern if we had observations of two cars with the same make and model but different years. So, this last condition is likely met. 
+
+In general, using `wt` to explain `mpg` in the `mtcars` data set could have gone worse. The violations of the assumptions were quite small and some folks might find that thee transgressions to be ignorable. We should not take violations lightly, however, especially since there are steps we can take if our data isn't meeting the assumptions. Transformations are always an option but if we have data of a particular kind, e.g. binary data or count data, we can use generalized linear models instead.
+
+## Summary
+
+Often we want to fit our data with a model to better understand our response variable or to try to predict new events. The ideal case (because it is common, widely used and easy to interpret) is that we can fit a linear model to the data. In order to do so, the relationship between the response variable and the explanatory variable(s) needs to be linear, we need to have constant variance, and the data needs to be independent. 
+
+If these condtions are not met, then there are steps we can take. One of which is transformations, we will not be going over that. The other is to fit a generalized linear model, which doesn't necessarily assume the data come from a normal distribution.
 

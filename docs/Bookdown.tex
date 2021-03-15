@@ -114,7 +114,7 @@
 
 \title{An Introduction to Generalized Linear Models}
 \author{Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments}
-\date{2021-03-11}
+\date{2021-03-15}
 
 \begin{document}
 \maketitle
@@ -142,9 +142,9 @@ A big thank you to James Molyneux for leading and organizing our reading and con
 
 If you have fit a linear model before, congratulations! You have already fit (one case) of a generalized linear model (GLM). Over the course of this book, we will explore the framework of Generalized Linear Models, why the Linear Model is a special case of a GLM, and two common type of GLMs, including logistic regression (for binary/binomial count data) and poisson regression (for count data).
 
-Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \ref{linear-assumptions} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to expand the kinds and ways we can use data to answer questions.
+Let's review why we would fit a linear model. For linear regression, given our data, (if we make some key assumptions \ref{linear-assumptions} ), we can perform inference or prediction by assuming that our response value forms a linear relationship with our explanatory variable (or variables). Generalized linear models expand upon the linear model assumptions to increase the kinds and ways we can use data to answer questions.
 
-The reasoning behind linear models can be intuitive, if we have two continuous variables, and make a scatterplot our data, and see this:
+The reasoning behind linear models can be intuitive; if we have two continuous variables, and make a scatterplot our data, and see this:
 
 \includegraphics{Bookdown_files/figure-latex/linearscatterplot-1.pdf}
 
@@ -238,12 +238,12 @@ Let's use some simulated data to see how GLMs are fit in R, and
 
 \begin{verbatim}
 ##           y     x1    x2
-## 1 -887.1755 -50.50 265.7
-## 2 -395.0929 140.00 215.3
-## 3 -711.1176  44.75 266.0
-## 4 -649.4375  99.50 284.2
-## 5 -534.8697 160.25 292.8
-## 6 -301.3693 167.75 208.2
+## 1 -678.0054   2.00 223.4
+## 2 -848.6161 -64.75 237.8
+## 3 -197.2991 202.25 201.6
+## 4 -834.2980 -85.75 225.2
+## 5 -381.3143 194.75 267.7
+## 6 -773.6472 -70.75 219.8
 \end{verbatim}
 
 First, fit a linear model the normal way, using \texttt{lm()}
@@ -262,19 +262,19 @@ First, fit a linear model the normal way, using \texttt{lm()}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -80.734 -14.173   1.144  14.466  69.858 
+## -59.999 -17.966   2.516  22.005  69.337 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 30.23712   28.52287    1.06    0.293    
-## x1           1.99093    0.03167   62.86   <2e-16 ***
-## x2          -3.10391    0.11249  -27.59   <2e-16 ***
+## (Intercept) 11.15952   30.63225   0.364    0.717    
+## x1           1.98268    0.03514  56.423   <2e-16 ***
+## x2          -3.04296    0.12302 -24.735   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 26.97 on 72 degrees of freedom
-## Multiple R-squared:  0.9848, Adjusted R-squared:  0.9844 
-## F-statistic:  2332 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 31.48 on 72 degrees of freedom
+## Multiple R-squared:  0.9814, Adjusted R-squared:  0.9808 
+## F-statistic:  1894 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
@@ -293,19 +293,19 @@ Now we show that we can use \texttt{glm()} the same way, specifying \texttt{fami
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -80.734 -14.173   1.144  14.466  69.858 
+## -59.999 -17.966   2.516  22.005  69.337 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 30.23712   28.52287    1.06    0.293    
-## x1           1.99093    0.03167   62.86   <2e-16 ***
-## x2          -3.10391    0.11249  -27.59   <2e-16 ***
+## (Intercept) 11.15952   30.63225   0.364    0.717    
+## x1           1.98268    0.03514  56.423   <2e-16 ***
+## x2          -3.04296    0.12302 -24.735   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 26.97 on 72 degrees of freedom
-## Multiple R-squared:  0.9848, Adjusted R-squared:  0.9844 
-## F-statistic:  2332 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 31.48 on 72 degrees of freedom
+## Multiple R-squared:  0.9814, Adjusted R-squared:  0.9808 
+## F-statistic:  1894 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 So we get exactly the same output, as we should, since both functions fit the same model. Many functions used for linear models, like \texttt{coef()}, \texttt{predict()}, etc, will perform as expected, when we pass a generalized linear model fitted using \texttt{glm()} in as the first argument.
@@ -482,20 +482,14 @@ Formally, a Generalized Linear Model is made of two components: the \emph{probab
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-\begin{figure}
-\centering
-\includegraphics{images/scooby_doo_meme.jpg}
-\caption{It's linear models all the way down. Posted on reddit in r/statisticsmemes by u/not\_really\_redditing.}
-\end{figure}
-
 At this point, you are likely familiar with linear regression. As discussed before, linear regression models are a special case of generalized regression model that we use when the data are normally distributed and have constant variance. We can think of linear regression models in the same terms we think of other regression models.
 
 The two components of a regression model are the random component and the systematic component and for linear regression,
 
 \[
 \begin{cases}
-  \text{var}[y_i] &= \sigma^2/w_i \\
-  \mu_i &= \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
+  \text{var}[y_i] = \sigma^2/w_i \\
+  \mu_i = \beta_0 + \sum_{j=1}^{p}\beta_jx_{ji}
 \end{cases}
 \]
 
@@ -517,6 +511,248 @@ As mentioned before, the assumptions belonging to linear regression are:
 \item
   Each datam is \textbf{independent} of all other data points.
 \end{enumerate}
+
+\hypertarget{a-good-example-of-simple-linear-regression}{%
+\section{A ``Good'' Example of Simple Linear Regression}\label{a-good-example-of-simple-linear-regression}}
+
+\texttt{trees} is a data set that comes with R. It has three variables, the diameter (mistakenly named girth in the data set), height and volume of each of the thirty-one trees in the data set. If we just type \texttt{data(trees)} into the Console, R will retreive it for us. This is the data set I'm going to use to showcase a good example of simple linear regression. At this time, let's also make sure we have the \texttt{tidyverse} (which includes \texttt{ggplot} for graphing) loaded.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{data}\NormalTok{(trees)}
+
+\CommentTok{\# Let\textquotesingle{}s change the name from Girth to Diameter:}
+\NormalTok{trees \textless{}{-}}\StringTok{ }\NormalTok{trees }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Diameter =}\NormalTok{ Girth) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{{-}}\NormalTok{Girth)}
+
+\KeywordTok{head}\NormalTok{(trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Height Volume Diameter
+## 1     70   10.3      8.3
+## 2     65   10.3      8.6
+## 3     63   10.2      8.8
+## 4     72   16.4     10.5
+## 5     81   18.8     10.7
+## 6     83   19.7     10.8
+\end{verbatim}
+
+Let's look at the scatterplot between these two variables, Diameter and Height.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(trees)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Diameter, }\DataTypeTok{y =}\NormalTok{  Height))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Diameter (inches)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Height (feet)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Diameter and Height of 31 Black Cherry Trees"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+When plotting the explanatory variable (Diameter) against the response variable (Height), we are looking for linearity, since that is one of our conditions of fitting a linear model to our data. Though the relationship between these two variables seems to be moderate or moderately-weak, it does indeed look linear.
+
+The next condition is constant variance, which we evaluate by looking at the residuals. We first need to produce those residuals which we do by fitting the model. The \texttt{lm} function automatically saves residuals, among other information, about the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(Height }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{Diameter, }\DataTypeTok{data =}\NormalTok{ trees)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Height ~ Diameter, data = trees)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.5816  -2.7686   0.3163   2.4728   9.9456 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  62.0313     4.3833  14.152 1.49e-14 ***
+## Diameter      1.0544     0.3222   3.272  0.00276 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.538 on 29 degrees of freedom
+## Multiple R-squared:  0.2697, Adjusted R-squared:  0.2445 
+## F-statistic: 10.71 on 1 and 29 DF,  p-value: 0.002758
+\end{verbatim}
+
+We can view those residuals by typing \texttt{head(mod\$residuals)}, let's just look at the first six to get an idea of them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(mod}\OperatorTok{$}\NormalTok{residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1         2         3         4         5         6 
+## -0.782575 -6.098886 -8.309759 -1.102186  7.686940  9.581503
+\end{verbatim}
+
+Next, we should view the actual residuals to check for normality and constant variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ trees}\OperatorTok{$}\NormalTok{Diameter, }\DataTypeTok{y =}\NormalTok{ mod}\OperatorTok{$}\NormalTok{residuals))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Diameter (inches)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"residuals"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residual plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+When examining the residual plot, we are looking for two things: randomness and constant variance. Both are indications that our residuals are \(N(0,\sigma^2)\). If we don't see randomness, i.e.~there is a pattern, that indicates that are data are not linear. Constant variance is a necessary condition because when we assume the residuals are \(N(0,\sigma^2)\), the variance parameter is one estimate, \(\sigma^2\). If we see the variance of the residuals changing, then that indicates that the one variance parameter isn't sufficient and since a normal distribution only has one variance parameter, it might not be the best model for the data.
+
+There does not seem to be a pattern to the residuals, so they look random. This again suggests our data are linear. As for constant variance, however, it seems have more variation in the middle than we do at the ends of our graph. It isn't too bad though and we can proceed.
+
+Our last condition is independence. We evaluate independence by looking at how the data were collected. We can find out more information about the trees data set by typing \texttt{?trees} into the Console, which will bring up the help file on the data set. This data comes from 31 black cherry trees, felled for timber. Though we don't have much information, the trees could be independent if they were randomly selected to be measured.
+
+The \texttt{trees} data set isn't perfect for linear regression, but it meets most of our assumptions. I'll now move on to an example of linear regression with a data set that is not linear.
+
+\hypertarget{a-bad-example-of-simple-linear-regression}{%
+\section{A ``Bad'' Example of Simple Linear Regression}\label{a-bad-example-of-simple-linear-regression}}
+
+First, we load in the \texttt{mtcars} data set, look at the first six obervations of each variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{data}\NormalTok{(mtcars)}
+\KeywordTok{head}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+\end{verbatim}
+
+Now, let's take a look at a scatterplot of two variables in \texttt{mtcars}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(mtcars)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Miles per Gallon"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Car\textquotesingle{}s Mileage based on Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+We can see that this graph looks mostly linear, there seems to be a strong, negative relationship between a car's weight and and its mpg. There is some nonlinearity because of the three points for cars with a weight above 5,000 lbs; the graph look a bit curved so we should be cautious as we proceed.
+
+If we add a smoothed line to the plot, we can see that it is indeed curved.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(mtcars)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_smooth}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ wt, }\DataTypeTok{y =}\NormalTok{ mpg), }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Miles per Gallon"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Car\textquotesingle{}s Mileage based on Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+This graph addresses one of the assumptions of linear regression: linearity. Next, let's check whether there is constant variation. We do this with a residual plot. First, we have to fit a model to our data in order to obtain residuals.
+
+To fit a model, we use the \texttt{lm} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{wt, }\DataTypeTok{data =}\NormalTok{ mtcars)}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  37.2851     1.8776  19.858  < 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
+\end{verbatim}
+
+Among other things, the \texttt{lm} function saves the residuals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(fit}\OperatorTok{$}\NormalTok{residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Mazda RX4     Mazda RX4 Wag        Datsun 710    Hornet 4 Drive 
+##        -2.2826106        -0.9197704        -2.0859521         1.2973499 
+## Hornet Sportabout           Valiant 
+##        -0.2001440        -0.6932545
+\end{verbatim}
+
+We can plot the residuals against the weight and look for randomness and constant variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ mtcars}\OperatorTok{$}\NormalTok{wt, }\DataTypeTok{y =}\NormalTok{ fit}\OperatorTok{$}\NormalTok{residuals))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Weight (in thousands of lbs)"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"residuals"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Residual plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+The graph above seems to have a curved pattern. The cars that weigh the least have large residuals, all above the zero line. The residuals of the cars that weigh between 2,250 and 4,250 lbs are lower and seem to be centered on the zero line. The cars that weigh the heaviest also have large residuals. So, there seems to be a parabola shape to our data, indicating nonlinearity.
+
+As for constant variance, we could go either way. As we look at different car weights, the distance between the top-most point and the bottom-most point is fairly similar indicating we could have constant variance. That might be enough evidence for some folks, but others might point out that the though the cars that weigh the least and the cars that weigh between 2,250 and 4,250 lbs are similar, cars that weigh the most have very small variance comparatively.
+
+Lastly, we need independence. We evaluate independence by checking the data and how it was obtained. If you type \texttt{?mtcars} into the Console, the Help file with pop up for the \texttt{mtcars} data set. Here, we learn that the data came from a 1981 textbook on biometrics. While there isn't much information on the data here, we can look to the data for answers. The data records many different attributes of certain make and models of cars. In general, one car of a particular make and model is unlikely to influence the attributes of another car. The only exception I can think of is cars of the same make. Perhaps two cars made by Mazda might not be totally independent, but this would be a more serious concern if we had observations of two cars with the same make and model but different years. So, this last condition is likely met.
+
+In general, using \texttt{wt} to explain \texttt{mpg} in the \texttt{mtcars} data set could have gone worse. The violations of the assumptions were quite small and some folks might find that thee transgressions to be ignorable. We should not take violations lightly, however, especially since there are steps we can take if our data isn't meeting the assumptions. Transformations are always an option but if we have data of a particular kind, e.g.~binary data or count data, we can use generalized linear models instead.
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+Often we want to fit our data with a model to better understand our response variable or to try to predict new events. The ideal case (because it is common, widely used and easy to interpret) is that we can fit a linear model to the data. In order to do so, the relationship between the response variable and the explanatory variable(s) needs to be linear, we need to have constant variance, and the data needs to be independent.
+
+If these condtions are not met, then there are steps we can take. One of which is transformations, we will not be going over that. The other is to fit a generalized linear model, which doesn't necessarily assume the data come from a normal distribution.
 
 \hypertarget{logistic-regression}{%
 \chapter{Logistic Regression}\label{logistic-regression}}
@@ -662,7 +898,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 0 1 1 0 1 0 0 0
+##  [1] 1 0 0 1 1 0 0 1 0 0
 \end{verbatim}
 
 \begin{Shaded}
@@ -686,7 +922,7 @@ So zeros and ones, we expect that (sorry if you're the 2 in \(2^{10}\) readers w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
