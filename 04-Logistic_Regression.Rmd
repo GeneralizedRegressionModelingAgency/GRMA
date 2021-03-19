@@ -97,9 +97,56 @@ So zeros and ones, we expect that (sorry if you're the 2 in $2^{10}$ readers who
 hist(flip_data)         # hist() generates a simple historam. We could make
                         # this prettier with ggplot2, but we don't need that right
                         # now.
+
+
 ```
 
+
+
 ## Why doesn't OLS work for Binomial Data?
+
+"Hey," you may be saying to the intense discomfort of those around you as you suddenly begin speaking to your book, "Yeah you--you're being intellectually dishonest!" The people around you register but do not address your sudden outburst. "Of course *that's* hard to fit--there is no meaningful relationship!" Acquaintances and strangers in earshot begin to gather their belongings closer to them and some plot in hushed tones to pay their check and depart. Perhaps a family pet or roommate registers this common occurance nonplused and proceeds with their day.
+
+Stop making a scene. You're right, fine. Maybe this will help. Picture five dice of different numbers of sides: 4, 6, 8, 12, and 20 sides. I want to know if the number of sides increases the liklihood of getting a 4 or above. Does the likelihood or getting a 4 or above increase with the number of sides? Our (and hopefully your) intuitive assumption is that yes. Obviously. So lets try to examine some data.
+
+
+```{r}
+# here I'll write a function and then use the map function to apply that
+# situation multiple times.This is a great technique for simulation and,
+# once you're acquainted with it, can lead to more efficient and/or easier#
+# to read code than complicated nested for-loops.
+
+# first, we define a simple function that returns a 1 if a roll of a simulated
+# die with a variable number of 'sides' equals a target number 'tn' or higher.
+
+library(tidyverse)
+
+simulate_die_roll <- function(sides = 4, tn = 4) { # this starts describing
+                                                   # the function and creates
+                                                   # two parameters, sides
+                                                   # and tn, which will be set
+                                                   # to 4 but can be changed
+                                                   # when the function is called
+  roll <- sample(1:sides, size = 1) # roll a die, size 1 to 'sides'.
+  if(roll >= tn){1} else {0} # if roll >= target number, then return 1,
+                             # otherwise, return 0.
+}
+
+# with this simple (and poorly error-proofed) function defined, we can use it
+# to sample some data.
+
+dice <- c(4, 6, 8, 12, 20) # gather our dice
+results <- 0 # blank the results variable, in case I was sloppy elsewhere
+nsimsperdie <- 10 # number of rolls per die
+
+(d4 <- unlist(map(1:nsimsperdie, ~ simulate_die_roll(sides = 4, tn=4))))
+(d6 <- unlist(map(1:nsimsperdie, ~ simulate_die_roll(sides = 6, tn=4))))
+(d8 <- unlist(map(1:nsimsperdie, ~ simulate_die_roll(sides = 8, tn=4))))
+(d12 <- unlist(map(1:nsimsperdie, ~ simulate_die_roll(sides = 12, tn=4))))
+(d20 <- unlist(map(1:nsimsperdie, ~ simulate_die_roll(sides = 20, tn=4))))
+
+
+```
 
 
 ## Link functions we can use
