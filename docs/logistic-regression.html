@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-15" />
+<meta name="date" content="2021-03-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="linear.html"/>
 <link rel="next" href="poisson-regression.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -134,7 +134,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">GRMs</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-the-authors"><i class="fa fa-check"></i><b>1.1</b> About the Authors</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#find-a-problem-have-a-question"><i class="fa fa-check"></i><b>1.2</b> Find a problem? Have a question?</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models---a-kind-of-generalized-linear-model"><i class="fa fa-check"></i><b>2.1</b> Linear models - a kind of Generalized Linear Model</a></li>
@@ -243,14 +247,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 where <span class="math inline">\(y\in\{0, 1\}, 0\leq\mu\leq1\)</span>.</p>
 <p>This might be a bit different than what you’ve seen before, so lets talk about each variable.</p>
 <ul>
-<li><span class="math inline">\(\mathcal{P}\)</span>: (<span class="math inline">\(\texttt{\\mathcal\{P\}}\)</span> in TeX) is the probability mass function of a certain outcome. <span class="math inline">\(\mathcal{P}(y;\mu)\)</span> then is the probability of event <span class="math inline">\(y\)</span> when the success has a probability of <span class="math inline">\(\mu\)</span>.</li>
+<li><span class="math inline">\(\mathcal{P}\)</span>: (<code>\\mathcal\{P\}</code> in TeX) is the probability mass function of a certain outcome. <span class="math inline">\(\mathcal{P}(y;\mu)\)</span> then is the probability of event <span class="math inline">\(y\)</span> when the success has a probability of <span class="math inline">\(\mu\)</span>.</li>
 <li><span class="math inline">\(y\)</span>: is the number of successes. Since this is a single trial, it can only be 0 or 1 (described by the statement <span class="math inline">\(y\in\{0, 1\}\)</span>).
 <ul>
 <li>Basically, it lets us choose whether we’re predicting success or predicting failure all in one function.</li>
 <li>If we’re interested in the liklihood of an event not occuring <span class="math inline">\(y=0\)</span>, <span class="math inline">\(\mu^0=1\)</span>, and the PMF simplifies to <span class="math inline">\(\mathcal{P(1,\mu)}=1-\mu\)</span>.</li>
 <li>Conversely, if we’re interetsed in an event occuring, <span class="math inline">\(y-1\)</span>, <span class="math inline">\((1-\mu)^{(1-1)}=1\)</span>, and the PMF simplifies to <span class="math inline">\(\mathcal{P(1,\mu)}=\mu\)</span>.</li>
 </ul></li>
-<li><span class="math inline">\(\mu\)</span>: (<span class="math inline">\(\texttt{\\mu}\)</span> in TeX) is the probability of the event. But wait, isn’t <span class="math inline">\(\mu\)</span> the mean, and also the expected value? <strong>Yes, exactly!</strong> Those are all the same in this PMF, so we use the same variable. Because many text books need you to consider those ideas separatey so you can discover that relationship, you might see it recorded elsewhere as <span class="math inline">\(p\)</span>, but since demonstrating that is beyond our scope here, we’ll use <span class="math inline">\(\mu\)</span> to reduce complexity.</li>
+<li><span class="math inline">\(\mu\)</span>: (<code>\mu</code> in TeX) is the probability of the event. But wait, isn’t <span class="math inline">\(\mu\)</span> the mean, and also the expected value? <strong>Yes, exactly!</strong> Those are all the same in this PMF, so we use the same variable. Because many text books need you to consider those ideas separatey so you can discover that relationship, you might see it recorded elsewhere as <span class="math inline">\(p\)</span>, but since demonstrating that is beyond our scope here, we’ll use <span class="math inline">\(\mu\)</span> to reduce complexity.</li>
 <li>It complicates using the formula elsewhere, but we could rewrite this as:
 <span class="math display">\[
 \mathcal{P}(y;\mu)=
@@ -268,8 +272,8 @@ where <span class="math inline">\(y\in\{0, 1\}, 0\leq\mu\leq1\)</span>.</p>
 where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a positive integer, and }0&lt;\mu&lt;1.\)</span></p>
 <p>Like before, this format might be a bit different than what you may have seen elsewhere, so let’s break it down.</p>
 <ul>
-<li>A reminder, <span class="math inline">\(\binom{n}{k}\)</span>, (written <code>\texttt{\binom{n}{k}}</code> in TeX) is a combination <span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>. More detail <a href="https://en.wikipedia.org/wiki/Combination">here.</a></li>
-<li><span class="math inline">\(\mathcal{P}\)</span> (<span class="math inline">\(\texttt{\\mathcal\{P\}}\)</span> in TeX) is the probability mass function (PMF) aka probability function. <span class="math inline">\(\mathcal{P}(y;\mu,m)\)</span> then is the probability function of a binomial distribution for event <span class="math inline">\(y\)</span> in the case of <span class="math inline">\(m\)</span> Bernoulli trials with each trial having a probability of <span class="math inline">\(\mu\)</span>.</li>
+<li>A reminder, <span class="math inline">\(\binom{n}{k}\)</span>, (written <code>\binom{n}{k}</code> in TeX) is a combination <span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>. More detail <a href="https://en.wikipedia.org/wiki/Combination">here.</a></li>
+<li><span class="math inline">\(\mathcal{P}\)</span> (<code>\\mathcal\{P\}</code> in TeX) is the probability mass function (PMF) aka probability function. <span class="math inline">\(\mathcal{P}(y;\mu,m)\)</span> then is the probability function of a binomial distribution for event <span class="math inline">\(y\)</span> in the case of <span class="math inline">\(m\)</span> Bernoulli trials with each trial having a probability of <span class="math inline">\(\mu\)</span>.</li>
 <li><span class="math inline">\(m\)</span> here is simply the number of trials easy.</li>
 <li><span class="math inline">\(y\)</span> here measures the <em>proportion</em> of successes (and actually it really is above as well–I’ll get to that in a moment).
 <ul>
@@ -290,7 +294,7 @@ where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a posit
 <span id="cb24-3"><a href="logistic-regression.html#cb24-3"></a>probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
 <span id="cb24-4"><a href="logistic-regression.html#cb24-4"></a>                        <span class="co"># a 50% chance of heads, a 50% chance of tails.</span></span>
 <span id="cb24-5"><a href="logistic-regression.html#cb24-5"></a>(<span class="dt">flip_data =</span> <span class="kw">sample</span>(<span class="dt">x =</span> possibilities, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span>probabilities))</span></code></pre></div>
-<pre><code>##  [1] 1 1 0 0 0 1 1 0 0 0</code></pre>
+<pre><code>##  [1] 1 1 1 1 1 1 0 0 1 1</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a>                        <span class="co"># x is the vector of possible outcomes.</span></span>
 <span id="cb26-2"><a href="logistic-regression.html#cb26-2"></a>                        <span class="co"># size is the number of coin flips I want.</span></span>
 <span id="cb26-3"><a href="logistic-regression.html#cb26-3"></a>                        <span class="co"># we are flipping coin, not drawing from a deck, so ne</span></span>
@@ -308,6 +312,46 @@ where <span class="math inline">\(y={0, 1/m, 2/m, ..., 1}, m \textrm{ is a posit
 </div>
 <div id="why-doesnt-ols-work-for-binomial-data" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Why doesn’t OLS work for Binomial Data?</h2>
+<p>“Hey,” you may be saying to the intense discomfort of those around you as you suddenly begin speaking to your book, “Yeah you–you’re being intellectually dishonest!” The people around you register but do not address your sudden outburst. “Of course <em>that’s</em> hard to fit–there is no meaningful relationship!” Acquaintances and strangers in earshot begin to gather their belongings closer to them and some plot in hushed tones to pay their check and depart. Perhaps a family pet or roommate registers this common occurance nonplused and proceeds with their day.</p>
+<p>Stop making a scene. You’re right, fine. Maybe this will help. Picture five dice of different numbers of sides: 4, 6, 8, 12, and 20 sides. I want to know if the number of sides increases the liklihood of getting a 4 or above. Does the likelihood or getting a 4 or above increase with the number of sides? Our (and hopefully your) intuitive assumption is that yes. Obviously. So lets try to examine some data.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="logistic-regression.html#cb29-1"></a><span class="co"># here I&#39;ll write a function and then use the map function to apply that</span></span>
+<span id="cb29-2"><a href="logistic-regression.html#cb29-2"></a><span class="co"># situation multiple times.This is a great technique for simulation and,</span></span>
+<span id="cb29-3"><a href="logistic-regression.html#cb29-3"></a><span class="co"># once you&#39;re acquainted with it, can lead to more efficient and/or easier#</span></span>
+<span id="cb29-4"><a href="logistic-regression.html#cb29-4"></a><span class="co"># to read code than complicated nested for-loops.</span></span>
+<span id="cb29-5"><a href="logistic-regression.html#cb29-5"></a></span>
+<span id="cb29-6"><a href="logistic-regression.html#cb29-6"></a><span class="co"># first, we define a simple function that returns a 1 if a roll of a simulated</span></span>
+<span id="cb29-7"><a href="logistic-regression.html#cb29-7"></a><span class="co"># die with a variable number of &#39;sides&#39; equals a target number &#39;tn&#39; or higher.</span></span>
+<span id="cb29-8"><a href="logistic-regression.html#cb29-8"></a></span>
+<span id="cb29-9"><a href="logistic-regression.html#cb29-9"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb29-10"><a href="logistic-regression.html#cb29-10"></a></span>
+<span id="cb29-11"><a href="logistic-regression.html#cb29-11"></a>simulate_die_roll &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">sides =</span> <span class="dv">4</span>, <span class="dt">tn =</span> <span class="dv">4</span>) { <span class="co"># this starts describing</span></span>
+<span id="cb29-12"><a href="logistic-regression.html#cb29-12"></a>                                                   <span class="co"># the function and creates</span></span>
+<span id="cb29-13"><a href="logistic-regression.html#cb29-13"></a>                                                   <span class="co"># two parameters, sides</span></span>
+<span id="cb29-14"><a href="logistic-regression.html#cb29-14"></a>                                                   <span class="co"># and tn, which will be set</span></span>
+<span id="cb29-15"><a href="logistic-regression.html#cb29-15"></a>                                                   <span class="co"># to 4 but can be changed</span></span>
+<span id="cb29-16"><a href="logistic-regression.html#cb29-16"></a>                                                   <span class="co"># when the function is called</span></span>
+<span id="cb29-17"><a href="logistic-regression.html#cb29-17"></a>  roll &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>sides, <span class="dt">size =</span> <span class="dv">1</span>) <span class="co"># roll a die, size 1 to &#39;sides&#39;.</span></span>
+<span id="cb29-18"><a href="logistic-regression.html#cb29-18"></a>  <span class="cf">if</span>(roll <span class="op">&gt;=</span><span class="st"> </span>tn){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">0</span>} <span class="co"># if roll &gt;= target number, then return 1,</span></span>
+<span id="cb29-19"><a href="logistic-regression.html#cb29-19"></a>                             <span class="co"># otherwise, return 0.</span></span>
+<span id="cb29-20"><a href="logistic-regression.html#cb29-20"></a>}</span>
+<span id="cb29-21"><a href="logistic-regression.html#cb29-21"></a></span>
+<span id="cb29-22"><a href="logistic-regression.html#cb29-22"></a><span class="co"># with this simple (and poorly error-proofed) function defined, we can use it</span></span>
+<span id="cb29-23"><a href="logistic-regression.html#cb29-23"></a><span class="co"># to sample some data.</span></span>
+<span id="cb29-24"><a href="logistic-regression.html#cb29-24"></a></span>
+<span id="cb29-25"><a href="logistic-regression.html#cb29-25"></a>dice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">20</span>) <span class="co"># gather our dice</span></span>
+<span id="cb29-26"><a href="logistic-regression.html#cb29-26"></a>results &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co"># blank the results variable, in case I was sloppy elsewhere</span></span>
+<span id="cb29-27"><a href="logistic-regression.html#cb29-27"></a>nsimsperdie &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># number of rolls per die</span></span>
+<span id="cb29-28"><a href="logistic-regression.html#cb29-28"></a></span>
+<span id="cb29-29"><a href="logistic-regression.html#cb29-29"></a>(d4 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>nsimsperdie, <span class="op">~</span><span class="st"> </span><span class="kw">simulate_die_roll</span>(<span class="dt">sides =</span> <span class="dv">4</span>, <span class="dt">tn=</span><span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 1 0 0 0 0 0 0</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic-regression.html#cb31-1"></a>(d6 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>nsimsperdie, <span class="op">~</span><span class="st"> </span><span class="kw">simulate_die_roll</span>(<span class="dt">sides =</span> <span class="dv">6</span>, <span class="dt">tn=</span><span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##  [1] 1 0 0 0 1 1 0 1 1 0</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="logistic-regression.html#cb33-1"></a>(d8 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>nsimsperdie, <span class="op">~</span><span class="st"> </span><span class="kw">simulate_die_roll</span>(<span class="dt">sides =</span> <span class="dv">8</span>, <span class="dt">tn=</span><span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 0 1 0 1</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="logistic-regression.html#cb35-1"></a>(d12 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>nsimsperdie, <span class="op">~</span><span class="st"> </span><span class="kw">simulate_die_roll</span>(<span class="dt">sides =</span> <span class="dv">12</span>, <span class="dt">tn=</span><span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##  [1] 1 0 1 1 1 1 0 1 1 1</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="logistic-regression.html#cb37-1"></a>(d20 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span>nsimsperdie, <span class="op">~</span><span class="st"> </span><span class="kw">simulate_die_roll</span>(<span class="dt">sides =</span> <span class="dv">20</span>, <span class="dt">tn=</span><span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##  [1] 1 1 1 0 1 1 1 1 1 1</code></pre>
 </div>
 <div id="link-functions-we-can-use" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Link functions we can use</h2>

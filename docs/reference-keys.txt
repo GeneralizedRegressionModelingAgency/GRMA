@@ -3,6 +3,8 @@ fig:linearline
 eq:systematic-linear
 eq:random-linear
 about-this-book
+about-the-authors
+find-a-problem-have-a-question
 intro
 linear-models---a-kind-of-generalized-linear-model
 linear-assumptions
