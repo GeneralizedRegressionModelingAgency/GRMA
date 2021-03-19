@@ -24,7 +24,7 @@
 <meta name="author" content="Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments" />
 
 
-<meta name="date" content="2021-03-15" />
+<meta name="date" content="2021-03-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="logistic-regression.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -134,7 +134,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">GRMs</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this book</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-the-authors"><i class="fa fa-check"></i><b>1.1</b> About the Authors</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#find-a-problem-have-a-question"><i class="fa fa-check"></i><b>1.2</b> Find a problem? Have a question?</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#linear-models---a-kind-of-generalized-linear-model"><i class="fa fa-check"></i><b>2.1</b> Linear models - a kind of Generalized Linear Model</a></li>
@@ -227,25 +231,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.4</span> Poisson Example</h2>
 <p><img src="images/bsb.jpg" /></p>
 <p>Now that we have had a chance to go over some of the characteristics of Poisson GLMs, let’s look at an example involving baseball data. The dataset that we will use is a subset of data from the Lahman package, which is an extensive collection of baseball statistics since the 1800s. This package is an excellant resource for fellow baseball fans to practice fitting various GLM models, including Binomial regressions. The dataset that we will be focusing on is the batting statistics from every World Series during the liveball era. If you do not have the following packages, please take a moment to install them using the install.packages command. To start, we will need to load the Lahman package and the tidyverse package to access our World Series data, which is a subset of the Postseason dataset:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="poisson-regression.html#cb29-1"></a><span class="kw">require</span>(Lahman)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="poisson-regression.html#cb39-1"></a><span class="kw">require</span>(Lahman)</span></code></pre></div>
 <pre><code>## Loading required package: Lahman</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="poisson-regression.html#cb31-1"></a><span class="kw">require</span>(tidyverse)</span>
-<span id="cb31-2"><a href="poisson-regression.html#cb31-2"></a><span class="kw">data</span>(BattingPost)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="poisson-regression.html#cb41-1"></a><span class="kw">require</span>(tidyverse)</span>
+<span id="cb41-2"><a href="poisson-regression.html#cb41-2"></a><span class="kw">data</span>(BattingPost)</span></code></pre></div>
 <p>Now we can manipulate the data to focus only on the World Series batting statistics from the liveball era:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="poisson-regression.html#cb32-1"></a>liveball_ws &lt;-<span class="st"> </span>BattingPost <span class="op">%&gt;%</span></span>
-<span id="cb32-2"><a href="poisson-regression.html#cb32-2"></a><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1920</span>) <span class="op">%&gt;%</span></span>
-<span id="cb32-3"><a href="poisson-regression.html#cb32-3"></a><span class="st">  </span><span class="kw">filter</span>(round <span class="op">==</span><span class="st"> &quot;WS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="poisson-regression.html#cb42-1"></a>liveball_ws &lt;-<span class="st"> </span>BattingPost <span class="op">%&gt;%</span></span>
+<span id="cb42-2"><a href="poisson-regression.html#cb42-2"></a><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1920</span>) <span class="op">%&gt;%</span></span>
+<span id="cb42-3"><a href="poisson-regression.html#cb42-3"></a><span class="st">  </span><span class="kw">filter</span>(round <span class="op">==</span><span class="st"> &quot;WS&quot;</span>)</span></code></pre></div>
 <p>Our response variable is going to be the runs scored by each player during each World Series from the liveball era. Initially, we can imagine that this will be a good canidate for Poisson regresssion because runs are a quantitative count. The number of runs scored by each player is also probably 0 to 1 typically, but there will be cases where a higher number of runs are occasionally scored and technically there is no upper limit to how many runs that is. Let’s graph the response variable and see if this seems to be the case:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="poisson-regression.html#cb33-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> liveball_ws, <span class="kw">aes</span>(<span class="dt">x =</span> R)) <span class="op">+</span></span>
-<span id="cb33-2"><a href="poisson-regression.html#cb33-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb33-3"><a href="poisson-regression.html#cb33-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Runs Scored&quot;</span>) <span class="op">+</span></span>
-<span id="cb33-4"><a href="poisson-regression.html#cb33-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Runs Scored During the World Series&quot;</span>, </span>
-<span id="cb33-5"><a href="poisson-regression.html#cb33-5"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Live Ball Era&quot;</span>) <span class="op">+</span></span>
-<span id="cb33-6"><a href="poisson-regression.html#cb33-6"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)) </span></code></pre></div>
-<p><img src="Bookdown_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="poisson-regression.html#cb43-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> liveball_ws, <span class="kw">aes</span>(<span class="dt">x =</span> R)) <span class="op">+</span></span>
+<span id="cb43-2"><a href="poisson-regression.html#cb43-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb43-3"><a href="poisson-regression.html#cb43-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Runs Scored&quot;</span>) <span class="op">+</span></span>
+<span id="cb43-4"><a href="poisson-regression.html#cb43-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Runs Scored During the World Series&quot;</span>, </span>
+<span id="cb43-5"><a href="poisson-regression.html#cb43-5"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Live Ball Era&quot;</span>) <span class="op">+</span></span>
+<span id="cb43-6"><a href="poisson-regression.html#cb43-6"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)) </span></code></pre></div>
+<p><img src="Bookdown_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>This indeed looks like a great candidate for Poisson regression. We could even imagine overlaying a Poisson distribution with a <span class="math inline">\(\mu\)</span> parameter of about 1 and see that it follows our response variable well. In fact, the mean number of runs scored in this dataset is 1.04, which would be the estimated <span class="math inline">\(\mu\)</span> value. Let’s now fit a model using batting-related outcome variables as our explanatory variables. We will model runs scored using the number of hits, doubles, triples, and home runs a player recored in each World Series:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="poisson-regression.html#cb34-1"></a>runmod &lt;-<span class="st"> </span><span class="kw">glm</span>(R <span class="op">~</span><span class="st"> </span>H <span class="op">+</span><span class="st"> </span>X2B <span class="op">+</span><span class="st"> </span>X3B <span class="op">+</span><span class="st"> </span>HR, <span class="dt">data =</span> liveball_ws, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)</span>
-<span id="cb34-2"><a href="poisson-regression.html#cb34-2"></a><span class="kw">summary</span>(runmod)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="poisson-regression.html#cb44-1"></a>runmod &lt;-<span class="st"> </span><span class="kw">glm</span>(R <span class="op">~</span><span class="st"> </span>H <span class="op">+</span><span class="st"> </span>X2B <span class="op">+</span><span class="st"> </span>X3B <span class="op">+</span><span class="st"> </span>HR, <span class="dt">data =</span> liveball_ws, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)</span>
+<span id="cb44-2"><a href="poisson-regression.html#cb44-2"></a><span class="kw">summary</span>(runmod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = R ~ H + X2B + X3B + HR, family = &quot;poisson&quot;, data = liveball_ws)

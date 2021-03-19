@@ -17,6 +17,24 @@ Welcome to our bookdown book on Generalized Linear Models. This book is the resu
 
 To learn this material ourselves, we used __Generalized Linear Models With Examples in R__ by Peter K. Dunn and Gordon K. Smyth[@dunn2018generalized]. If you are looking for more background reading or examples and applications, we recommend this book, as it is a good, accessible, resource to understand these models. 
 
-In this book, we used the following data for examples: (add sources)
 
 A big thank you to James Molyneux for leading and organizing our reading and conference class. 
+
+## About the Authors 
+
+Emma Grossman is a graduate student finishing her MS degree in Statistics at Oregon State University. She enjoys using machine learning to solve statistical problems and loves programming in R. You can find more about her on her [website](https://www.emmaleda.com).
+
+Leah Marcus is a graduate student obtaining her MS in Statistics. Her interests are statistical modeling applications, with a focus in Economics and baseball. You can find her on [LinkedIn](https://www.linkedin.com/in/leah-marcus-11aa59207/).
+
+Emily Palmer is a graduate student in statistics studying statistical methods in microbiome research. You can find more of her work on her [GitHub](https://github.com/empalmer), or follow her on [Twitter](https://twitter.com/emilymmpalmer).
+
+Katherine Pulham is a graduate student and early-career researcher in the field of statistics. Her research interests are point processes, statistical computing, regression methods and Bayesian statistics. You can find her on [LinkedIn](https://www.linkedin.com/in/red-noise-rose/).
+
+
+Andrew Rumments exists and is cool 
+
+## Find a problem? Have a question? 
+
+The best way to notify the authors of a problem is to file an [issue](https://github.com/GeneralizedRegressionModelingAgency/GRMA/issues) on this book's [GitHub repository.
+
+

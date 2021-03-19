@@ -114,7 +114,7 @@
 
 \title{An Introduction to Generalized Linear Models}
 \author{Emma Grossman, Leah Marcus, Emily Palmer, Katherine Pulham, Andrew Rumments}
-\date{2021-03-15}
+\date{2021-03-19}
 
 \begin{document}
 \maketitle
@@ -130,9 +130,25 @@ Welcome to our bookdown book on Generalized Linear Models. This book is the resu
 
 To learn this material ourselves, we used \textbf{Generalized Linear Models With Examples in R} by Peter K. Dunn and Gordon K. Smyth\citep{dunn2018generalized}. If you are looking for more background reading or examples and applications, we recommend this book, as it is a good, accessible, resource to understand these models.
 
-In this book, we used the following data for examples: (add sources)
-
 A big thank you to James Molyneux for leading and organizing our reading and conference class.
+
+\hypertarget{about-the-authors}{%
+\section{About the Authors}\label{about-the-authors}}
+
+Emma Grossman is a graduate student finishing her MS degree in Statistics at Oregon State University. She enjoys using machine learning to solve statistical problems and loves programming in R. You can find more about her on her \href{https://www.emmaleda.com}{website}.
+
+Leah Marcus is a graduate student obtaining her MS in Statistics. Her interests are statistical modeling applications, with a focus in Economics and baseball. You can find her on \href{https://www.linkedin.com/in/leah-marcus-11aa59207/}{LinkedIn}.
+
+Emily Palmer is a graduate student in statistics studying statistical methods in microbiome research. You can find more of her work on her \href{https://github.com/empalmer}{GitHub}, or follow her on \href{https://twitter.com/emilymmpalmer}{Twitter}.
+
+Katherine Pulham is a graduate student and early-career researcher in the field of statistics. Her research interests are point processes, statistical computing, regression methods and Bayesian statistics. You can find her on \href{https://www.linkedin.com/in/red-noise-rose/}{LinkedIn}.
+
+Andrew Rumments exists and is cool
+
+\hypertarget{find-a-problem-have-a-question}{%
+\section{Find a problem? Have a question?}\label{find-a-problem-have-a-question}}
+
+The best way to notify the authors of a problem is to file an \href{https://github.com/GeneralizedRegressionModelingAgency/GRMA/issues}{issue} on this book's {[}GitHub repository.
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
@@ -251,12 +267,12 @@ Let's use some simulated data to see how GLMs are fit in R, and
 
 \begin{verbatim}
 ##           y     x1    x2
-## 1 -786.7001  35.75 277.4
-## 2 -854.6331 -78.25 233.0
-## 3 -702.1706  80.00 294.1
-## 4 -935.8824 -34.75 288.6
-## 5 -249.0226 190.25 206.5
-## 6 -401.1268 195.50 267.3
+## 1 -725.9119  32.00 264.5
+## 2 -865.7442 -24.25 266.8
+## 3 -735.8747  51.50 283.6
+## 4 -372.6265 241.25 284.6
+## 5 -530.3268 127.25 249.0
+## 6 -386.1976 217.25 269.6
 \end{verbatim}
 
 First, fit a linear model the normal way, using \texttt{lm()}
@@ -275,19 +291,19 @@ First, fit a linear model the normal way, using \texttt{lm()}
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -77.921 -13.169  -0.579  15.589  55.405 
+## -45.373 -15.786  -0.426  13.828  46.333 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 10.32672   26.37681   0.392    0.697    
-## x1           1.95805    0.03167  61.832   <2e-16 ***
-## x2          -3.03767    0.10609 -28.634   <2e-16 ***
+## (Intercept)  8.64298   24.72986   0.349    0.728    
+## x1           1.95640    0.02618  74.721   <2e-16 ***
+## x2          -3.04431    0.09788 -31.101   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 27.81 on 72 degrees of freedom
-## Multiple R-squared:  0.9841, Adjusted R-squared:  0.9836 
-## F-statistic:  2224 on 2 and 72 DF,  p-value: < 2.2e-16
+## Residual standard error: 22.18 on 72 degrees of freedom
+## Multiple R-squared:  0.9901, Adjusted R-squared:  0.9898 
+## F-statistic:  3584 on 2 and 72 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 Now we show that we can use \texttt{glm()} the same way, specifying \texttt{family\ =\ "gaussian"}, which gives the identity link.
@@ -306,21 +322,21 @@ Now we show that we can use \texttt{glm()} the same way, specifying \texttt{fami
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -77.921  -13.169   -0.579   15.589   55.405  
+## -45.373  -15.786   -0.426   13.828   46.333  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 10.32672   26.37681   0.392    0.697    
-## x1           1.95805    0.03167  61.832   <2e-16 ***
-## x2          -3.03767    0.10609 -28.634   <2e-16 ***
+## (Intercept)  8.64298   24.72986   0.349    0.728    
+## x1           1.95640    0.02618  74.721   <2e-16 ***
+## x2          -3.04431    0.09788 -31.101   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 773.5935)
+## (Dispersion parameter for gaussian family taken to be 491.8093)
 ## 
-##     Null deviance: 3495888  on 74  degrees of freedom
-## Residual deviance:   55699  on 72  degrees of freedom
-## AIC: 716.61
+##     Null deviance: 3560648  on 74  degrees of freedom
+## Residual deviance:   35410  on 72  degrees of freedom
+## AIC: 682.64
 ## 
 ## Number of Fisher Scoring iterations: 2
 \end{verbatim}
@@ -841,7 +857,7 @@ This might be a bit different than what you've seen before, so lets talk about e
 \begin{itemize}
 \tightlist
 \item
-  \(\mathcal{P}\): (\(\texttt{\\mathcal\{P\}}\) in TeX) is the probability mass function of a certain outcome. \(\mathcal{P}(y;\mu)\) then is the probability of event \(y\) when the success has a probability of \(\mu\).
+  \(\mathcal{P}\): (\texttt{\textbackslash{}\textbackslash{}mathcal\textbackslash{}\{P\textbackslash{}\}} in TeX) is the probability mass function of a certain outcome. \(\mathcal{P}(y;\mu)\) then is the probability of event \(y\) when the success has a probability of \(\mu\).
 \item
   \(y\): is the number of successes. Since this is a single trial, it can only be 0 or 1 (described by the statement \(y\in\{0, 1\}\)).
 
@@ -855,7 +871,7 @@ This might be a bit different than what you've seen before, so lets talk about e
     Conversely, if we're interetsed in an event occuring, \(y-1\), \((1-\mu)^{(1-1)}=1\), and the PMF simplifies to \(\mathcal{P(1,\mu)}=\mu\).
   \end{itemize}
 \item
-  \(\mu\): (\(\texttt{\\mu}\) in TeX) is the probability of the event. But wait, isn't \(\mu\) the mean, and also the expected value? \textbf{Yes, exactly!} Those are all the same in this PMF, so we use the same variable. Because many text books need you to consider those ideas separatey so you can discover that relationship, you might see it recorded elsewhere as \(p\), but since demonstrating that is beyond our scope here, we'll use \(\mu\) to reduce complexity.
+  \(\mu\): (\texttt{\textbackslash{}mu} in TeX) is the probability of the event. But wait, isn't \(\mu\) the mean, and also the expected value? \textbf{Yes, exactly!} Those are all the same in this PMF, so we use the same variable. Because many text books need you to consider those ideas separatey so you can discover that relationship, you might see it recorded elsewhere as \(p\), but since demonstrating that is beyond our scope here, we'll use \(\mu\) to reduce complexity.
 \item
   It complicates using the formula elsewhere, but we could rewrite this as:
   \[
@@ -880,9 +896,9 @@ Like before, this format might be a bit different than what you may have seen el
 \begin{itemize}
 \tightlist
 \item
-  A reminder, \(\binom{n}{k}\), (written \texttt{\textbackslash{}texttt\{\textbackslash{}binom\{n\}\{k\}\}} in TeX) is a combination \(n\) choose \(k\). More detail \href{https://en.wikipedia.org/wiki/Combination}{here.}
+  A reminder, \(\binom{n}{k}\), (written \texttt{\textbackslash{}binom\{n\}\{k\}} in TeX) is a combination \(n\) choose \(k\). More detail \href{https://en.wikipedia.org/wiki/Combination}{here.}
 \item
-  \(\mathcal{P}\) (\(\texttt{\\mathcal\{P\}}\) in TeX) is the probability mass function (PMF) aka probability function. \(\mathcal{P}(y;\mu,m)\) then is the probability function of a binomial distribution for event \(y\) in the case of \(m\) Bernoulli trials with each trial having a probability of \(\mu\).
+  \(\mathcal{P}\) (\texttt{\textbackslash{}\textbackslash{}mathcal\textbackslash{}\{P\textbackslash{}\}} in TeX) is the probability mass function (PMF) aka probability function. \(\mathcal{P}(y;\mu,m)\) then is the probability function of a binomial distribution for event \(y\) in the case of \(m\) Bernoulli trials with each trial having a probability of \(\mu\).
 \item
   \(m\) here is simply the number of trials easy.
 \item
@@ -921,7 +937,7 @@ Like before, this format might be a bit different than what you may have seen el
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 1 0 1 0 0 1 0 0 1
+##  [1] 1 1 0 0 0 0 1 1 0 0
 \end{verbatim}
 
 \begin{Shaded}
@@ -956,6 +972,88 @@ So zeros and ones, we expect that (sorry if you're the 2 in \(2^{10}\) readers w
 
 \hypertarget{why-doesnt-ols-work-for-binomial-data}{%
 \section{Why doesn't OLS work for Binomial Data?}\label{why-doesnt-ols-work-for-binomial-data}}
+
+``Hey,'' you may be saying to the intense discomfort of those around you as you suddenly begin speaking to your book, ``Yeah you--you're being intellectually dishonest!'' The people around you register but do not address your sudden outburst. ``Of course \emph{that's} hard to fit--there is no meaningful relationship!'' Acquaintances and strangers in earshot begin to gather their belongings closer to them and some plot in hushed tones to pay their check and depart. Perhaps a family pet or roommate registers this common occurance nonplused and proceeds with their day.
+
+Stop making a scene. You're right, fine. Maybe this will help. Picture five dice of different numbers of sides: 4, 6, 8, 12, and 20 sides. I want to know if the number of sides increases the liklihood of getting a 4 or above. Does the likelihood or getting a 4 or above increase with the number of sides? Our (and hopefully your) intuitive assumption is that yes. Obviously. So lets try to examine some data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# here I\textquotesingle{}ll write a function and then use the map function to apply that}
+\CommentTok{\# situation multiple times.This is a great technique for simulation and,}
+\CommentTok{\# once you\textquotesingle{}re acquainted with it, can lead to more efficient and/or easier\#}
+\CommentTok{\# to read code than complicated nested for{-}loops.}
+
+\CommentTok{\# first, we define a simple function that returns a 1 if a roll of a simulated}
+\CommentTok{\# die with a variable number of \textquotesingle{}sides\textquotesingle{} equals a target number \textquotesingle{}tn\textquotesingle{} or higher.}
+
+\KeywordTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{simulate\_die\_roll \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{4}\NormalTok{, }\DataTypeTok{tn =} \DecValTok{4}\NormalTok{) \{ }\CommentTok{\# this starts describing}
+                                                   \CommentTok{\# the function and creates}
+                                                   \CommentTok{\# two parameters, sides}
+                                                   \CommentTok{\# and tn, which will be set}
+                                                   \CommentTok{\# to 4 but can be changed}
+                                                   \CommentTok{\# when the function is called}
+\NormalTok{  roll \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{sides, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\CommentTok{\# roll a die, size 1 to \textquotesingle{}sides\textquotesingle{}.}
+  \ControlFlowTok{if}\NormalTok{(roll }\OperatorTok{\textgreater{}=}\StringTok{ }\NormalTok{tn)\{}\DecValTok{1}\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}\DecValTok{0}\NormalTok{\} }\CommentTok{\# if roll \textgreater{}= target number, then return 1,}
+                             \CommentTok{\# otherwise, return 0.}
+\NormalTok{\}}
+
+\CommentTok{\# with this simple (and poorly error{-}proofed) function defined, we can use it}
+\CommentTok{\# to sample some data.}
+
+\NormalTok{dice \textless{}{-}}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{20}\NormalTok{) }\CommentTok{\# gather our dice}
+\NormalTok{results \textless{}{-}}\StringTok{ }\DecValTok{0} \CommentTok{\# blank the results variable, in case I was sloppy elsewhere}
+\NormalTok{nsimsperdie \textless{}{-}}\StringTok{ }\DecValTok{10} \CommentTok{\# number of rolls per die}
+
+\NormalTok{(d4 \textless{}{-}}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{nsimsperdie, }\OperatorTok{\textasciitilde{}}\StringTok{ }\KeywordTok{simulate\_die\_roll}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{4}\NormalTok{, }\DataTypeTok{tn=}\DecValTok{4}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 0 1 0 0 0 0 0 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(d6 \textless{}{-}}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{nsimsperdie, }\OperatorTok{\textasciitilde{}}\StringTok{ }\KeywordTok{simulate\_die\_roll}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{6}\NormalTok{, }\DataTypeTok{tn=}\DecValTok{4}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 1 0 1 1 1 1 0 1 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(d8 \textless{}{-}}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{nsimsperdie, }\OperatorTok{\textasciitilde{}}\StringTok{ }\KeywordTok{simulate\_die\_roll}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{8}\NormalTok{, }\DataTypeTok{tn=}\DecValTok{4}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 1 0 1 1 0 0 0 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(d12 \textless{}{-}}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{nsimsperdie, }\OperatorTok{\textasciitilde{}}\StringTok{ }\KeywordTok{simulate\_die\_roll}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{12}\NormalTok{, }\DataTypeTok{tn=}\DecValTok{4}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 0 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(d20 \textless{}{-}}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{map}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{nsimsperdie, }\OperatorTok{\textasciitilde{}}\StringTok{ }\KeywordTok{simulate\_die\_roll}\NormalTok{(}\DataTypeTok{sides =} \DecValTok{20}\NormalTok{, }\DataTypeTok{tn=}\DecValTok{4}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 1 1 1 1 1 1 1 1 1
+\end{verbatim}
 
 \hypertarget{link-functions-we-can-use}{%
 \section{Link functions we can use}\label{link-functions-we-can-use}}
@@ -1030,7 +1128,7 @@ Our response variable is going to be the runs scored by each player during each 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{Bookdown_files/figure-latex/unnamed-chunk-23-1.pdf}
 
 This indeed looks like a great candidate for Poisson regression. We could even imagine overlaying a Poisson distribution with a \(\mu\) parameter of about 1 and see that it follows our response variable well. In fact, the mean number of runs scored in this dataset is 1.04, which would be the estimated \(\mu\) value. Let's now fit a model using batting-related outcome variables as our explanatory variables. We will model runs scored using the number of hits, doubles, triples, and home runs a player recored in each World Series:
 
